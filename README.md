@@ -12,9 +12,28 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 - **Assignments 1 and 2**, with hidden worked solutions.
 - **Midterm prep:** rules, the lecturer's examples worked in full, and a mock exam in the 50 / 25 / 25 mix.
 - **Textbook depth** from Fabozzi (ch. 1–6, 29) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
-- **Yuzuki**, the study companion, who reacts to answers, tools and progress.
+
+## Design
+
+The page runs on a **Nocturne Bazaar** palette — warm parchment and deep plum ink, with iris, jade, saffron, coral and sakura doing the semantic work. Light and dark are both first-class; the toggle sits in the masthead and is remembered.
+
+## The game layer
+
+- **XP and levels.** 15 / 20 / 30 XP per correct easy / medium / difficult answer, 10 per tool you try, 50 per coupon clipped, 5 per Arbitrage Hunter win. Nine levels, each with a rank from Runner up to Rate Sovereign. XP is derived from saved progress, so it can never double-count.
+- **Daily contracts.** Three objectives drawn from a pool each day, stable until midnight, worth 25–70 XP apiece.
+- **Trophy case.** Fifteen achievements covering streaks, hard-tier answers, tools, mock scores, day streaks and a couple you'll have to find.
+- **Mastery rings** on each coupon in the rail, filling as you answer its bank correctly. A coupon clips at 80%.
+- **Streaks**, both answer streaks and consecutive-day study streaks.
+
+## The companion
+
+There is a study companion on this page. She is **off by default** — no card, no chat, no reactions, and the page never even asks for chat permission until she is woken. Waking her is a secret the page's owner knows; doing it again puts her back in the margin.
+
+Once she is awake she has an **affection gauge** that rises as you study with her and cools if you leave her alone for days. It runs through six tiers, and her dialogue, faces and mood change at each one — she also reacts to headpats, trophies, contracts, level-ups, long sessions, tab-switching, text you highlight, and the numbers in every tool.
+
+Note that this is a single static HTML file, so the secret is obfuscation rather than security: anyone reading the source can find it. What it guarantees is that the *default* experience carries no trace of her.
 
 ## Notes
 
-- Progress is saved in your browser (localStorage).
-- Yuzuki's chat only works when the page runs as a published Claude artifact. Everything else works anywhere.
+- Progress is saved in your browser (localStorage), and synced to the artifact when the page runs as a published Claude artifact.
+- The companion's chat only works when the page runs as a published Claude artifact. Everything else works anywhere.

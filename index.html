@@ -4722,6 +4722,23 @@ placeCard();
 $("#yzPat").addEventListener("click", headpat);
 $("#yzToggle").addEventListener("dblclick", function(ev){ ev.preventDefault(); headpat(); });
 
+/* A second way in. The typed secret needs keyboard focus, which a page running
+   inside a frame does not always have — five quick taps on the masthead always
+   reach it, and work on a phone too. */
+(function(){
+  var mark = $(".mast h1 em");
+  if(!mark) return;
+  mark.style.cursor = "pointer";
+  mark.title = "";
+  var run = 0, at = 0;
+  mark.addEventListener("click", function(){
+    var now = Date.now();
+    run = (now - at < 900) ? run + 1 : 1;
+    at = now;
+    if(run >= 5){ run = 0; toggleCompanion(); }
+  });
+})();
+
 /* she is not here until you ask for her, by name */
 document.documentElement.setAttribute("data-companion", "off");
 if(secretWanted()) setCompanion(true, false);

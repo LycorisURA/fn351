@@ -2021,6 +2021,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-17c</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
@@ -4733,8 +4734,16 @@ $("#yzToggle").addEventListener("dblclick", function(ev){ ev.preventDefault(); h
   var run = 0, at = 0;
   mark.addEventListener("click", function(){
     var now = Date.now();
-    run = (now - at < 900) ? run + 1 : 1;
+    /* 2.5s between taps: a person tapping deliberately is about a second apart,
+       and nobody clicks a page title five times in a row by accident. */
+    run = (now - at < 2500) ? run + 1 : 1;
     at = now;
+    if(run >= 2){                      /* a quiet nudge, so you can feel it counting */
+      mark.style.transition = "transform .18s cubic-bezier(.2,1.6,.4,1)";
+      mark.style.display = "inline-block";
+      mark.style.transform = "scale(" + (1 + run*0.035) + ")";
+      setTimeout(function(){ mark.style.transform = ""; }, 190);
+    }
     if(run >= 5){ run = 0; toggleCompanion(); }
   });
 })();

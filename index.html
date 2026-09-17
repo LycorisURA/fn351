@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>Fixed Income Coupon Strip</title>
+<title>The Coupon Strip</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,500;0,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -1923,7 +1923,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
     </div>
 
     <div class="note" style="margin-bottom:20px"><span class="eyebrow">How to use this</span>
-      Write your answer down before you open a card. If it disagrees, the disagreement is the useful part — ask Yuzuki <em>why</em> your method gave a different number rather than just reading the solution.</div>
+      Write your answer down before you open a card. If it disagrees, the disagreement is the useful part — work out <em>why</em> your method gave a different number rather than just reading the solution.</div>
 
     <p class="eyebrow" style="margin:0 0 12px">Assignment 1 · Fabozzi ch. 1–2 + Tuckman ch. 1</p>
     <section class="block">
@@ -2021,7 +2021,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    Progress is stored against this artifact, so closing the tab loses nothing. Yuzuki answers through Claude, using your own account.
+    Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
 
@@ -2501,7 +2501,7 @@ function save(){
   if(remoteDb){
     clearTimeout(saveTimer);
     saveTimer = setTimeout(function(){
-      remoteDb.doc("progress/main").set(payload).catch(function(){});
+      remoteDb.doc("data/users/me/progress").set(payload).catch(function(){});
     }, 900);
   }
 }
@@ -3047,7 +3047,7 @@ if(window.claude && window.claude.use){
   window.claude.use("db").then(function(d){
     if(!d) return;
     remoteDb = d;
-    return d.doc("progress/main").get().then(function(snap){
+    return d.doc("data/users/me/progress").get().then(function(snap){
       if(!snap || !snap.exists) return;
       var data = snap.data() || {};
       if(data.tools && typeof data.tools === "object"){ state.tools = state.tools || {}; Object.keys(data.tools).forEach(function(k){ state.tools[k] = 1; }); }
@@ -3145,8 +3145,8 @@ function buildAuction(){
   body.innerHTML = "";
   AUCTION.forEach(function(b,i){
     var tr = el("tr");
-    tr.innerHTML = '<td><input class="auY" data-i="'+i+'" type="number" step="0.01" value="'+b.y+'" style="width:80px;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:2px;padding:3px 5px"></td>'+
-      '<td class="r"><input class="auA" data-i="'+i+'" type="number" step="5" value="'+b.amt+'" style="width:80px;text-align:right;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:2px;padding:3px 5px"></td>'+
+    tr.innerHTML = '<td><input class="auY" data-i="'+i+'" type="number" step="0.01" value="'+b.y+'" style="width:80px;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r1);padding:3px 5px"></td>'+
+      '<td class="r"><input class="auA" data-i="'+i+'" type="number" step="5" value="'+b.amt+'" style="width:80px;text-align:right;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r1);padding:3px 5px"></td>'+
       '<td class="r" data-fill="'+i+'">—</td><td class="r" data-pays="'+i+'">—</td>';
     body.appendChild(tr);
   });
@@ -3227,7 +3227,7 @@ function arbRows(){
     : '<th>Maturity</th><th class="r">Price</th><th class="r">Face needed</th><th class="r">Cost</th>';
   ZT.forEach(function(t,i){
     var tr = el("tr");
-    var inp = function(cls,val){ return '<input class="'+cls+'" data-i="'+i+'" type="number" step="0.001" value="'+val+'" style="width:84px;text-align:right;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:2px;padding:3px 5px">' };
+    var inp = function(cls,val){ return '<input class="'+cls+'" data-i="'+i+'" type="number" step="0.001" value="'+val+'" style="width:84px;text-align:right;font-family:var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r1);padding:3px 5px">' };
     tr.innerHTML = ba
       ? '<td>'+t.toFixed(1)+'</td><td class="r">'+inp("zb",ZBID[i])+'</td><td class="r">'+inp("za",ZASK[i])+'</td><td class="r" data-fv="'+i+'">—</td><td class="r" data-cost="'+i+'">—</td>'
       : '<td>'+t.toFixed(1)+'</td><td class="r">'+inp("zm",ZMID[i])+'</td><td class="r" data-fv="'+i+'">—</td><td class="r" data-cost="'+i+'">—</td>';
@@ -4057,8 +4057,8 @@ function companionBoot(announce){
     y.met = 1;
     var gap = affDecay();
     addMsg("t", firstTime
-      ? "Oh— you found me ( ˶ˆᵜˆ˵ ) I wasn't hiding, exactly. I was waiting for someone who knew where to look.\n\nI'm Yuzuki. I've read the same seven lectures you have, and the textbook chapters that go with them, so ask me about whatever's on screen, or hand me a number you got and I'll find where it came from.\n\nI'll tell you when you're wrong. Which I'd never enjoy. Obviously. If you'd rather be tested than told, say \"quiz me\"."
-      : "You called me back ( ˶ˆᵜˆ˵ ) I didn't go anywhere, you know. I was right here in the margin the whole time.\n\nAsk me about anything on screen, or say \"quiz me\".");
+      ? "Oh— you found me ( ˶ˆᗜˆ˵ ) I wasn't hiding, exactly. I was waiting for someone who knew where to look.\n\nI'm Yuzuki. I've read the same seven lectures you have, and the textbook chapters that go with them, so ask me about whatever's on screen, or hand me a number you got and I'll find where it came from.\n\nI'll tell you when you're wrong. Which I'd never enjoy. Obviously. If you'd rather be tested than told, say \"quiz me\"."
+      : "You called me back ( ˶ˆᗜˆ˵ ) I didn't go anywhere, you know. I was right here in the margin the whole time.\n\nAsk me about anything on screen, or say \"quiz me\".");
     ["click","keydown","input"].forEach(function(ev){ document.addEventListener(ev, resetIdle, {passive:true}); });
     resetIdle();
     if(window.claude && window.claude.use){
@@ -4222,7 +4222,7 @@ Object.assign(LINES, {
 /* ---------------- new line banks ---------------- */
 Object.assign(FACES, {
   love:["(๑>؂<๑)♡","( ˶˘ ³˘˶ )♡","(♡˙﹏˙♡)","♪( ◡‿◡ )"],
-  sulk:["( ˘︹˘ )","(－‸ლ)","(｡•́‿•̀｡)"],
+  sulk:["( ˘︹˘ )","(－‸ლ)","( ｡•́ ᴗ •̀｡)"],
   melt:["(⁄ ⁄•⁄ω⁄•⁄ ⁄)","(*/▽＼*)","(〃▽〃)"]
 });
 Object.assign(LINES, {
@@ -4236,7 +4236,7 @@ Object.assign(LINES, {
   ],
   neglected:[
     ["sulk","<b>{days} days.</b> I counted. I counted every one. ...You're here now, so I'll let it go. Mostly."],
-    ["sad","{days} days without opening the strip (｡•́‿•̀｡) The convexity term missed you. I did too, a bit."]
+    ["sad","{days} days without opening the strip ( ｡•́ ᴗ •̀｡) The convexity term missed you. I did too, a bit."]
   ],
   dayStreak:[
     ["happy","<b>{days} days</b> in a row you've come back to me. I have every one written down ♪"],

@@ -2019,6 +2019,36 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
         </div>
       </div>
     </section>
+
+    <section class="block">
+      <h3>Endless drill</h3>
+      <div class="prose"><p>Fresh numbers every time, generated on the page itself &mdash; so it works offline, and never runs out. The wrong options are the mistakes people actually make on each question type, not random noise, and the working is shown in full either way.</p></div>
+      <div class="tool" style="margin-top:12px">
+        <div class="tool-h"><div><span class="eyebrow">Practice</span><h4>Endless drill</h4></div><span class="num" id="drillScore" style="font-size:12px;color:var(--mute)">0 right of 0</span></div>
+        <div class="tool-b">
+          <div class="ctrls">
+            <label class="f">Topic<select id="drillTopic">
+              <option value="all">Every topic</option>
+              <option value="intro">01 &middot; What a bond is</option>
+              <option value="treasury">02 &middot; Treasury securities</option>
+              <option value="arbitrage">03 &middot; Arbitrage</option>
+              <option value="term">04 &middot; Term structure</option>
+              <option value="apply">05 &middot; Pricing &amp; returns</option>
+              <option value="vol">06 &middot; Duration &amp; convexity</option>
+              <option value="fut">07 &middot; Interest rate futures</option>
+            </select></label>
+            <label class="f">Difficulty<select id="drillTier">
+              <option value="all">Any</option><option value="e">Easy</option><option value="m">Medium</option><option value="d">Difficult</option>
+            </select></label>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px">
+            <button class="btn" type="button" id="drillNew">Generate a question</button>
+            <span class="num" id="drillCount" style="font-size:12px;color:var(--faint)"></span>
+          </div>
+          <div id="drillBody" style="margin-top:6px"></div>
+        </div>
+      </div>
+    </section>
   </article>
 
   </main>
@@ -2028,7 +2058,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-17d</span>
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-18a</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
@@ -2496,7 +2526,7 @@ var el = function(tag,cls,html){var e=document.createElement(tag); if(cls)e.clas
 var fmt = function(x,d){ if(!isFinite(x)) return "—"; return Number(x).toLocaleString("en-US",{minimumFractionDigits:d==null?2:d,maximumFractionDigits:d==null?2:d}) };
 
 var state = {topic:"intro", answers:{}, clipped:{}, streak:0, best:0, tools:{}, hunt:{won:0, played:0}, mocks:[],
-             bonusXp:0, quests:null, badges:{}, days:null, yz:null, cards:{}};
+             bonusXp:0, quests:null, badges:{}, days:null, yz:null, cards:{}, drill:{right:0, done:0}};
 var remoteDb = null, saveTimer = null;
 
 function loadLocal(){
@@ -2504,7 +2534,7 @@ function loadLocal(){
 }
 function save(){
   var payload = {topic:state.topic, answers:state.answers, clipped:state.clipped, streak:state.streak, best:state.best, tools:state.tools, hunt:state.hunt, mocks:state.mocks,
-                 bonusXp:state.bonusXp, quests:state.quests, badges:state.badges, days:state.days, yz:state.yz, cards:state.cards};
+                 bonusXp:state.bonusXp, quests:state.quests, badges:state.badges, days:state.days, yz:state.yz, cards:state.cards, drill:state.drill};
   try{ localStorage.setItem("couponStrip.v1", JSON.stringify(payload)); }catch(e){}
   if(remoteDb){
     clearTimeout(saveTimer);
@@ -2647,6 +2677,11 @@ function buildQuizzes(){
     var note = el("span", "tb-note", "");
     note.dataset.tierscore = key;
     bar.appendChild(note);
+    var again = el("button", null, "Reattempt");
+    again.type = "button";
+    again.title = "Clear your answers for this coupon and start it over. The XP goes with them, so nothing can be farmed.";
+    again.addEventListener("click", function(){ retryBank(key, host, again); });
+    bar.appendChild(again);
     host.appendChild(bar);
     bank.forEach(function(q,i){
       var item = el("div","qitem");
@@ -2711,7 +2746,9 @@ function xpTotal(){
     if(state.clipped[k]) clipped++;
   });
   var hunts = Math.min((state.hunt && state.hunt.won) || 0, 40);
-  return right + 10*Object.keys(state.tools||{}).length + 50*clipped + 5*hunts + (state.bonusXp||0);
+  /* drill XP is capped so an endless generator can never be farmed into a level */
+  var drilled = Math.min((state.drill && state.drill.right) || 0, 60);
+  return right + 10*Object.keys(state.tools||{}).length + 50*clipped + 5*hunts + 5*drilled + (state.bonusXp||0);
 }
 function levelOf(xp){ var l = 1; for(var i = 1; i < LEVELS.length; i++) if(xp >= LEVELS[i]) l = i + 1; return l; }
 function paintHud(){
@@ -2772,7 +2809,8 @@ var QUEST_POOL = [
   {id:"topic",  n:3, xp:30, tx:"Open {n} different coupons"},
   {id:"card",   n:5, xp:25, tx:"Flip {n} risk cards"},
   {id:"mock",   n:1, xp:70, tx:"Sit a full mock midterm"},
-  {id:"clip",   n:1, xp:60, tx:"Clip a coupon clean"}
+  {id:"clip",   n:1, xp:60, tx:"Clip a coupon clean"},
+  {id:"drill",  n:8, xp:40, tx:"Nail {n} generated drill questions"}
 ];
 function seedFrom(str){ var h = 2166136261; for(var i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = (h*16777619) >>> 0; } return h; }
 function questsForToday(){
@@ -2850,6 +2888,7 @@ var BADGES = [
   {id:"top",    g:"♛", t:"Rate Sovereign — reach the top level"},
   {id:"every",  g:"❖", t:"No Stone — answer every question on the page"},
   {id:"secret", g:"✿", t:"…she was there all along"},
+  {id:"drill25",g:"⚛", t:"Drilled — 25 generated questions right"},
   {id:"devoted",g:"❤", t:"Inseparable — max affection"}
 ];
 function grantBadge(id){
@@ -2902,6 +2941,7 @@ function checkBadges(){
   if((state.days && state.days.streak || 0) >= 7) grantBadge("week");
   if(levelOf(xpTotal()) >= RANKS.length) grantBadge("top");
   if(answered >= total) grantBadge("every");
+  if(((state.drill && state.drill.right) || 0) >= 25) grantBadge("drill25");
   var h = new Date().getHours();
   if(h >= 0 && h < 5) grantBadge("night");
 }
@@ -2989,6 +3029,10 @@ function reveal(key,i,choice,item){
     openYuzuki(prompt);
   });
   why.appendChild(ask);
+  var again = el("button", "btn sm ghost", "Try this one again");
+  again.type = "button";
+  again.addEventListener("click", function(){ retryOne(key, i, item); });
+  why.appendChild(again);
   item.appendChild(why);
 }
 
@@ -3880,6 +3924,314 @@ $("#mockSubmit").addEventListener("click", function(){
   mockSubmit();
 });
 $("#mockBest").textContent = mockBestText();
+
+/* ============================================================
+   endless drill — fresh numbers every time, no model needed.
+   Each template computes its own answer from the same functions
+   the rest of the page uses, and builds distractors out of the
+   mistakes people actually make.
+   ============================================================ */
+function dR(lo, hi, step){ step = step || 1; var n = Math.round((hi-lo)/step); return lo + step*Math.floor(Math.random()*(n+1)); }
+function dPick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function dOpts(correct, wrongs, f){
+  var seen = {}, list = [];
+  function push(v){
+    if(!isFinite(v)) return;
+    if(v === 0) v = 0;                    /* fold -0 into 0 so it cannot read as a second option */
+    var s = f(v); if(seen[s]) return; seen[s] = 1; list.push(s);
+  }
+  push(correct);
+  (wrongs || []).forEach(push);
+  /* a multiplicative filler cannot move away from zero, so scale off the answer
+     when it is non-trivial and fall back to an additive step when it is not */
+  var span = Math.abs(correct) > 1e-9 ? Math.abs(correct) : 1;
+  var guard = 0;
+  while(list.length < 4 && guard++ < 60){
+    push(correct + (Math.random() < 0.5 ? 1 : -1)*span*(0.08 + Math.random()*0.4));
+  }
+  list = list.slice(0, 4);
+  var right = list[0];
+  for(var i = list.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)), t = list[i]; list[i] = list[j]; list[j] = t; }
+  return {o:list, a:list.indexOf(right)};
+}
+var money = function(v){ return fmt(v, 2); };
+var pct2 = function(v){ return fmt(v, 2) + "%"; };
+var pct3 = function(v){ return fmt(v, 3) + "%"; };
+
+var DRILL = [
+{id:"bill", topic:"treasury", tier:"e", make:function(){
+  var d = dR(30, 300, 1), yd = dR(150, 600, 5)/100;
+  var right = 100*(1 - d/360*yd/100);
+  var o = dOpts(right, [100*(1 - d/365*yd/100), 100/(1 + d/360*yd/100), 100 - yd], money);
+  return {q:"A Treasury bill has <b>" + d + " days</b> to maturity and is quoted at a bank discount yield of <b>" + fmt(yd,2) + "%</b>. Its price per 100 of face is:",
+    o:o.o, a:o.a,
+    e:"B = F(1 − t/360 × y<sub>d</sub>) = 100(1 − " + d + "/360 × " + fmt(yd/100,4) + ") = <b>" + fmt(right,2) + "</b>. Two conventions do the work: a <b>360-day</b> year, and the discount taken off <b>face</b> rather than off the price you pay. Using 365 gives " + fmt(100*(1-d/365*yd/100),2) + " — close enough to look right, which is why it is the usual slip."};
+}},
+{id:"q32", topic:"treasury", tier:"e", make:function(){
+  var w = dR(94, 106), n = dR(1, 31), face = dPick([1000, 100000]);
+  var right = (w + n/32)*face/100;
+  var o = dOpts(right, [(w + n/100)*face/100, (w + n/10)*face/100, w*face/100], money);
+  return {q:"A note is quoted at <b>" + w + "-" + String(n).padStart(2,"0") + "</b>. What do you pay for <b>" + fmt(face,0) + "</b> of face?",
+    o:o.o, a:o.a,
+    e:"The dash means <b>32nds</b>, never decimals: " + w + " + " + n + "/32 = " + fmt(w + n/32,5) + " per 100 of face, so " + fmt(w+n/32,5) + " × " + fmt(face,0) + "/100 = <b>" + fmt(right,2) + "</b>. Reading it as a decimal gives " + fmt((w+n/100)*face/100,2) + "."};
+}},
+{id:"price", topic:"apply", tier:"m", make:function(){
+  var c = dR(2, 12, 0.5), T = dPick([2,3,5,7,10]), y = dR(2, 11, 0.25);
+  var right = bondPrice(c, T, y, 100);
+  var annual = (function(){ var p = 0; for(var t = 1; t <= T; t++) p += c/Math.pow(1+y/100, t); return p + 100/Math.pow(1+y/100, T); })();
+  var nohalf = (function(){ var n = T*2, p = 0; for(var t = 1; t <= n; t++) p += c/Math.pow(1+y/200, t); return p + 100/Math.pow(1+y/200, n); })();
+  var o = dOpts(right, [annual, nohalf, 100], money);
+  return {q:"A <b>" + fmt(c,2) + "%</b> semiannual bond with <b>" + T + " years</b> to maturity is priced to yield <b>" + fmt(y,2) + "%</b>. Its price per 100 of face is:",
+    o:o.o, a:o.a,
+    e:"Halve the coupon, halve the yield, double the years: " + T*2 + " payments of " + fmt(c/2,3) + " plus 100 at the end, all discounted at " + fmt(y/2,3) + "% a period → <b>" + fmt(right,2) + "</b>. " + (c > y ? "Coupon above yield, so it trades at a <b>premium</b>." : (c < y ? "Coupon below yield, so it trades at a <b>discount</b>." : "Coupon equals yield, so it prices at <b>par</b>.")) + " Forgetting to halve the coupon gives " + fmt(nohalf,2) + "."};
+}},
+{id:"accrued", topic:"apply", tier:"e", make:function(){
+  var c = dR(3, 10, 0.5), Y = dPick([181, 182, 184]), X = dR(10, Y-10), clean = dR(92, 108, 0.125);
+  var ai = X/Y*(c/2), right = clean + ai;
+  var o = dOpts(right, [clean + X/Y*c, clean - ai, clean], money);
+  return {q:"A <b>" + fmt(c,2) + "%</b> semiannual bond is quoted at <b>" + fmt(clean,3) + "</b>. It is <b>" + X + "</b> days into a <b>" + Y + "</b>-day coupon period. What settles?",
+    o:o.o, a:o.a,
+    e:"Invoice (dirty) = clean + accrued, and accrued uses the <b>semiannual</b> coupon: (" + X + "/" + Y + ") × " + fmt(c/2,3) + " = " + fmt(ai,4) + ", so " + fmt(clean,3) + " + " + fmt(ai,4) + " = <b>" + fmt(right,4) + "</b>. Using the full annual coupon gives " + fmt(clean + X/Y*c,4) + ". Count days to <b>settlement</b>, not to the trade date."};
+}},
+{id:"spot", topic:"term", tier:"m", make:function(){
+  var T = dPick([0.5, 1, 1.5, 2, 3]), y = dR(150, 700, 5)/100;
+  var P = 100/Math.pow(1 + y/200, 2*T), right = 2*(Math.pow(100/P, 1/(2*T)) - 1)*100;
+  var o = dOpts(right, [(Math.pow(100/P, 1/T) - 1)*100, (100-P)/P/T*100, (100-P)/100/T*100], pct3);
+  return {q:"A zero maturing in <b>" + fmt(T,1) + " years</b> costs <b>" + fmt(P,4) + "</b> per 100 of face. Its spot rate, bond-equivalent, is:",
+    o:o.o, a:o.a,
+    e:"y<sub>t</sub> = 2[(F/P)<sup>1/(2t)</sup> − 1] = 2[(100/" + fmt(P,4) + ")<sup>1/" + fmt(2*T,1) + "</sup> − 1] = <b>" + fmt(right,3) + "%</b>. A zero's YTM <em>is</em> the spot rate for its maturity — no reinvestment assumption is needed, which is what makes zeros the market's source of clean discount factors."};
+}},
+{id:"forward", topic:"term", tier:"m", make:function(){
+  var t1 = dPick([0.5, 1, 1.5]), t2 = t1 + 0.5;
+  var y1 = dR(200, 600, 5)/100, y2 = y1 + dR(-40, 90, 5)/100;
+  var right = 2*(Math.pow(1+y2/200, 2*t2)/Math.pow(1+y1/200, 2*t1) - 1)*100;
+  var o = dOpts(right, [y2 - y1, (y1+y2)/2, 2*y2 - y1], pct3);
+  return {q:"Spot rates are <b>" + fmt(y1,2) + "%</b> at " + fmt(t1,1) + " years and <b>" + fmt(y2,2) + "%</b> at " + fmt(t2,1) + " years. The six-month forward rate starting at " + fmt(t1,1) + " years is:",
+    o:o.o, a:o.a,
+    e:"f = 2[(1+y<sub>2</sub>/2)<sup>2t₂</sup> / (1+y<sub>1</sub>/2)<sup>2t₁</sup> − 1] = <b>" + fmt(right,3) + "%</b>. " + (y2 > y1 ? "The spot curve rises here, so the forward sits <b>above</b> both spots — an average can only climb if the new term beats it." : (y2 < y1 ? "The spot curve falls here, so the forward sits <b>below</b> both spots." : "Flat spots put the forward right on top of them.")) + " Subtracting the spots (" + fmt(y2-y1,3) + "%) is the common shortcut, and it is wrong."};
+}},
+{id:"dfprice", topic:"arbitrage", tier:"e", make:function(){
+  var base = dR(200, 600, 25)/100, slope = dR(-20, 60, 10)/100, ts = [0.5, 1, 1.5, 2];
+  var d = ts.map(function(t){ return Math.pow(1 + (base + slope*t)/200, -2*t); });
+  var c = dPick([4, 5, 6, 8, 10]);
+  var right = ts.reduce(function(s, t, i){ return s + (c/2 + (i === 3 ? 100 : 0))*d[i]; }, 0);
+  var undisc = 4*(c/2) + 100;
+  var noprin = ts.reduce(function(s, t, i){ return s + (c/2)*d[i]; }, 0);
+  var o = dOpts(right, [undisc, noprin, 100], money);
+  return {q:"Discount factors are d(0.5)=" + fmt(d[0],5) + ", d(1)=" + fmt(d[1],5) + ", d(1.5)=" + fmt(d[2],5) + ", d(2)=" + fmt(d[3],5) + ". A 2-year <b>" + c + "%</b> semiannual bond should cost:",
+    o:o.o, a:o.a,
+    e:"Price = Σ C<sub>t</sub> · d(t) = " + fmt(c/2,1) + "(" + fmt(d[0],5) + " + " + fmt(d[1],5) + " + " + fmt(d[2],5) + ") + " + fmt(100 + c/2,1) + "(" + fmt(d[3],5) + ") = <b>" + fmt(right,2) + "</b>. Each cash flow gets <em>its own</em> rate — no single yield is involved, and nothing is being estimated. " + fmt(undisc,2) + " is the undiscounted sum."};
+}},
+{id:"arbdir", topic:"arbitrage", tier:"m", make:function(){
+  var base = dR(250, 600, 25)/100, ts = [0.5, 1, 1.5, 2];
+  var d = ts.map(function(t){ return Math.pow(1 + base/200, -2*t); });
+  var c = dPick([4, 6, 8, 10]);
+  var fair = ts.reduce(function(s, t, i){ return s + (c/2 + (i === 3 ? 100 : 0))*d[i]; }, 0);
+  var edge = dPick([-1, 1])*dR(40, 260, 10)/100;
+  var quote = fair + edge;
+  var o = ["Buy the bond, short the zeros", "Short the bond, buy the zeros", "No arbitrage — the gap is noise", "Buy both the bond and the zeros"];
+  return {q:"The replicating portfolio of zeros is worth <b>" + fmt(fair,2) + "</b>. The bond is quoted at <b>" + fmt(quote,2) + "</b>. Your trade is:",
+    o:o, a:edge > 0 ? 1 : 0,
+    e:"The bond is <b>" + (edge > 0 ? "rich" : "cheap") + "</b> by " + fmt(Math.abs(edge),2) + " per 100 of face. " + (edge > 0 ? "Sell the expensive leg and buy the cheap one: short the bond, buy the zeros." : "Buy the cheap leg and sell the dear one: buy the bond, short the zeros.") + " Either way you bank " + fmt(Math.abs(edge),2) + " <em>today</em> and every future cash flow cancels, so there is no liability left to carry."};
+}},
+{id:"zerodur", topic:"vol", tier:"e", make:function(){
+  var T = dPick([3, 5, 7, 10, 20, 30]), y = dR(200, 900, 25)/100;
+  var right = T/(1 + y/200);
+  var o = dOpts(right, [T, T/(1 + y/100), 2*T], function(v){ return fmt(v,3); });
+  return {q:"A <b>" + T + "-year zero</b> yields <b>" + fmt(y,2) + "%</b> (semiannual). Its <b>modified</b> duration in years is:",
+    o:o.o, a:o.a,
+    e:"A zero's Macaulay duration is exactly its maturity, <b>" + T + "</b> years. Modified = Macaulay ÷ (1 + y/2) = " + T + " / " + fmt(1+y/200,5) + " = <b>" + fmt(right,3) + "</b>. Answering " + T + " confuses duration-as-<em>time</em> with duration-as-<em>sensitivity</em> — the same bond is less rate-sensitive when yields are high."};
+}},
+{id:"durconv", topic:"vol", tier:"m", make:function(){
+  var D = dR(300, 1400, 25)/100, C = dR(20, 300, 5), bp = dPick([-200, -100, -50, 50, 100, 200]);
+  var dy = bp/10000, dur = -D*dy*100, both = (-D*dy + 0.5*C*dy*dy)*100;
+  var o = dOpts(both, [dur, (-D*dy + 0.25*C*dy*dy)*100, -both], pct3);
+  return {q:"A bond has modified duration <b>" + fmt(D,2) + "</b> and convexity <b>" + fmt(C,0) + "</b> (both in years). Yields move <b>" + (bp > 0 ? "+" : "") + bp + " bp</b>. The duration-plus-convexity estimate of the price change is:",
+    o:o.o, a:o.a,
+    e:"ΔP/P = −D·Δy + ½·C·(Δy)² = " + fmt(dur,3) + "% + ½(" + fmt(C,0) + ")(" + fmt(dy,4) + ")² = <b>" + fmt(both,3) + "%</b>. The convexity term is <b>always positive</b> for an option-free bond, so it " + (bp > 0 ? "softens the loss" : "adds to the gain") + " — it can never flip the sign. Using ¼ instead of ½ gives " + fmt((-D*dy + 0.25*C*dy*dy)*100,3) + "%, the slip the class spreadsheet makes."};
+}},
+{id:"portdur", topic:"vol", tier:"m", make:function(){
+  var n = dPick([3, 4]), h = [];
+  for(var i = 0; i < n; i++) h.push({v:dR(10, 80, 5), d:dR(15, 160, 5)/10});
+  var tot = h.reduce(function(s, x){ return s + x.v; }, 0);
+  var right = h.reduce(function(s, x){ return s + x.v*x.d; }, 0)/tot;
+  var simple = h.reduce(function(s, x){ return s + x.d; }, 0)/n;
+  var o = dOpts(right, [simple, right*2, Math.max.apply(null, h.map(function(x){ return x.d; }))], function(v){ return fmt(v,3); });
+  return {q:"A portfolio holds " + h.map(function(x){ return "<b>$" + x.v + "M</b> at duration " + fmt(x.d,1); }).join(", ") + ". Its duration is:",
+    o:o.o, a:o.a,
+    e:"Duration aggregates on <b>value</b> weights: (" + h.map(function(x){ return x.v + "×" + fmt(x.d,1); }).join(" + ") + ") / " + tot + " = <b>" + fmt(right,3) + "</b>. A plain average of the durations gives " + fmt(simple,3) + " and ignores how much money sits behind each one. Each holding's <em>contribution</em> is its weight times its duration, and that is usually the more revealing number."};
+}},
+{id:"effdur", topic:"vol", tier:"m", make:function(){
+  var P0 = dR(900, 1100), bp = dPick([10, 25, 50]), dy = bp/10000;
+  var D = dR(150, 900, 10)/100;
+  var Pm = P0*(1 + D*dy), Pp = P0*(1 - D*dy);
+  var o = dOpts(D, [Pm - Pp, (Pm-Pp)/(P0*dy), (Pm-Pp)/(2*P0)], function(v){ return fmt(v,3); });
+  return {q:"A bond is worth <b>" + fmt(P0,2) + "</b>. Shocked <b>±" + bp + " bp</b> it prices at <b>" + fmt(Pp,4) + "</b> (up) and <b>" + fmt(Pm,4) + "</b> (down). Its effective duration is:",
+    o:o.o, a:o.a,
+    e:"D<sub>eff</sub> = (P<sub>−</sub> − P<sub>+</sub>) / (2 · P<sub>0</sub> · Δy) = " + fmt(Pm-Pp,4) + " / (2 × " + fmt(P0,2) + " × " + fmt(dy,4) + ") = <b>" + fmt(D,3) + "</b>. Dropping the <b>2</b> doubles your answer; stopping at the numerator leaves a dollar figure, not a duration. This is the version you need when the cash flows are not known — callables, MBS, anything with an option."};
+}},
+{id:"sofr", topic:"fut", tier:"e", make:function(){
+  var q1 = dR(9300, 9700, 5)/100, mv = dPick([-1, 1])*dR(10, 90, 1)/100;
+  var q2 = q1 + mv, N = dR(1, 20), long = Math.random() < 0.5;
+  var right = (long ? 1 : -1)*(q2 - q1)*100*25*N;
+  var o = dOpts(right, [-right, right/25*12.5, (long?1:-1)*(q2-q1)*25*N], money);
+  return {q:"You are <b>" + (long ? "long" : "short") + " " + N + "</b> three-month SOFR futures at <b>" + fmt(q1,2) + "</b>. They settle at <b>" + fmt(q2,2) + "</b>. Your P&amp;L is:",
+    o:o.o, a:o.a,
+    e:"The index moved " + (mv > 0 ? "+" : "") + fmt(mv*100,0) + " ticks, each worth <b>$25</b> on a 3-month contract: " + fmt(mv*100,0) + " × 25 × " + N + " = " + fmt(Math.abs(right),2) + ", and you are " + (long ? "long" : "short") + ", so <b>" + (right >= 0 ? "+" : "−") + "$" + fmt(Math.abs(right),2) + "</b>. Index = 100 − rate, so rates " + (mv > 0 ? "<b>fell</b>" : "<b>rose</b>") + " here — which pays the " + (mv > 0 ? "long" : "short") + "."};
+}},
+{id:"sofrsize", topic:"fut", tier:"m", make:function(){
+  var target = dR(5, 60)*1000, bp = dPick([10, 15, 20, 25, 40, 50]);
+  var right = target/(bp*25);
+  var o = dOpts(right, [target/(bp*41.67), target/25, target/bp], function(v){ return fmt(v,2); });
+  return {q:"You want to make <b>$" + fmt(target,0) + "</b> from a <b>" + bp + " bp</b> fall in three-month rates. How many contracts?",
+    o:o.o, a:o.a,
+    e:"Each contract earns " + bp + " × $25 = $" + fmt(bp*25,0) + " on that move, so " + fmt(target,0) + " ÷ " + fmt(bp*25,0) + " = <b>" + fmt(right,2) + "</b> — round up to " + Math.ceil(right - 1e-9) + " and go <b>long</b>, since falling rates lift the index. $41.67 per bp is the <em>1-month</em> contract; mixing them up gives " + fmt(target/(bp*41.67),2) + "."};
+}},
+{id:"invoice", topic:"fut", tier:"m", make:function(){
+  var fp = dR(8800, 10500, 25)/100, cf = dR(8000, 15000, 1)/10000, ai = dR(0, 400, 25)/100;
+  var right = fp*cf + ai;
+  var o = dOpts(right, [fp*cf, fp + cf + ai, fp/cf + ai], money);
+  return {q:"Treasury futures settle at <b>" + fmt(fp,2) + "</b>. The delivered bond has a conversion factor of <b>" + fmt(cf,4) + "</b> and accrued interest of <b>" + fmt(ai,2) + "</b> per 100. The invoice price per 100 is:",
+    o:o.o, a:o.a,
+    e:"Invoice = futures × CF + accrued = " + fmt(fp,2) + " × " + fmt(cf,4) + " + " + fmt(ai,2) + " = <b>" + fmt(right,3) + "</b>. The conversion factor is a <em>clean</em> price per $1, which is exactly why the accrued interest has to be added back separately. " + (cf > 1 ? "CF above 1 means the bond's coupon beats the 6% notional." : "CF below 1 means the bond's coupon is under the 6% notional.")};
+}},
+{id:"ctd", topic:"fut", tier:"m", make:function(){
+  var fp = dR(9000, 9800, 25)/100, bonds = [];
+  for(var i = 0; i < 3; i++){
+    var cf = dR(9000, 15500, 1)/10000, cost = dR(150, 320, 1)/100;
+    bonds.push({cf:cf, px:fp*cf + cost, cost:cost});
+  }
+  var best = 0; for(var j = 1; j < 3; j++) if(bonds[j].cost < bonds[best].cost) best = j;
+  return {q:"Futures are at <b>" + fmt(fp,2) + "</b>. " + bonds.map(function(b, i){ return "Bond " + (i+1) + ": price " + fmt(b.px,2) + ", CF " + fmt(b.cf,4); }).join(". ") + ". Which is cheapest to deliver?",
+    o:["Bond 1","Bond 2","Bond 3","They cost the same after conversion"], a:best,
+    e:"Cost of delivery = price − futures × CF: " + bonds.map(function(b, i){ return "Bond " + (i+1) + " " + fmt(b.cost,3); }).join(", ") + ". <b>Bond " + (best+1) + "</b> costs the short least, and so carries the highest implied repo rate. Note the raw price is irrelevant — the priciest bond is often the cheapest to deliver."};
+}},
+{id:"hedge", topic:"fut", tier:"d", make:function(){
+  var P = dR(5, 40)*1e6, Dp = dR(20, 110, 5)/10, Df = dR(50, 120, 5)/10;
+  var Dt = dPick([0, 0, 2, 4]);
+  if(Math.abs(Dt - Dp) < 0.05) Dt = Dp > 5 ? 0 : Dp + 3;   /* a target you already hold is not a question */
+  var fq = dR(9000, 10500, 25)/100, Fc = fq/100*100000;
+  var right = (Dt - Dp)*P/(Fc*Df);
+  var o = dOpts(right, [-right, (Dt-Dp)*P/Fc, Dp*P/(Fc*Df)], function(v){ return fmt(v,1); });
+  return {q:"A <b>$" + fmt(P/1e6,0) + "M</b> portfolio has duration <b>" + fmt(Dp,1) + "</b>. You want <b>" + fmt(Dt,1) + "</b>. Futures are at " + fmt(fq,2) + " on $100,000 contracts, and the CTD's duration is <b>" + fmt(Df,1) + "</b>. How many contracts?",
+    o:o.o, a:o.a,
+    e:"N = (D<sub>target</sub> − D<sub>P</sub>) × P / (F<sub>C</sub> × D<sub>F</sub>) = (" + fmt(Dt,1) + " − " + fmt(Dp,1) + ") × " + fmt(P,0) + " / (" + fmt(Fc,2) + " × " + fmt(Df,1) + ") = <b>" + fmt(right,1) + "</b> — negative means <b>sell</b> " + fmt(Math.abs(Math.round(right)),0) + ". Selling futures removes dollar duration. " + (Dt === 0 ? "Target zero is a full hedge." : "") + " It only protects against <em>parallel</em> shifts, and swaps price risk for basis risk against the CTD."};
+}},
+{id:"taxable", topic:"intro", tier:"e", make:function(){
+  var m = dR(200, 500, 5)/100, t = dPick([0.25, 0.28, 0.32, 0.35, 0.40, 0.45]);
+  var right = m/(1-t);
+  var o = dOpts(right, [m*(1-t), m*t, m + t*100], pct2);
+  return {q:"A taxpayer in the <b>" + fmt(t*100,0) + "%</b> bracket holds a <b>" + fmt(m,2) + "%</b> tax-exempt municipal bond. The equivalent taxable yield is:",
+    o:o.o, a:o.a,
+    e:"Equivalent taxable yield = tax-exempt ÷ (1 − marginal rate) = " + fmt(m,2) + " / (1 − " + fmt(t,2) + ") = <b>" + fmt(right,2) + "%</b>. You <em>divide</em>, because you are asking what a taxed bond must pay <em>before</em> tax to leave the same amount behind. The same bond is worth more to whoever is taxed more."};
+}},
+{id:"hpr", topic:"apply", tier:"d", make:function(){
+  var c = dR(4, 12, 0.5), T = dPick([2, 3, 5]), y1 = dR(300, 700, 25)/100;
+  var y2 = y1 + dR(-100, 100, 25)/100, H = 1;
+  var P1 = bondPrice(c, T, y1, 100), P2 = bondPrice(c, T-H, y2, 100), coup = c;
+  var right = (P2 - P1 + coup)/P1*100;
+  var o = dOpts(right, [(P2-P1)/P1*100, coup/P1*100, (P2-P1+coup)/P2*100], pct3);
+  return {q:"You buy a <b>" + fmt(c,2) + "%</b> bond with <b>" + T + "</b> years left at a <b>" + fmt(y1,2) + "%</b> yield, and sell after <b>one year</b> when its yield is <b>" + fmt(y2,2) + "%</b>. Ignoring reinvestment, your holding period return is:",
+    o:o.o, a:o.a,
+    e:"HPR = (P<sub>sell</sub> − P<sub>buy</sub> + coupons) / P<sub>buy</sub> = (" + fmt(P2,3) + " − " + fmt(P1,3) + " + " + fmt(coup,2) + ") / " + fmt(P1,3) + " = <b>" + fmt(right,3) + "%</b>. Yields " + (y2 > y1 ? "<b>rose</b>, so the capital loss of " + fmt(P2-P1,3) + " eats into the coupons" : (y2 < y1 ? "<b>fell</b>, so a capital gain of " + fmt(P2-P1,3) + " sits on top of the coupons" : "were unchanged, so the whole return is carry")) + ". Note this is not the YTM you bought at — that only holds if you hold to maturity and reinvest at it."};
+}}
+];
+
+/* ---------------- drill runtime ---------------- */
+var drillCur = null;
+function drillPool(){
+  var topic = $("#drillTopic").value, tier = $("#drillTier").value;
+  return DRILL.filter(function(d){
+    return (topic === "all" || d.topic === topic) && (tier === "all" || d.tier === tier);
+  });
+}
+function drillCount(){
+  var n = drillPool().length;
+  $("#drillCount").textContent = n ? n + " template" + (n === 1 ? "" : "s") + " match" : "nothing matches — widen the filter";
+  $("#drillNew").disabled = !n;
+}
+function drillNew(){
+  var pool = drillPool();
+  if(!pool.length) return;
+  var def = pool[Math.floor(Math.random()*pool.length)], made;
+  try{ made = def.make(); }catch(e){ return; }
+  drillCur = {def:def, made:made, done:false};
+  var host = $("#drillBody");
+  host.innerHTML = "";
+  var item = el("div", "qitem");
+  var t = TOPICS.filter(function(x){ return x.id === def.topic; })[0];
+  item.innerHTML = '<div class="qq"><span class="n">NEW</span>' + made.q +
+    '<span class="qsrc">' + (t ? t.n + " · " + t.t : def.topic) + '</span>' +
+    '<span class="tier t-' + def.tier + '">' + TIER_LABEL[def.tier] + '</span></div>';
+  var opts = el("div", "opts");
+  made.o.forEach(function(text, j){
+    var o = el("button", "opt");
+    o.type = "button";
+    o.innerHTML = '<span class="k">' + KEYS[j] + '</span><span>' + text + '</span>';
+    o.addEventListener("click", function(){ drillAnswer(j, item, opts); });
+    opts.appendChild(o);
+  });
+  item.appendChild(opts);
+  host.appendChild(item);
+  $("#drillScore").textContent = (state.drill.right || 0) + " right of " + (state.drill.done || 0);
+}
+function drillAnswer(choice, item, opts){
+  if(!drillCur || drillCur.done) return;
+  drillCur.done = true;
+  var made = drillCur.made, right = choice === made.a, before = xpTotal();
+  state.drill = state.drill || {right:0, done:0};
+  state.drill.done++;
+  if(right) state.drill.right++;
+  $$(".opt", opts).forEach(function(b, j){
+    b.disabled = true;
+    if(j === made.a) b.classList.add("right");
+    else if(j === choice) b.classList.add("wrong");
+  });
+  var why = el("div", "why");
+  why.innerHTML = '<span>' + (right ? "" : "<strong>" + KEYS[made.a] + " is right.</strong> ") + made.e + '</span>';
+  item.appendChild(why);
+  $("#drillScore").textContent = state.drill.right + " right of " + state.drill.done;
+  if(right){
+    questBump("drill");
+    affectionAdd(2, "drill");
+    if(!awardXp(before, "drill")) burstOn($(".opt.right", opts), "+5");
+    if(state.drill.right >= 25) grantBadge("drill25");
+  } else {
+    affectionAdd(1, "drill");
+    save();
+  }
+  react(right ? (drillCur.def.tier === "d" ? "correctHard" : "correct") : "wrong", false,
+        {inline:why, vars:{pick:KEYS[choice], ans:KEYS[made.a], src:"a generated question", streak:state.streak,
+                           tier:TIER_LABEL[drillCur.def.tier].toLowerCase()}});
+}
+["#drillTopic","#drillTier"].forEach(function(s){ $(s).addEventListener("change", function(){ drillCount(); drillNew(); }); });
+$("#drillNew").addEventListener("click", drillNew);
+drillCount();
+drillNew();
+
+/* ---------------- reattempting the fixed banks ---------------- */
+function retryOne(key, i, item){
+  delete state.answers[key + ":" + i];
+  $$(".opt", item).forEach(function(o){ o.disabled = false; o.classList.remove("right","wrong","picked"); });
+  var why = $(".why", item);
+  if(why) why.remove();
+  updateScore(key);
+  refreshProgress();
+  save();
+}
+function retryBank(key, host, btn){
+  if(btn.dataset.armed !== "1"){
+    btn.dataset.armed = "1";
+    btn.textContent = "Clear " + QUIZ[key].length + " answers?";
+    setTimeout(function(){ if(btn.dataset.armed === "1"){ btn.dataset.armed = "0"; btn.textContent = "Reattempt"; } }, 4000);
+    return;
+  }
+  btn.dataset.armed = "0";
+  btn.textContent = "Reattempt";
+  $$(".qitem", host).forEach(function(item, i){ retryOne(key, i, item); });
+  toast("Coupon reset · answer them fresh");
+  react("retry", false, {vars:{n:QUIZ[key].length}});
+}
 </script>
 <script>
 /* ============================================================
@@ -4273,6 +4625,10 @@ Object.assign(LINES, {
   badge:[
     ["happy","<b>{badge}</b> — {why}. Into the trophy case it goes, next to all the others I've kept for you."],
     ["smug","A trophy: <b>{badge}</b>. I'd say I'm not impressed, but I've already polished it~"]
+  ],
+  retry:[
+    ["smug","Wiping <b>{n}</b> answers to do them again? Good. Recognising a question you have seen is not the same as knowing it~"],
+    ["happy","Cleared. The XP went with them, so this is honest work — which is the only kind that helps ♪"]
   ],
   study30:[
     ["sad","Half an hour straight. Drink something, stretch, then come back to me. I'll hold your place."],

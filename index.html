@@ -287,6 +287,63 @@ label.f input[type=range]:focus{box-shadow:none}
 .why{margin-top:11px;font-size:13.5px;color:var(--mute);border-left:2px solid var(--iris-line);padding-left:12px;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .why .btn{flex:0 0 auto}
 
+/* ============================================================
+   the desk calculator — expression, TVM, cash flows
+   ============================================================ */
+.calc{position:fixed;left:18px;bottom:18px;z-index:78;width:min(372px,calc(100vw - 28px));
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--r3);
+  box-shadow:0 22px 60px var(--shadow-deep);display:flex;flex-direction:column;overflow:hidden;
+  animation:yzpop .26s cubic-bezier(.2,1.3,.5,1)}
+.calc-head{display:flex;align-items:center;gap:9px;padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule);
+  cursor:grab;touch-action:none;flex:0 0 auto}
+.calc-head:active{cursor:grabbing}
+.calc-head h4{font-size:14.5px;font-family:var(--serif)}
+.calc-head .grip{font-family:var(--mono);color:var(--faint);font-size:13px;letter-spacing:-1px}
+.calc-head .x{margin-left:auto;background:transparent;border:0;color:var(--ink);cursor:pointer;font-size:17px;line-height:1;
+  padding:3px 8px;border-radius:8px}
+.calc-head .x:hover{background:var(--card)}
+.calc-tabs{display:flex;gap:5px;padding:9px 12px 0}
+.calc-tabs button{flex:1 1 0;font-family:var(--mono);font-size:11px;padding:5px 6px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--paper);color:var(--mute);cursor:pointer;transition:all .15s}
+.calc-tabs button:hover{border-color:var(--iris);color:var(--iris)}
+.calc-tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.calc-body{padding:12px}
+.calc-out{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:23px;text-align:right;
+  padding:10px 12px;border-radius:var(--r1);background:var(--band);border:1px solid var(--rule);
+  overflow-x:auto;white-space:nowrap;letter-spacing:-.02em;min-height:46px;display:flex;align-items:center;justify-content:flex-end}
+.calc-out.err{color:var(--coral);font-size:13px;justify-content:flex-start;white-space:normal;text-align:left}
+.calc-in{width:100%;margin-top:9px;font-family:var(--mono);font-size:15px;padding:9px 11px;border-radius:var(--r1);
+  background:var(--paper);color:var(--ink);border:1px solid var(--rule);transition:border-color .16s,box-shadow .16s}
+.calc-in:focus{outline:none;border-color:var(--iris);box-shadow:0 0 0 3px var(--glow)}
+.calc-hint{font-size:11px;color:var(--faint);margin-top:7px;line-height:1.5}
+.calc-hint code{font-family:var(--mono);background:var(--band);padding:1px 4px;border-radius:4px;font-size:10.5px}
+.calc-tape{margin-top:10px;max-height:118px;overflow-y:auto;font-family:var(--mono);font-size:11.5px;
+  border-top:1px dashed var(--rule);padding-top:8px}
+.calc-tape div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;color:var(--faint);cursor:pointer;border-radius:4px}
+.calc-tape div:hover{background:var(--iris-soft);color:var(--iris)}
+.calc-tape b{color:var(--ink);font-weight:600}
+
+.tvm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.tvm-f{display:block}
+.tvm-f span{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:700;font-family:var(--mono)}
+.tvm-f input{width:100%;margin-top:3px;font-family:var(--mono);font-size:14px;padding:6px 9px;background:var(--paper);
+  color:var(--ink);border:1px solid var(--rule);border-radius:var(--r1);font-variant-numeric:tabular-nums}
+.tvm-f input:focus{outline:none;border-color:var(--iris);box-shadow:0 0 0 3px var(--glow)}
+.tvm-f.solved input{background:var(--jade-soft);border-color:var(--jade);font-weight:600}
+.tvm-solve{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.tvm-solve button{flex:1 1 0;min-width:52px;font-family:var(--mono);font-size:11px;padding:6px 4px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--paper);color:var(--mute);cursor:pointer;transition:all .15s}
+.tvm-solve button:hover{border-color:var(--iris);color:var(--iris);background:var(--iris-soft)}
+.cf-rows{max-height:150px;overflow-y:auto;margin-top:8px}
+.cf-row{display:grid;grid-template-columns:34px minmax(0,1fr) 54px 26px;gap:6px;align-items:center;margin-bottom:5px}
+.cf-row label{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.cf-row input{font-family:var(--mono);font-size:13px;padding:5px 8px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--rule);border-radius:var(--r1);width:100%;font-variant-numeric:tabular-nums}
+.cf-row input:focus{outline:none;border-color:var(--iris);box-shadow:0 0 0 2px var(--glow)}
+.cf-row .del{background:transparent;border:0;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:2px;border-radius:5px}
+.cf-row .del:hover{color:var(--coral);background:var(--coral-soft)}
+@media (max-width:560px){ .calc{left:8px;right:8px;bottom:8px;width:auto} }
+
 /* the takeaway line under each worked answer */
 .takeaway{margin-top:12px;padding:9px 12px 9px 13px;border-radius:var(--r1);position:relative;
   background:color-mix(in srgb,var(--iris-soft) 70%,transparent);border:1px solid var(--iris-line);
@@ -547,6 +604,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
       <span class="chip streakchip" id="chipStreak" title="Correct answers in a row">Streak <b id="hudStreak">0</b></span>
       <span class="chip" id="chipDays" title="Consecutive days studied">Days <b id="hudDays">1</b></span>
       <span class="chip clipchip" id="chipProgress"><b>0</b>/7 clipped</span>
+      <button class="tbtn" id="calcBtn" type="button" aria-expanded="false" aria-controls="calcPanel" title="Calculator — Alt+C">⌨ Calc</button>
       <button class="tbtn" id="themeBtn" type="button">◐ Theme</button>
     </div>
   </div>
@@ -2058,10 +2116,74 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-18a</span>
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-18b</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
+
+<!-- ==================== calculator ==================== -->
+<section class="calc" id="calcPanel" role="dialog" aria-label="Desk calculator" data-tab="expr" hidden>
+  <div class="calc-head" id="calcHead">
+    <span class="grip" aria-hidden="true">≡</span>
+    <h4>Desk calculator</h4>
+    <button class="x" id="calcClose" type="button" aria-label="Close the calculator">×</button>
+  </div>
+  <div class="calc-tabs" role="tablist" aria-label="Calculator mode">
+    <button type="button" role="tab" data-calctab="expr" aria-selected="true" aria-controls="calcPane-expr">Expression</button>
+    <button type="button" role="tab" data-calctab="tvm" aria-selected="false" aria-controls="calcPane-tvm">TVM</button>
+    <button type="button" role="tab" data-calctab="cf" aria-selected="false" aria-controls="calcPane-cf">Cash flows</button>
+  </div>
+
+  <div class="calc-body" id="calcPane-expr" role="tabpanel" aria-label="Expression">
+    <div class="calc-out" id="calcOut" aria-live="polite">0</div>
+    <input class="calc-in" id="calcExpr" autocomplete="off" spellcheck="false" aria-label="Expression to evaluate"
+           placeholder="1000/(1+0.047/2)^4">
+    <div style="display:flex;gap:7px;margin-top:9px">
+      <button class="btn sm" type="button" id="calcGo">Evaluate</button>
+      <span class="calc-hint" style="margin:0;align-self:center">or press Enter</span>
+    </div>
+    <p class="calc-hint"><code>+ − * / ^ ( )</code> · <code>sqrt ln log exp abs</code> · <code>sin cos tan</code> ·
+      <code>min max round</code> · <code>pi e</code> · <code>ans</code> for the last result · a trailing
+      <code>%</code> divides by 100, so <code>4.5%</code> is 0.045.</p>
+    <div class="calc-tape" id="calcTape"></div>
+  </div>
+
+  <div class="calc-body" id="calcPane-tvm" role="tabpanel" aria-label="Time value of money" hidden>
+    <div class="calc-out" id="tvmOut" aria-live="polite" style="font-size:15px">Fill four, then solve for the fifth</div>
+    <div class="tvm-grid" style="margin-top:10px">
+      <label class="tvm-f"><span>N &middot; periods</span><input id="tvm-n" type="number" step="any" value="36"></label>
+      <label class="tvm-f"><span>I/Y &middot; % a year</span><input id="tvm-iy" type="number" step="any" value="0"></label>
+      <label class="tvm-f"><span>PV</span><input id="tvm-pv" type="number" step="any" value="-1169"></label>
+      <label class="tvm-f"><span>PMT</span><input id="tvm-pmt" type="number" step="any" value="55"></label>
+      <label class="tvm-f"><span>FV</span><input id="tvm-fv" type="number" step="any" value="1000"></label>
+      <label class="tvm-f"><span>P/Y &middot; per year</span><input id="tvm-py" type="number" step="1" min="1" value="2"></label>
+    </div>
+    <label style="display:flex;align-items:center;gap:7px;margin-top:9px;font-size:12px;color:var(--mute)">
+      <input type="checkbox" id="tvm-bgn" style="accent-color:var(--iris)"> Payments at the <b>beginning</b> of each period (BGN)
+    </label>
+    <div class="tvm-solve">
+      <button type="button" data-tvm="n">Solve N</button>
+      <button type="button" data-tvm="iy">Solve I/Y</button>
+      <button type="button" data-tvm="pv">Solve PV</button>
+      <button type="button" data-tvm="pmt">Solve PMT</button>
+      <button type="button" data-tvm="fv">Solve FV</button>
+    </div>
+    <p class="calc-hint">Same keys as the calculator the exam requires. Money you <b>pay</b> is negative and money you
+      <b>receive</b> is positive — a bond you buy at 116.90 with 55 coupons is PV −116.90, PMT 55, FV 100.
+      I/Y comes back on a bond-equivalent basis when P/Y is 2. Loaded with Assignment 2, ch. 3 Q7(a): solve I/Y for 9.077%.</p>
+  </div>
+
+  <div class="calc-body" id="calcPane-cf" role="tabpanel" aria-label="Cash flows" hidden>
+    <div class="calc-out" id="cfOut" aria-live="polite" style="font-size:15px">—</div>
+    <div class="cf-rows" id="cfRows"></div>
+    <div style="display:flex;gap:7px;align-items:center;margin-top:8px;flex-wrap:wrap">
+      <button class="btn sm ghost" type="button" id="cfAdd">Add a flow</button>
+      <label class="tvm-f" style="flex:1 1 120px"><span>NPV at % </span><input id="cfRate" type="number" step="any" value="10"></label>
+    </div>
+    <p class="calc-hint">CF0 is today and is normally negative. The middle box on each later row is how many times that
+      amount repeats. Loaded with Assignment 2, ch. 3 Q1 — the IRR should read 11.987%.</p>
+  </div>
+</section>
 
 <!-- ==================== yuzuki ==================== -->
 <div class="toasts" id="toasts" aria-live="polite"></div>
@@ -3926,6 +4048,315 @@ $("#mockSubmit").addEventListener("click", function(){
 $("#mockBest").textContent = mockBestText();
 
 /* ============================================================
+   desk calculator — a real parser rather than eval(), a TVM
+   solver with the exam calculator's own key names, and a cash
+   flow pad that does NPV and IRR.
+   ============================================================ */
+
+/* ---------- expression parser (recursive descent, no eval) ---------- */
+var CALC_FN = {
+  sqrt:Math.sqrt, ln:Math.log, log:function(x){ return Math.log(x)/Math.LN10; }, log10:function(x){ return Math.log(x)/Math.LN10; },
+  exp:Math.exp, abs:Math.abs, sin:Math.sin, cos:Math.cos, tan:Math.tan,
+  asin:Math.asin, acos:Math.acos, atan:Math.atan, round:Math.round, floor:Math.floor, ceil:Math.ceil,
+  min:Math.min, max:Math.max, pow:Math.pow
+};
+function calcEval(src, ans){
+  var s = String(src).toLowerCase().replace(/[\s_]/g, ""), i = 0;
+  function err(m){ throw new Error(m); }
+  function ch(){ return s.charAt(i); }
+  function eat(c){ if(ch() === c){ i++; return true; } return false; }
+  function expr(){
+    var v = term();
+    for(;;){
+      if(eat("+")) v += term();
+      else if(eat("-")) v -= term();
+      else return v;
+    }
+  }
+  function term(){
+    var v = unary();
+    for(;;){
+      if(eat("*")) v *= unary();
+      else if(eat("/")){ var d = unary(); if(d === 0) err("division by zero"); v /= d; }
+      else return v;
+    }
+  }
+  function unary(){
+    if(eat("-")) return -unary();
+    if(eat("+")) return unary();
+    return power();
+  }
+  function power(){
+    var base = postfix();
+    if(eat("^")) return Math.pow(base, unary());   /* right associative */
+    return base;
+  }
+  function postfix(){
+    var v = atom();
+    while(eat("%")) v /= 100;                      /* 4.5% reads as 0.045 */
+    return v;
+  }
+  function atom(){
+    if(eat("(")){ var v = expr(); if(!eat(")")) err("missing )"); return v; }
+    var start = i;
+    if(/[0-9.]/.test(ch())){
+      while(/[0-9.]/.test(ch())) i++;
+      if(ch() === "e" && /[0-9+-]/.test(s.charAt(i+1))){ i++; if(ch()==="+"||ch()==="-") i++; while(/[0-9]/.test(ch())) i++; }
+      var n = parseFloat(s.slice(start, i));
+      if(!isFinite(n)) err("cannot read “" + s.slice(start, i) + "”");
+      return n;
+    }
+    if(/[a-z]/.test(ch())){
+      while(/[a-z0-9]/.test(ch())) i++;
+      var name = s.slice(start, i);
+      if(name === "pi") return Math.PI;
+      if(name === "e") return Math.E;
+      if(name === "ans") return ans || 0;
+      var f = CALC_FN[name];
+      if(!f) err("unknown name “" + name + "”");
+      if(!eat("(")) err(name + " needs brackets");
+      var args = [expr()];
+      while(eat(",")) args.push(expr());
+      if(!eat(")")) err("missing ) after " + name);
+      return f.apply(null, args);
+    }
+    if(ch() === ",") err("a comma only separates function arguments \u2014 write 1065.95, not 1,065.95");
+    err(i >= s.length ? "unfinished expression" : "unexpected “" + ch() + "”");
+  }
+  if(!s) return null;
+  var out = expr();
+  if(s.charAt(i) === ",") throw new Error("a comma only separates function arguments \u2014 write 1065.95, not 1,065.95");
+  if(i < s.length) err("unexpected “" + ch() + "”");
+  if(!isFinite(out)) err("not a finite number");
+  return out;
+}
+
+/* ---------- time value of money ---------- */
+/* PV + PMT.a(n,i).(1+i.bgn) + FV.(1+i)^-n = 0 , the BA II Plus sign convention */
+function tvmResidual(v, i){
+  var n = v.n, bgn = v.bgn ? 1 : 0;
+  var ann = Math.abs(i) < 1e-12 ? n : (1 - Math.pow(1+i, -n))/i;
+  return v.pv + v.pmt*ann*(1 + i*bgn) + v.fv*Math.pow(1+i, -n);
+}
+function tvmSolve(which, v){
+  var i = v.iy/(100*v.py), bgn = v.bgn ? 1 : 0;
+  var ann = function(n, r){ return Math.abs(r) < 1e-12 ? n : (1 - Math.pow(1+r, -n))/r; };
+  if(which === "pv") return -(v.pmt*ann(v.n, i)*(1 + i*bgn) + v.fv*Math.pow(1+i, -v.n));
+  if(which === "fv") return -(v.pv + v.pmt*ann(v.n, i)*(1 + i*bgn))*Math.pow(1+i, v.n);
+  if(which === "pmt"){
+    var a = ann(v.n, i)*(1 + i*bgn);
+    if(Math.abs(a) < 1e-12) return NaN;
+    return -(v.pv + v.fv*Math.pow(1+i, -v.n))/a;
+  }
+  if(which === "n"){
+    var f = function(n){ var c = Object.assign({}, v, {n:n}); return tvmResidual(c, i); };
+    return bisect(f, 1e-6, 1200);
+  }
+  if(which === "iy"){
+    var g = function(r){ return tvmResidual(v, r); };
+    var r = bisect(g, -0.9999, 10);
+    return isFinite(r) ? r*100*v.py : NaN;
+  }
+  return NaN;
+}
+function bisect(f, lo, hi){
+  var flo = f(lo), fhi = f(hi);
+  if(!isFinite(flo) || !isFinite(fhi)) return NaN;
+  if(flo === 0) return lo;
+  if(fhi === 0) return hi;
+  if(flo*fhi > 0){                                  /* walk outward for a sign change */
+    var found = false;
+    for(var k = 1; k <= 240; k++){
+      var t = lo + (hi-lo)*k/240, ft = f(t);
+      if(isFinite(ft) && flo*ft <= 0){ hi = t; fhi = ft; found = true; break; }
+    }
+    if(!found) return NaN;
+  }
+  for(var j = 0; j < 300; j++){
+    var mid = (lo+hi)/2, fm = f(mid);
+    if(!isFinite(fm)) return NaN;
+    if(flo*fm <= 0){ hi = mid; } else { lo = mid; flo = fm; }
+  }
+  return (lo+hi)/2;
+}
+
+/* ---------- cash flows ---------- */
+function cfNPV(rows, rate){
+  var t = 0, npv = rows.length ? rows[0].amt : 0;
+  for(var k = 1; k < rows.length; k++)
+    for(var c = 0; c < rows[k].n; c++){ t++; npv += rows[k].amt/Math.pow(1+rate, t); }
+  return npv;
+}
+function cfIRR(rows){
+  var f = function(r){ return cfNPV(rows, r); };
+  return bisect(f, -0.9999, 10);
+}
+
+/* ---------- panel, tabs, keyboard, drag ---------- */
+var calcPanel = $("#calcPanel"), calcAns = 0, calcTape = [];
+function calcOpen(show){
+  calcPanel.hidden = !show;
+  $("#calcBtn").setAttribute("aria-expanded", String(!!show));
+  if(show){
+    calcTab(calcPanel.dataset.tab || "expr");
+    var f = $("#calcExpr");
+    if(f && !f.closest("[hidden]")) f.focus();
+  } else {
+    $("#calcBtn").focus();
+  }
+}
+function calcTab(name){
+  calcPanel.dataset.tab = name;
+  ["expr","tvm","cf"].forEach(function(t){
+    $("#calcPane-" + t).hidden = t !== name;
+    var b = $('[data-calctab="' + t + '"]');
+    b.setAttribute("aria-selected", String(t === name));
+  });
+  try{ localStorage.setItem("couponStrip.calcTab", name); }catch(e){}
+  var first = $("#calcPane-" + name).querySelector("input");
+  if(first) first.focus();
+}
+$$("[data-calctab]").forEach(function(b){ b.addEventListener("click", function(){ calcTab(b.dataset.calctab); }); });
+$("#calcBtn").addEventListener("click", function(){ calcOpen(calcPanel.hidden); });
+$("#calcClose").addEventListener("click", function(){ calcOpen(false); });
+
+/* Alt+C anywhere, Esc to close — the whole panel is reachable without a mouse */
+document.addEventListener("keydown", function(ev){
+  if((ev.altKey || ev.metaKey) && !ev.ctrlKey && (ev.key === "c" || ev.key === "C")){
+    var t = ev.target;
+    if(t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA") && (t.selectionStart !== t.selectionEnd)) return; /* let a real copy through */
+    ev.preventDefault(); calcOpen(calcPanel.hidden); return;
+  }
+  if(ev.key === "Escape" && !calcPanel.hidden){ ev.preventDefault(); calcOpen(false); }
+});
+
+/* --- expression tab --- */
+function calcRun(){
+  var src = $("#calcExpr").value, out = $("#calcOut");
+  if(!src.trim()){ out.className = "calc-out"; out.textContent = "0"; return; }
+  try{
+    var v = calcEval(src, calcAns);
+    if(v == null) return;
+    calcAns = v;
+    out.className = "calc-out";
+    out.textContent = (Math.abs(v) >= 1e12 || (v !== 0 && Math.abs(v) < 1e-7))
+      ? v.toExponential(6) : Number(v.toFixed(10)).toLocaleString("en-US", {maximumFractionDigits:10});
+    calcTape.unshift({q:src.trim(), a:out.textContent});
+    calcTape = calcTape.slice(0, 24);
+    calcPaintTape();
+    $("#calcExpr").select();
+  }catch(e){
+    out.className = "calc-out err";
+    out.textContent = e.message;
+  }
+}
+function calcPaintTape(){
+  var host = $("#calcTape");
+  host.innerHTML = "";
+  calcTape.forEach(function(r){
+    var d = el("div");
+    d.innerHTML = '<span>' + esc(r.q) + '</span><b>' + esc(r.a) + '</b>';
+    d.title = "Put this back in the box";
+    d.addEventListener("click", function(){ $("#calcExpr").value = r.q; $("#calcExpr").focus(); });
+    host.appendChild(d);
+  });
+}
+$("#calcExpr").addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); calcRun(); } });
+$("#calcGo").addEventListener("click", calcRun);
+
+/* --- TVM tab --- */
+var TVM_KEYS = ["n","iy","pv","pmt","fv"];
+function tvmRead(){
+  var v = {};
+  TVM_KEYS.forEach(function(k){ v[k] = parseFloat($("#tvm-" + k).value); if(!isFinite(v[k])) v[k] = 0; });
+  v.py = Math.max(1, parseFloat($("#tvm-py").value) || 1);
+  v.bgn = $("#tvm-bgn").checked;
+  return v;
+}
+function tvmGo(which){
+  var v = tvmRead(), out = $("#tvmOut");
+  $$(".tvm-f").forEach(function(f){ f.classList.remove("solved"); });
+  var r = tvmSolve(which, v);
+  if(!isFinite(r)){
+    out.className = "calc-out err";
+    out.textContent = "No solution for those inputs. Check the signs — money in and money out must have opposite signs.";
+    return;
+  }
+  $("#tvm-" + which).value = Number(r.toFixed(6));
+  $("#tvm-" + which).closest(".tvm-f").classList.add("solved");
+  out.className = "calc-out";
+  out.textContent = {n:"N", iy:"I/Y", pv:"PV", pmt:"PMT", fv:"FV"}[which] + " = " +
+    Number(r.toFixed(6)).toLocaleString("en-US", {maximumFractionDigits:6});
+  try{ localStorage.setItem("couponStrip.tvm", JSON.stringify(tvmRead())); }catch(e){}
+}
+$$("[data-tvm]").forEach(function(b){ b.addEventListener("click", function(){ tvmGo(b.dataset.tvm); }); });
+(function(){
+  try{
+    var saved = JSON.parse(localStorage.getItem("couponStrip.tvm") || "null");
+    if(saved) TVM_KEYS.concat(["py"]).forEach(function(k){ if(isFinite(saved[k])) $("#tvm-" + k).value = saved[k]; });
+  }catch(e){}
+})();
+
+/* --- cash flow tab --- */
+var cfRows = [{amt:-7704, n:1}, {amt:2000, n:2}, {amt:2500, n:1}, {amt:4000, n:1}];
+function cfPaint(){
+  var host = $("#cfRows");
+  host.innerHTML = "";
+  cfRows.forEach(function(r, k){
+    var row = el("div", "cf-row");
+    row.innerHTML = '<label>' + (k ? "CF" + k : "CF0") + '</label>' +
+      '<input type="number" step="any" value="' + r.amt + '" aria-label="Cash flow ' + k + ' amount">' +
+      (k ? '<input type="number" step="1" min="1" value="' + r.n + '" aria-label="How many times cash flow ' + k + ' repeats">' : '<span></span>') +
+      (k ? '<button class="del" type="button" aria-label="Remove cash flow ' + k + '">×</button>' : '<span></span>');
+    var ins = row.querySelectorAll("input");
+    ins[0].addEventListener("input", function(){ r.amt = parseFloat(ins[0].value) || 0; cfRun(); });
+    if(k){
+      ins[1].addEventListener("input", function(){ r.n = Math.max(1, parseInt(ins[1].value, 10) || 1); cfRun(); });
+      row.querySelector(".del").addEventListener("click", function(){ cfRows.splice(k, 1); cfPaint(); cfRun(); });
+    }
+    host.appendChild(row);
+  });
+}
+function cfRun(){
+  var out = $("#cfOut"), rate = parseFloat($("#cfRate").value);
+  var irr = cfIRR(cfRows);
+  var npv = isFinite(rate) ? cfNPV(cfRows, rate/100) : NaN;
+  if(!isFinite(irr) && !isFinite(npv)){
+    out.className = "calc-out err";
+    out.textContent = "No sign change in the cash flows, so there is no IRR to find.";
+    return;
+  }
+  out.className = "calc-out";
+  out.style.fontSize = "15px";
+  out.textContent = (isFinite(irr) ? "IRR " + (irr*100).toFixed(4) + "%" : "IRR —") +
+                    (isFinite(npv) ? "   NPV " + npv.toLocaleString("en-US", {maximumFractionDigits:2}) : "");
+}
+$("#cfAdd").addEventListener("click", function(){ cfRows.push({amt:0, n:1}); cfPaint(); cfRun(); });
+$("#cfRate").addEventListener("input", cfRun);
+cfPaint(); cfRun();
+
+/* --- drag, kept inside the viewport --- */
+(function(){
+  var head = $("#calcHead"), dragging = false, ox = 0, oy = 0;
+  head.addEventListener("pointerdown", function(ev){
+    if(ev.target.closest("button")) return;
+    var r = calcPanel.getBoundingClientRect();
+    dragging = true; ox = ev.clientX - r.left; oy = ev.clientY - r.top;
+    calcPanel.style.bottom = "auto"; calcPanel.style.top = r.top + "px"; calcPanel.style.left = r.left + "px";
+    head.setPointerCapture(ev.pointerId);
+  });
+  head.addEventListener("pointermove", function(ev){
+    if(!dragging) return;
+    var w = calcPanel.offsetWidth, h = calcPanel.offsetHeight;
+    var x = Math.min(Math.max(0, ev.clientX - ox), window.innerWidth - w);
+    var y = Math.min(Math.max(0, ev.clientY - oy), window.innerHeight - 40);
+    calcPanel.style.left = x + "px"; calcPanel.style.top = y + "px";
+  });
+  head.addEventListener("pointerup", function(ev){ dragging = false; try{ head.releasePointerCapture(ev.pointerId); }catch(e){} });
+})();
+try{ var tb = localStorage.getItem("couponStrip.calcTab"); if(tb) calcPanel.dataset.tab = tb; }catch(e){}
+
+/* ============================================================
    endless drill — fresh numbers every time, no model needed.
    Each template computes its own answer from the same functions
    the rest of the page uses, and builds distractors out of the
@@ -4401,6 +4832,7 @@ document.addEventListener("keydown", function(ev){
     konami = []; toggleCompanion(); return;
   }
   if(!ev.key || ev.key.length !== 1) return;
+  if(ev.ctrlKey || ev.metaKey || ev.altKey) return;   /* chords are shortcuts, not typing */
   typedBuf = (typedBuf + ev.key.toLowerCase()).slice(-20);
   if(typedBuf.indexOf(SECRET) >= 0){ typedBuf = ""; toggleCompanion(); }
 });

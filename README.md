@@ -18,6 +18,14 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 
 The page runs on a **Nocturne Bazaar** palette — warm parchment and deep plum ink, with iris, jade, saffron, coral and sakura doing the semantic work. Light and dark are both first-class; the toggle sits in the masthead and is remembered.
 
+## The desk calculator
+
+Launched from the masthead or with **Alt+C**, closed with **Escape**, draggable by its title bar, and operable end to end from the keyboard. Three modes:
+
+- **Expression** — a real recursive-descent parser rather than `eval`, so it works under a strict CSP and rejects malformed input with a readable reason instead of a silent `NaN`. Arithmetic, `^`, brackets, `sqrt ln log exp abs`, trig, `min max round`, `pi`, `e`, `ans` for the previous result, and a trailing `%` that divides by 100. Keeps a clickable tape of recent lines.
+- **TVM** — N, I/Y, PV, PMT, FV, P/Y and a BGN switch, solving for whichever you leave out, on the same sign convention and key names as the financial calculator the exam requires. Closed form where one exists, bracketed bisection for N and I/Y.
+- **Cash flows** — CF0 onward with repeat counts, giving NPV at a rate you choose and the IRR.
+
 ## The game layer
 
 - **XP and levels.** 15 / 20 / 30 XP per correct easy / medium / difficult answer, 10 per tool you try, 50 per coupon clipped, 5 per Arbitrage Hunter win. Nine levels, each with a rank from Runner up to Rate Sovereign. XP is derived from saved progress, so it can never double-count.

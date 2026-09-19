@@ -2109,6 +2109,150 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
     </section>
   </article>
 
+
+  <!-- ==================== formula sheet ==================== -->
+  <article class="panel" id="p-sheet" hidden>
+    <div class="panel-head">
+      <span class="eyebrow">Reference &middot; every formula on one page</span>
+      <h2>The sheet</h2>
+      <p class="lede">Everything the course actually uses, grouped the way you would lay out the one A4 side you are allowed. Each line says what the symbols mean and where the marks get lost &mdash; conventions cost more marks than missing formulas do.</p>
+    </div>
+
+    <div class="note" style="margin-bottom:22px"><span class="eyebrow">The convention that breaks most answers</span>
+      Unless a question says otherwise, everything here is <strong>semiannual</strong>: halve the coupon, halve the yield, double the years.
+      A rate quoted <span class="num">y</span> means <span class="num">y/2</span> per period over <span class="num">2T</span> periods.
+      Durations come out of the summation in <strong>half-years</strong> &mdash; divide by 2 for years, and convexity by 4, because convexity carries time squared.
+    </div>
+
+    <section class="block">
+      <h3>Quoting and price</h3>
+      <div class="eq">Bank discount yield (bills): &nbsp; B = F &times; (1 &minus; <span class="fr"><span>t</span><span>360</span></span> &times; y<sub>d</sub>)
+        <span class="lbl">F face, t days to maturity. A <strong>360</strong>-day year, and the discount taken off <strong>face</strong> rather than the price paid &mdash; which is why it always understates the true yield.</span></div>
+      <div class="eq" style="margin-top:11px">CD-equivalent = <span class="fr"><span>360 y<sub>d</sub></span><span>360 &minus; t y<sub>d</sub></span></span>
+        &nbsp;&nbsp;&nbsp; Bond-equivalent = <span class="fr"><span>F &minus; P</span><span>P</span></span> &times; <span class="fr"><span>365</span><span>t</span></span>
+        <span class="lbl">Both restate the bill on the price actually paid. Discount yield &lt; CD-equivalent &lt; bond-equivalent, always.</span></div>
+      <div class="eq" style="margin-top:11px">32nds: &nbsp; 103-14 = 103 + <span class="fr"><span>14</span><span>32</span></span> = 103.4375 &nbsp;per 100 face
+        <span class="lbl">A third digit counts <strong>eighths of a 32nd</strong>: 100-052 is 100 + 5.25/32. A trailing <strong>+</strong> adds half a 32nd (a 64th): 96-14+ is 96.453125. One 32nd on a $100,000 contract is $31.25.</span></div>
+      <div class="eq" style="margin-top:11px">P = &sum;<sub>t</sub> <span class="fr"><span>C<sub>t</sub></span><span>(1 + y/2)<sup>t</sup></span></span> &nbsp;&nbsp;(flat yield) &nbsp;&nbsp;&nbsp; P = &sum;<sub>t</sub> C<sub>t</sub> &middot; d(t) &nbsp;&nbsp;(off the curve)
+        <span class="lbl">The second form gives every cash flow <em>its own</em> rate and assumes nothing. The first compresses the curve into one number for quoting.</span></div>
+      <div class="eq" style="margin-top:11px">Invoice (dirty) = quote (clean) + AI &nbsp;&nbsp;&nbsp; AI = <span class="fr"><span>X</span><span>Y</span></span> &times; <span class="fr"><span>annual coupon</span><span>2</span></span>
+        <span class="lbl">X counts days from the last coupon up to but <strong>excluding settlement</strong> &mdash; not the trade date. Y is days in the period. Use the <em>semiannual</em> coupon: the commonest slip is multiplying X/Y by the annual one.</span></div>
+      <div class="eq" style="margin-top:11px">Day counts: &nbsp; actual/actual (Treasuries) &nbsp;&middot;&nbsp; actual/360 (money market) &nbsp;&middot;&nbsp; 30/360 (corporates, munis)
+        <span class="lbl">30/360: days = 360(Y<sub>2</sub>&minus;Y<sub>1</sub>) + 30(M<sub>2</sub>&minus;M<sub>1</sub>) + (D<sub>2</sub>&minus;D<sub>1</sub>). June 1 to August 15 is 75 actual but 74 on 30/360.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>Yield measures</h3>
+      <div class="eq">Current yield = <span class="fr"><span>annual coupon</span><span>price</span></span> &nbsp;&nbsp;&nbsp; P = &sum;<sub>t=1</sub><sup>2T</sup> <span class="fr"><span>C</span><span>(1 + y/2)<sup>t</sup></span></span> + <span class="fr"><span>M</span><span>(1 + y/2)<sup>2T</sup></span></span> &nbsp;&rarr;&nbsp; YTM = 2y
+        <span class="lbl">YTM is the single rate reproducing the price &mdash; a way of <em>quoting</em> a price, not a forecast of return. Calculator: N, PV (negative), PMT, FV &rarr; I/Y, then double.</span></div>
+      <div class="eq" style="margin-top:11px">At par: coupon = current yield = YTM &nbsp;&middot;&nbsp; Discount: coupon &lt; CY &lt; YTM &nbsp;&middot;&nbsp; Premium: coupon &gt; CY &gt; YTM</div>
+      <div class="eq" style="margin-top:11px">Effective annual yield = (1 + y/2)<sup>2</sup> &minus; 1 &nbsp;&nbsp;&nbsp; Bond-equivalent = 2 &times; (half-year rate)
+        <span class="lbl">Doubling always <em>understates</em> the effective annual yield. 4.3% a half-year is 8.60% bond-equivalent but 8.785% effective.</span></div>
+      <div class="eq" style="margin-top:11px">Yield to worst = min(YTM, every yield to call, every yield to put)
+        <span class="lbl">Recompute with that date's redemption price in place of par. Quote a callable or putable bond on this, not on its YTM.</span></div>
+      <div class="eq" style="margin-top:11px">Equivalent taxable yield = <span class="fr"><span>tax-exempt yield</span><span>1 &minus; marginal tax rate</span></span>
+        <span class="lbl"><strong>Divide</strong> &mdash; you are asking what a taxed bond must pay <em>before</em> tax to leave the same amount. The same muni is worth more to whoever is taxed more.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>Return</h3>
+      <div class="eq">HPR = <span class="fr"><span>P<sub>sell</sub> &minus; P<sub>buy</sub> + coupons + I</span><span>P<sub>buy</sub></span></span>
+        <span class="lbl">I is interest on reinvesting each coupon from receipt to the horizon. A coupon arriving <em>at</em> the horizon earns nothing.</span></div>
+      <div class="eq" style="margin-top:11px">Interest on interest = C &times; <span class="fr"><span>(1 + r)<sup>n</sup> &minus; 1</span><span>r</span></span> &minus; nC
+        <span class="lbl">C the periodic coupon, r the periodic reinvestment rate, n periods. For a long high-coupon bond this can be half or more of the total dollar return &mdash; which is exactly why YTM is only a <em>promised</em> yield.</span></div>
+      <div class="eq" style="margin-top:11px">Total return = (<span class="fr"><span>total future dollars</span><span>price paid</span></span>)<sup>1/n</sup> &minus; 1 &nbsp;&rarr;&nbsp; &times; 2 for the annual figure
+        <span class="lbl">Horizon analysis: state a horizon, a reinvestment rate and the yield you will sell at, then compute. YTM equals your return only if you hold to maturity <em>and</em> reinvest at the YTM.</span></div>
+      <div class="eq" style="margin-top:11px">Relative yield change = ln(<span class="fr"><span>y<sub>2</sub></span><span>y<sub>1</sub></span></span>) &nbsp;&nbsp;&nbsp; Absolute change = (y<sub>2</sub> &minus; y<sub>1</sub>) in bp</div>
+    </section>
+
+    <section class="block">
+      <h3>The curve</h3>
+      <div class="eq">d(t) = <span class="fr"><span>price of a zero maturing at t</span><span>its face</span></span> &nbsp;&nbsp;&nbsp; y<sub>t</sub> = 2[ (<span class="fr"><span>1</span><span>d(t)</span></span>)<sup>1/(2t)</sup> &minus; 1 ]
+        <span class="lbl">A zero's YTM <em>is</em> the spot rate for its maturity. Nothing is estimated &mdash; d(t) is a price divided by a number.</span></div>
+      <div class="eq" style="margin-top:11px">f<sub>t</sub> = 2[ <span class="fr"><span>(1 + y<sub>t</sub>/2)<sup>2t</sup></span><span>(1 + y<sub>t&minus;0.5</sub>/2)<sup>2t&minus;1</sup></span></span> &minus; 1 ] &nbsp;&nbsp;&nbsp; equivalently &nbsp; 1 + f = <span class="fr"><span>d(t &minus; 0.5)</span><span>d(t)</span></span>
+        <span class="lbl">The second form is one division. The spot rate is the geometric average of the forwards up to it, so <strong>rising spots &rArr; forwards above them</strong>, falling spots below, flat spots exactly on top.</span></div>
+      <div class="eq" style="margin-top:11px">Bootstrapping: &nbsp; P<sub>1</sub> = C&middot;d(0.5) + &hellip; solve d(0.5), substitute, solve d(1.0), and so on
+        <span class="lbl">Each step has exactly one unknown because every earlier factor is already known.</span></div>
+      <div class="eq" style="margin-top:11px">Annuity factor A(T) = &sum; d(t) &nbsp;&nbsp;&rarr;&nbsp;&nbsp; par rate C(T) = <span class="fr"><span>2[1 &minus; d(T)]</span><span>A(T)</span></span>
+        <span class="lbl">A swap rate is a par rate. On a rising curve, par rates sit just <em>below</em> spot rates of the same maturity.</span></div>
+      <div class="eq" style="margin-top:11px">Compounding: &nbsp; (1 + r<sub>ann</sub>) = (1 + <span class="fr"><span>r<sub>m</sub></span><span>m</span></span>)<sup>m</sup>
+        <span class="lbl">More frequent compounding means a <em>lower</em> quoted rate for the same money: 2% annual is 1.9901% semiannual, 1.9803% daily.</span></div>
+      <div class="eq" style="margin-top:11px">Theories: &nbsp; segmentation (no forecast) &nbsp;&middot;&nbsp; pure expectations f<sub>n</sub> = E[r<sub>n</sub>] &nbsp;&middot;&nbsp; liquidity f<sub>n</sub> = E[r<sub>n</sub>] + premium
+        <span class="lbl">Preferred habitat lets the premium be either sign, so any shape is possible. A forward is a rate you can <em>transact at</em>, not a prediction.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>Arbitrage</h3>
+      <div class="eq">Law of one price: identical cash flows <em>and identical risks</em> &rArr; identical price
+        <span class="lbl">Cheaper leg: buy it and short the dear one. The difference is banked <strong>today</strong>; every future cash flow cancels.</span></div>
+      <div class="eq" style="margin-top:11px">With a spread, test both ways: &nbsp; ask(A) &lt; bid(B) &nbsp;or&nbsp; ask(B) &lt; bid(A)
+        <span class="lbl">Never both &mdash; that would need an ask below a bid. Finding both means an arithmetic error.</span></div>
+      <div class="eq" style="margin-top:11px">Replicating: &nbsp; (1) one zero per cash flow &nbsp;&middot;&nbsp; (2) scale a coupon bond, plug the gap with a zero &nbsp;&middot;&nbsp; (3) back-substitute from the last date
+        <span class="lbl">Method 3 needs one bond maturing on every payment date (<strong>spanning</strong>), and negative weights are normal. Discounting and replicating are provably the same arithmetic.</span></div>
+      <div class="eq" style="margin-top:11px">Dominance: &nbsp; price(putable) = price(straight) + put value &nbsp;&ge;&nbsp; price(straight)</div>
+    </section>
+
+    <section class="block">
+      <h3>Duration and convexity</h3>
+      <div class="eq">PVBP (DV01) = P(y) &minus; P(y + 0.01%) &nbsp;&asymp;&nbsp; <span class="fr"><span>D<sub>mod</sub> &times; P</span><span>10,000</span></span>
+        <span class="lbl">Dollar duration is D<sub>mod</sub> &times; P. Over one basis point the curve has no room to bend, so the two agree to four decimals.</span></div>
+      <div class="eq" style="margin-top:11px">D<sub>mac</sub> = <span class="fr"><span>1</span><span>P</span></span> &sum; <span class="fr"><span>t &middot; C<sub>t</sub></span><span>(1 + y)<sup>t</sup></span></span> &nbsp;&nbsp;&nbsp; D<sub>mod</sub> = <span class="fr"><span>D<sub>mac</sub></span><span>1 + y/2</span></span> &nbsp;&nbsp;&nbsp; <span class="fr"><span>&Delta;P</span><span>P</span></span> &asymp; &minus;D<sub>mod</sub> &middot; &Delta;y
+        <span class="lbl">A zero's Macaulay duration is exactly its maturity; its <em>modified</em> duration is not, and falls as yields rise. Duration always <strong>understates gains and overstates losses</strong>, because the true curve bends above the tangent on both sides.</span></div>
+      <div class="eq" style="margin-top:11px">C = <span class="fr"><span>1</span><span>P</span></span> &sum; <span class="fr"><span>t(t+1) C<sub>t</sub></span><span>(1 + y)<sup>t+2</sup></span></span> &nbsp;&nbsp;&nbsp; <span class="fr"><span>&Delta;P</span><span>P</span></span> &asymp; &minus;D<sub>mod</sub>&Delta;y + <span class="fr"><span>1</span><span>2</span></span> C(&Delta;y)<sup>2</sup>
+        <span class="lbl">The <strong>&frac12;</strong> comes from the Taylor expansion &mdash; a quarter is the classic slip. Convexity is positive for every option-free bond, so it can soften a loss but never turn it into a gain. A positive answer to a yield rise is always wrong.</span></div>
+      <div class="eq" style="margin-top:11px">D<sub>eff</sub> = <span class="fr"><span>P<sub>&minus;</sub> &minus; P<sub>+</sub></span><span>2 P<sub>0</sub> &Delta;y</span></span> &nbsp;&nbsp;&nbsp; C<sub>eff</sub> = <span class="fr"><span>P<sub>+</sub> + P<sub>&minus;</sub> &minus; 2P<sub>0</sub></span><span>P<sub>0</sub> (&Delta;y)<sup>2</sup></span></span>
+        <span class="lbl">For anything whose cash flows depend on rates. Keep full precision: convexity is a tiny difference between large numbers, and rounding the prices first is what turns 4.12 into 10.</span></div>
+      <div class="eq" style="margin-top:11px">Portfolio: &nbsp; D<sub>p</sub> = &sum; w<sub>i</sub> D<sub>i</sub> &nbsp;&nbsp;&nbsp; contribution<sub>i</sub> = w<sub>i</sub> D<sub>i</sub>
+        <span class="lbl">Weights are <strong>value</strong> weights, not face and not a plain average. Same for convexity. Duration-neutral is not risk-neutral: key rate durations shock one maturity at a time and can differ wildly at equal duration.</span></div>
+      <div class="eq" style="margin-top:11px">Inverse floater: &nbsp; D &asymp; (1 + L) &times; D<sub>collateral</sub> &times; <span class="fr"><span>P<sub>collateral</sub></span><span>P<sub>inverse</sub></span></span>
+        <span class="lbl">L = floater par / inverse par. Duration is a <em>sensitivity</em>, not a time, which is how a 15-year security reaches a duration of 40.</span></div>
+      <div class="eq" style="margin-top:11px">Units: &nbsp; duration &divide; 2 for years &nbsp;&middot;&nbsp; convexity &divide; 4 for years<sup>2</sup>
+        <span class="lbl">Pair a half-year duration with a per-half-year yield change, or a yearly one with a yearly change. Mixing them is out by a factor of two.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>Futures</h3>
+      <div class="eq">SOFR / Eurodollar: &nbsp; Q = 100 &minus; rate &nbsp;&nbsp;&nbsp; 3-month settles at 10,000[100 &minus; 0.25(100 &minus; Q)]
+        <span class="lbl"><strong>$25 per bp</strong> on the 3-month, <strong>$41.67</strong> on the 1-month. The index moves opposite to the rate, so a <em>long</em> gains when rates fall. Euribor is &euro;2,500 &times; index, so 25 bp is &euro;625.</span></div>
+      <div class="eq" style="margin-top:11px">Contracts for a target profit = <span class="fr"><span>target</span><span>bp move &times; value per bp</span></span></div>
+      <div class="eq" style="margin-top:11px">Conversion factor = price per $1 at a flat <strong>6%</strong>, maturity rounded <em>down</em> to 3 months
+        <span class="lbl">A 3-month stub means discounting one extra quarter at &radic;1.03 and then <strong>subtracting the accrued interest</strong>, because a CF is a clean price. Coupon above 6% &rArr; CF above 1.</span></div>
+      <div class="eq" style="margin-top:11px">Invoice = contract size &times; futures price &times; CF + accrued interest</div>
+      <div class="eq" style="margin-top:11px">Cheapest to deliver = min(price &minus; futures &times; CF) &nbsp;&equiv;&nbsp; highest implied repo rate
+        <span class="lbl">The raw price is irrelevant &mdash; the priciest bond is often the cheapest to deliver. The short also holds the quality, timing and wild card options, which is why F sits <em>below</em> pure carry.</span></div>
+      <div class="eq" style="margin-top:11px">Cost of carry: &nbsp; F = P[1 + t(r &minus; c)] &minus; delivery options
+        <span class="lbl">r financing rate, c current yield. Positive carry (c &gt; r) puts futures <strong>below</strong> the cash price.</span></div>
+      <div class="eq" style="margin-top:11px">Duration hedge: &nbsp; N = <span class="fr"><span>(D<sub>target</sub> &minus; D<sub>P</sub>) &times; P</span><span>F<sub>C</sub> &times; D<sub>F</sub></span></span> &nbsp;&nbsp;&nbsp; full hedge sets D<sub>target</sub> = 0
+        <span class="lbl">Negative N means <strong>sell</strong>. D<sub>F</sub> is the CTD's duration at the futures' maturity. It protects only against parallel shifts and swaps price risk for <strong>basis risk</strong>.</span></div>
+      <div class="eq" style="margin-top:11px">Cross hedge ratio = <span class="fr"><span>PVBP of the bond hedged</span><span>PVBP of the CTD</span></span> &times; CF<sub>CTD</sub> &times; yield beta
+        <span class="lbl">Then contracts = ratio &times; par hedged / contract par.</span></div>
+      <div class="eq" style="margin-top:11px">Forward rate = futures rate &minus; &frac12; &sigma;<sup>2</sup> t<sub>1</sub> t<sub>2</sub>
+        <span class="lbl">Daily settlement favours the short, so the futures <em>rate</em> sits above the forward rate.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>Repo</h3>
+      <div class="eq">Collateral = loan &times; (1 + margin) &nbsp;&nbsp;&nbsp; repurchase price = loan &times; (1 + r<sub>period</sub>)
+        <span class="lbl">r<sub>period</sub> = (1 + r<sub>annual</sub>)<sup>t</sup> &minus; 1. A 2% annual rate is <strong>0.038%</strong> for a week, not 0.38%. <em>Repo</em> is the borrower's side (delivers collateral, receives cash); <em>reverse repo</em> is the lender's.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>What to put on the A4 side</h3>
+      <div class="prose"><p>If space is short, these earn their place because they are the ones people reconstruct wrongly under time pressure:</p>
+        <ul>
+          <li>Bank discount price, and the 32nds conventions including the <strong>+</strong> and the third digit.</li>
+          <li>Accrued interest: X to <strong>settlement</strong>, and the <strong>semiannual</strong> coupon.</li>
+          <li>Spot from d(t), and the forward as a <strong>ratio of discount factors</strong>.</li>
+          <li>Duration + convexity with the <strong>&frac12;</strong>, and the &divide;2 and &divide;4 unit conversions.</li>
+          <li>Effective duration and convexity, with the <strong>2</strong> in the duration denominator.</li>
+          <li>Conversion factor rounding and the <strong>stub subtraction</strong>; CTD as price &minus; futures &times; CF.</li>
+          <li>The hedge ratio N, and which sign means sell.</li>
+        </ul>
+        <p style="margin-top:10px">Conventions cost more marks than missing formulas do. Write <em>semiannual unless told otherwise</em> at the top of the sheet and you will catch half your own mistakes.</p>
+      </div>
+    </section>
+  </article>
+
   </main>
 </div>
 
@@ -2116,7 +2260,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-18b</span>
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-19a</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
@@ -2214,6 +2358,7 @@ var TOPICS = [
   {id:"vol",       n:"06", t:"Duration & convexity",  panel:"p-vol",       ctx:"Measures of bond price sensitivity. Option-free bonds: price and yield move inversely, the relation is convex, longer maturity and lower coupon mean more sensitivity. PVBP/DV01 = price(y) - price(y+1bp); simple but scales with position size, is symmetric, and assumes a flat curve with parallel shifts. Macaulay duration = PV-weighted average time to cash flows (in periods; divide by 2 for years); modified duration = Macaulay/(1+y) and gives percentage price change per unit yield change; a zero's Macaulay duration equals its maturity. Duration always understates gains and overstates losses because the true curve is convex. Convexity C = (1/P) sum t(t+1)C_t/(1+y)^(t+2), divided by m^2 for years; dP/P = -D*dy + 0.5*C*dy^2. Duration and convexity of a portfolio are value-weighted sums. Effective duration for securities with unknown cash flows: D = (P- - P+)/(2 P0 dy), C = (P+ + P- - 2P0)/(P0 dy^2). All of these assume parallel shifts; a non-parallel move requires repricing off the new curve."},
   {id:"fut",       n:"07", t:"Interest rate futures",  panel:"p-fut",       ctx:"Interest rate futures. SOFR (formerly Eurodollar/LIBOR) futures: index Q = 100 - rate, cash-settled; 3-month contract settles at 10,000[100 - 0.25(100 - Q)], $25 per bp, ticks 1/2 bp $12.50 and 1/4 bp $6.25 nearby; 1-month contract 10,000[100 - (30/360)(5)(100 - Q)], $41.67 per bp. Long gains when rates fall (index rises); 94.52 to 95.00 pays the long 48 x $25 = $1,200; a borrower hedges with a short (94.52 to 94.00 pays the short $1,300). Euribor futures: EUR 2,500 x index, tick 0.005 = EUR 12.50, 0.0025 = EUR 6.25 (a 25 bp move is EUR 625). 30-day fed funds futures: $4,167 x index, R = average daily effective fed funds rate for the month. Treasury bond futures: $100,000 par of a hypothetical 20-year 6% bond, quoted in 32nds (97-16 = $97,500, 1/32 = $31.25), physically delivered; deliverable issues at least 15 years to maturity (not callable within 15 years); 10-year note futures deliverables 6.5-10 years. Conversion factor = price per $1 at 6% flat (semiannual) with maturity rounded down to 3 months; 10% 20y2m gives 1.4623; 8% 18y4m gives 121.99/100 = 1.2199 after subtracting 2.00 accrued interest for the 3-month stub. Invoice price = contract size x futures price x CF + accrued interest (1.38 x 90 + 3 = 127.20). Cheapest to deliver = lowest price - futures x CF (futures 93.25: bond costs 2.69, 1.87, 2.12, so bond 2) = highest implied repo rate. Delivery options: quality/swap, timing, wild card. Forward rate = futures rate - 0.5 sigma^2 t1 t2. Speculation: $10,000 on a 25 bp fall = 16 long 3-month contracts. Duration-based hedge N = P D_P / (F_C D_F): $10M, D_P 6.8, futures 93-02 (93,062.5), D_F 9.2 gives 79.4, short 79."},
   {id:"pset",      n:"PS", t:"Assignments",           panel:"p-pset",      ctx:"Assignments. Assignment 1: Fabozzi chapter 1 questions 1, 4, 5a, 6, 8, 9, 19, 20; Fabozzi chapter 2 questions 1, 2, 8, 13, 15; Tuckman chapter 1 questions 1.1-1.5 (Q1.3's second bond matures 05/15/2002 - the book has a typo). Assignment 2: Fabozzi chapter 3 questions 1, 2, 3, 6, 7a and chapter 4 questions 2, 3, 5, 8, 10, 13, 17, 22 (9th edition numbering; ch. 4 Q22 is key rate duration, Q21 in the 7th-edition instructor's manual)."},
+  {id:"sheet",     n:"∑",  t:"The sheet",              panel:"p-sheet",     ctx:"A single reference page collecting every formula the course uses: quoting conventions (bank discount, 32nds, accrued interest, day counts), yield measures (current yield, YTM, effective annual versus bond-equivalent, yield to worst, equivalent taxable yield), return (holding period return, interest on interest, total return), the curve (discount factors, spot rates, forwards as a ratio of discount factors, bootstrapping, par rates, compounding conversions, the three shape theories), arbitrage (law of one price, the bid-ask test in both directions, the three replication methods, spanning, dominance), duration and convexity (PVBP, Macaulay, modified, the duration-plus-convexity expansion with the one half, effective duration and convexity, portfolio value weighting, inverse floater leverage, and the divide-by-2 and divide-by-4 unit conversions), futures (SOFR index and tick values, conversion factors with the stub subtraction, cheapest to deliver, cost of carry, the duration hedge ratio, cross hedging, the forward-futures adjustment) and repo. It also lists what is worth putting on the one-sided A4 sheet the exam allows."},
   {id:"exam",      n:"EX", t:"Midterm prep",          panel:"p-exam",      ctx:"Midterm preparation: exam rules and weighting, the lecturer's example questions worked through, and a mock exam drawn from every quiz in a 50/25/25 easy/medium/difficult mix."}
 ];
 
@@ -2296,13 +2441,13 @@ var QUIZ = {
     {src:"Fabozzi 5", q:"A 10% 10-year Treasury is worth 115.42 off the spot curve but trades at 115.08, its value at its own 7.8% YTM. A dealer:",o:["Sells the bond and buys zeros","Buys the bond, strips it and sells the zeros","Reconstitutes the bond from zeros","Does nothing — yields are what matter"],a:1,
      e:"Stripping captures about 34 cents per 100 and bids the bond up. Reconstitution is the mirror trade when a bond is rich to its zeros."},
     {src:"Tuckman 3", q:"A 1.5-year bond is 6.5 cents cheap to the curve. Expressed as a spread over the forward curve, that is about:",o:["6.5 bp","4.4 bp","0.65 bp","65 bp"],a:1,
-     e:"A price gap converts to a spread through the bond's rate sensitivity: roughly 0.065 ÷ 0.015 of DV01 per 100 ≈ 4.4 bp."},
+     e:"A price gap converts to a spread through the bond’s rate sensitivity: divide by its DV01. A 1.5-year bond near par has a DV01 of roughly <strong>0.0148</strong> per 100, so 0.065 ÷ 0.0148 ≈ <strong>4.4 bp</strong>. Price is the natural unit for P&amp;L; spread is the natural unit for comparing bonds across the curve."},
     {src:"Tuckman 1", q:"Which is NOT a reason an apparent law-of-one-price violation can persist?",o:["Bid–ask spreads","The cost of shorting bonds in repo","Bonds' individual liquidity and financing value","Discounting and arbitrage pricing give different prices"],a:3,
      e:"Discounting with factors from spanning bonds and pricing their replicating portfolio are mathematically identical. The other three are real frictions."}
   ],
   term:[
     {q:"A project pays 1M in one year and 2M in two years. The spot curve (annual) is 4.0 / 4.3 / 4.6 / 4.8% at 0.5 / 1 / 1.5 / 2 years. Its present value is:",o:["1M/1.043 + 2M/1.048 = 2.87M","1M/1.043 + 2M/1.048² = 2.779M","1M/1.0215² + 2M/1.024⁴ = 2.777M","2M/1.048² only"],a:1,
-     e:"Each cash flow is discounted at <em>its own</em> spot rate, raised to its own maturity. Option 1 forgets to compound the two-year rate; option 3 mixes semiannual periodic rates with annual quotes."},
+     e:"Each cash flow is discounted at <em>its own</em> spot rate, raised to its own maturity: 1M at the 1-year rate, 2M at the 2-year rate <em>squared</em> because it is two years away. <b>A</b> forgets to compound the two-year rate. <b>C</b> halves the quoted rates as though they were semiannual, which the question says they are not. <b>D</b> simply drops the first cash flow."},
     {q:"Spot rates are 4.5 / 4.7 / 4.8 / 4.9% at 0.5 / 1.0 / 1.5 / 2.0 years. The six-month forward rate starting in one year is:",o:["4.80%","4.90%","5.00%","5.20%"],a:2,
      e:"f(1.5) = 2[(1.024)³/(1.0235)² − 1] = 2[1.073742/1.047552 − 1] = 5.00%. The forwards on this curve run 4.5, 4.9, 5.0, 5.2 — above the spots throughout, as they must be when the spot curve slopes up."},
     {q:"You need to borrow between year 1 and year 1.5 and want to fix the rate today. Using zeros, you:",o:["Buy the 1-year zero and short the 1.5-year zero","Short the 1-year zero and buy the 1.5-year zero","Buy both","Short both"],a:0,
@@ -2312,7 +2457,7 @@ var QUIZ = {
     {q:"Under pure expectations theory the forward rate equals E[r̃]. What does liquidity preference add?",o:["A discount, because long bonds are more liquid","A premium, compensating for holding rate risk over an unmatched horizon","Nothing — it is the same model","A seasonal adjustment"],a:1,
      e:"f = E[r̃] + premium. Lenders are naturally short-term and borrowers long-term; the premium is what persuades lenders to stretch. It is generally positive and fairly stable — which is why curves usually slope up even when rates are expected to be flat."},
     {src:"Fabozzi 5", q:"6-month and 1-year bills yield 5.25% and 5.50%. A 1.5-year bond with a 5.75% coupon trades at par. The 1.5-year spot rate is closest to:",o:["5.75%","5.76%","5.63%","6.02%"],a:1,
-     e:"100 = 2.875/1.02625 + 2.875/1.0275² + 102.875/(1 + z/2)³ gives z = 5.76%: a touch above par because the curve rises. 6.02% is the next step, at 2 years."},
+     e:"100 = 2.875/1.02625 + 2.875/1.0275² + 102.875/(1 + z/2)³ gives z = <strong>5.760%</strong>. Note what it sits above: the bond’s own <em>par rate</em> of 5.75%, not par itself. On a rising curve the early coupons are discounted at the lower 5.25% and 5.50% spots, so the final spot has to be a shade higher than the coupon to bring the total back to 100. 6.02% is the next bootstrap step, at 2 years."},
     {src:"Tuckman 2", q:"On an upward-sloping curve, par rates compared with spot rates of the same maturity are:",o:["Above","Slightly below","Equal","Unrelated"],a:1,
      e:"A par bond's coupons are discounted at lower short-term spot rates, so a coupon slightly below the final spot rate is enough to price at par."},
     {src:"Fabozzi 5", q:"The 6-month rate six months forward is 5.75%. You expect the 6-month rate then to be 5.60% — above today's 5.25%. With a 1-year horizon you should:",o:["Roll six-month bills","Buy the one-year instrument","Be indifferent","Buy a 30-year and sell in a year"],a:1,
@@ -2354,7 +2499,7 @@ var QUIZ = {
     {q:"For an option-free bond, which is true?",o:["The dollar price change from duration understates the true gain when rates fall","Modified duration is positive","Both","Neither"],a:2,
      e:"Both. Modified duration is a positive number (the minus sign lives in the formula, not the measure), and because the true price–yield curve is convex it bends <em>above</em> the tangent line on both sides — so duration understates gains and overstates losses."},
     {q:"Half your money is in a 5-year zero, half in a 10-year zero, both yielding 5%. The portfolio's Macaulay duration is:",o:["7.5 years","7.32 years","10 years","5 years"],a:0,
-     e:"Duration is additive in <em>value</em> weights: 0.5(5) + 0.5(10) = 7.5 years. The 7.32 answer comes from weighting by face value instead of money — with equal money invested, the weights are 0.5 each by construction."},
+     e:"Duration is additive in <em>value</em> weights: 0.5(5) + 0.5(10) = 7.5 years, and with equal <em>money</em> in each the weights are 0.5 by construction. The 7.32 distractor is the portfolio’s <strong>modified</strong> duration — 0.5(5/1.025) + 0.5(10/1.025) = 0.5(4.878) + 0.5(9.756) = 7.317 — which answers a different question. (Weighting by <em>face</em> instead of money would give 7.19, since the 10-year zero costs less per 100 of face.)"},
     {q:"A 2-year 10% bond priced at par: P₊ = 998.23 at 10.1%, P₋ = 1001.78 at 9.9%. Its approximate (effective) duration is:",o:["3.55","1.78","10.0","0.18"],a:1,
      e:"D = (P₋ − P₊)/(2 P₀ dy) = 3.55/(2 × 1000 × 0.001) = 1.775 (1.773 with unrounded prices). The 3.55 is the numerator alone. 10.0 is the convexity you get by plugging in these rounded prices; with unrounded prices it is about 4.12."},
     {q:"The biggest weakness shared by PVBP, duration and convexity is that they:",o:["Require the cash flows to be known","Assume a flat curve shifting in parallel","Cannot be computed for zeros","Only work for short maturities"],a:1,
@@ -2397,7 +2542,7 @@ function applyTiers(){
 QUIZ.intro.push(
   {src:"Exam guide", tier:"e", q:"A Japanese company sells a bond in the United States, denominated in yen. What is it called?",o:["A Yankee bond","A Samurai bond","A Euroyen bond","A Eurodollar bond"],a:2,
    e:"Sold outside its currency's home market, in the issuer's own currency ⇒ a Euro bond, here a Euroyen. A Yankee bond is a foreign issuer selling <em>US-dollar</em> bonds in the US; a Samurai is a foreign issuer selling yen bonds in Japan."},
-  {src:"Exam guide", tier:"m", q:"Which of these is <em>not</em> a risk borne by an investor in a bond fund?",o:["Interest-rate risk: the fund's value falls when yields rise","Credit risk on the bonds the fund holds","Reinvestment risk on coupons and maturing bonds","None — the fund repays at a fixed maturity, so holding it long enough removes price risk"],a:3,
+  {src:"Exam guide", tier:"m", q:"Which statement about a bond fund is <em>false</em>?",o:["Its value falls when yields rise, so the holder carries interest-rate risk","The credit risk of every bond it holds passes through to the holder","Coupons and maturing bonds are reinvested at unknown future rates","It repays at a fixed maturity, so holding it long enough removes price risk"],a:3,
    e:"A bond fund has no maturity date. It keeps rolling into new bonds, so there is no pull to par that eventually removes price risk. Interest-rate, credit, reinvestment, liquidity, call, inflation and (for foreign holdings) exchange-rate risk all pass through to the fund's investors."}
 );
 QUIZ.treasury.push(
@@ -2406,13 +2551,13 @@ QUIZ.treasury.push(
 );
 QUIZ.arbitrage.push(
   {src:"Exam guide", tier:"d", q:"Zeros (per 1,000 face): 0.5-year 970.87, 1.5-year 909.09, 2-year 873.36. A 2-year 6% bond trades at 982 and a 2-year 10% bond at 1,060, both semiannual. Which trade is an arbitrage?",o:["Buy the 10% bond, sell 1.667 of the 6% bond, buy 666.67 face of the 2-year zero","Buy the 6% bond, sell 0.6 of the 10% bond and short 400 face of the 2-year zero, collecting 3.344 today","None — both bonds price off the same curve","You can't tell without a 1-year zero"],a:1,
-   e:"No 1-year zero is quoted, and you don't need one. 0.6 of the 10% bond pays 30 on every coupon date, exactly like the 6% bond, and 630 + 400 = 1,030 at maturity once 400 face of the 2-year zero is added. That portfolio costs 0.6 × 1,060 + 0.4 × 873.36 = 985.344 against 982 for the 6% bond. Buy the cheap bond, sell the portfolio: +3.344 per 1,000 face today and nothing owed later. The giveaway: the two bonds imply different 1-year discount factors, 0.868 and 0.979."}
+   e:"No 1-year zero is quoted, and you don't need one. 0.6 of the 10% bond pays 30 on every coupon date, exactly like the 6% bond, and 630 + 400 = 1,030 at maturity once 400 face of the 2-year zero is added. That portfolio costs 0.6 × 1,060 + 0.4 × 873.36 = 985.344 against 982 for the 6% bond. Buy the cheap bond, sell the portfolio: +3.344 per 1,000 face today and nothing owed later. The giveaway: the two bonds imply different 1-year discount factors, 0.8680 and 0.9795 — and one date can only have one."}
 );
 var ZTAB = "Zero-coupon bonds, face 1,000, by half-year period: 1 → 909.09, 2 → 811.62, 3 → 711.78, 4 → 635.52. ";
 QUIZ.term.push(
   {src:"Exam guide", tier:"e", q:ZTAB + "What is the price of a 4% 1-year bond with semiannual coupons?",o:["846.03","945.45","811.62","1,040.00"],a:0,
    e:"Two coupons of 20: 20 × 0.90909 + 1,020 × 0.81162 = 18.18 + 827.85 = 846.03. (945.45 is what you get by treating the periods as years with one annual coupon — check the table's units first.)"},
-  {src:"Exam guide", tier:"e", q:ZTAB + "What is the forward rate between periods 3 and 4, as a semiannual rate?",o:["11.00%","12.00%","24.00%","13.10%"],a:1,
+  {src:"Exam guide", tier:"e", q:ZTAB + "What is the forward rate between periods 3 and 4, expressed as the rate <em>for that half-year period</em>?",o:["11.00%","12.00%","24.00%","13.10%"],a:1,
    e:"f = d(3)/d(4) − 1 = 711.78/635.52 − 1 = 12.00% for that half-year (24.00% annualised on a bond-equivalent basis). The per-period spot rates are 10%, 11%, 12% and 12%, so a 12% forward is consistent."},
   {src:"Exam guide", tier:"e", q:ZTAB + "An investor buys bond C and holds it to maturity. What return do they earn?",o:["12.00% per half-year","11.00% per half-year","9.6% per half-year","It depends on the reinvestment rate"],a:0,
    e:"C is a zero, so there is nothing to reinvest: the return is its YTM, (1,000/711.78)<sup>1/3</sup> − 1 = 12.00% per half-year, or 24.00% bond-equivalent."},
@@ -4995,6 +5140,7 @@ Object.assign(LINES, {
   tier_d:[["intense","Difficult tier: {n} questions. Not all of them are calculations — some just need you to think properly."]]
 });
 Object.assign(LINES, {
+  topic_sheet:[["smug","Every formula in the course, on one page. Learn the <em>conventions</em> in the margins — halving the coupon, counting days to settlement, the ½ on convexity. That is where the marks actually go~"],["happy","The sheet ♪ If you memorise one thing from it, make it that durations come out in half-years and convexity divides by four."]],
   topic_exam:[["intense","Midterm prep. Three hours, one A4 side, a calculator that does IRR — and me. Work the lecturer's examples first, then take a mock at the bottom."]],
   mockStart:[
     ["intense","<b>{n}</b> questions, about <b>{mins}</b> minutes at exam pace. Notes away, calculator out. Go~"],

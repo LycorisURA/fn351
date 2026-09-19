@@ -12,6 +12,7 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 - **An endless drill**, generated on the page itself from 19 parametrised templates across all seven topics. Fresh numbers every time, so it never runs out and needs no network. Each template computes its own answer and builds its wrong options out of the mistakes people actually make on that question type — Macaulay where modified was wanted, ¼ instead of ½ on the convexity term, the annual coupon where the semiannual one belongs.
 - **Assignments 1 and 2**, with hidden worked solutions.
 - **Midterm prep:** rules, the lecturer's examples worked in full, and a mock exam in the 50 / 25 / 25 mix.
+- **The sheet** — a reference panel collecting every formula the course uses, grouped the way you would lay out the one A4 side the exam allows, with the convention traps written into each line.
 - **Textbook depth** from Fabozzi (ch. 1–6, 29) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
 
 ## Design

@@ -11,7 +11,8 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 - **106 quiz questions**, each tiered easy / medium / difficult, with explanations. Every coupon can be **reattempted**, either one question at a time or the whole bank at once.
 - **An endless drill**, generated on the page itself from 14 parametrised templates across all seven topics. Fresh numbers every time, so it never runs out and needs no network. Each template computes its own answer and builds its wrong options out of the mistakes people actually make on that question type — Macaulay where modified was wanted, ¼ instead of ½ on the convexity term, the annual coupon where the semiannual one belongs.
 - **Assignments 1 and 2**, with hidden worked solutions.
-- **Midterm prep:** rules, the lecturer's examples worked in full, and a mock exam in the 50 / 25 / 25 mix.
+- **Exam guide** — a section for the lecturer's own example questions: each one first as multiple choice to attempt cold, then worked in full, in the guideline's own Simple / Moderately difficult / Difficult tiers, plus the class examples on bond price sensitivity and the rules themselves. The multiple-choice versions render the *same* question objects as their home coupon and write to the same answer keys, so answering in either place counts once and shows up in both.
+- **Midterm prep:** a mock exam in the paper's own 50 / 25 / 25 mix.
 - **The sheet** — a reference panel collecting every formula the course uses, grouped the way you would lay out the one A4 side the exam allows, with the convention traps written into each line.
 - **Textbook depth** from Fabozzi (ch. 1–6) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
 

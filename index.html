@@ -1828,36 +1828,62 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
     </section>
   </article>
 
+  <!-- ==================== exam guide ==================== -->
+  <article class="panel" id="p-guide" hidden>
+    <div class="panel-head">
+      <span class="eyebrow">Exam guideline &middot; the lecturer&rsquo;s own questions</span>
+      <h2>Straight from the guideline</h2>
+      <p class="lede">Every example the lecturer handed out, in their own Simple / Moderately difficult / Difficult tiers &mdash; first as multiple choice to attempt cold, then worked through in full. These are the closest thing you have to the real paper.</p>
+    </div>
+
+    <div class="note" style="margin-bottom:22px"><span class="eyebrow">How to use this page</span>
+      Work the multiple choice <strong>first</strong>, on paper, before you open anything below it. These questions share their scoring with the coupon they came from, so answering here counts once and only once &mdash; and answering here marks them answered there too.
+      Then read the worked versions and check not just the number but the <em>route</em> you took to it.
+    </div>
+
+    <section class="block">
+      <h3>Attempt them first</h3>
+      <div class="prose" style="margin-bottom:12px"><p>The same examples as multiple choice, grouped by the lecturer&rsquo;s tiers. The badge on each says which coupon it belongs to, if you want to go back and read around it.</p></div>
+      <div id="guideQuiz"></div>
+    </section>
+
+    <section class="block">
+      <h3>Then read them worked</h3>
+      <div class="prose" style="margin-bottom:12px"><p>The same questions with the full method, the traps named, and the arithmetic recomputed. The lecturer is not handing out solutions &mdash; these are this page&rsquo;s own, checked against the slides and the textbooks.</p></div>
+      <div id="exEx"></div>
+    </section>
+
+    <section class="block">
+      <h3>The class examples on bond price sensitivity</h3>
+      <div class="prose" style="margin-bottom:12px"><p>The worked set from the lecture on duration and convexity, where the slides slip more than once. Watch the units throughout &mdash; these keep durations in <strong>half-years</strong> and move the yield <strong>25 bp per half-year</strong>.</p></div>
+      <div id="guideClass"></div>
+    </section>
+
+    <section class="block">
+      <h3>What the guideline actually says</h3>
+      <div class="grid3">
+        <div class="ro"><div class="k">Time</div><div class="v">3 hours</div></div>
+        <div class="ro"><div class="k">Allowed</div><div class="v" style="font-size:14px;line-height:1.35">One-sided A4 sheet &middot; financial calculator &middot; writing materials</div></div>
+        <div class="ro hi"><div class="k">Simple / moderate / difficult</div><div class="v">50 / 25 / 25</div></div>
+      </div>
+      <div class="prose" style="margin-top:12px"><ul>
+        <li>Everything taught up to <strong>15 September 2026</strong>, weighted roughly by the time spent on each topic.</li>
+        <li>The textbooks are required reading, but at most <strong>2 multiple-choice questions</strong> may come from them without appearing in the slides.</li>
+        <li>Your calculator <strong>must solve for yield (IRR)</strong>. Drill the N / I/Y / PV / PMT / FV keys until they are automatic &mdash; the <b>Calc</b> panel in the masthead has the same keys.</li>
+        <li><strong>Difficulty is not the same as arithmetic.</strong> A simple question can involve a calculation and a difficult one can be pure reasoning &mdash; two of the difficult examples below are calculations and one of the moderate ones is not.</li>
+      </ul></div>
+      <div class="note" style="margin-top:12px"><span class="eyebrow">Where to go next</span>
+        Once these feel comfortable, <strong>Midterm prep</strong> has the mock exam in the same 50 / 25 / 25 mix, and <strong>The sheet</strong> collects every formula with the conventions written beside it.</div>
+    </section>
+  </article>
+
   <!-- ==================== midterm ==================== -->
   <article class="panel" id="p-exam" hidden>
     <div class="panel-head">
       <span class="eyebrow">Midterm prep · everything taught up to 15 Sept 2026</span>
       <h2>The midterm, decoded</h2>
-      <p class="lede">What you can bring, how the marks split, the lecturer's own example questions worked through, and a mock exam that draws easy, medium and difficult questions in the same 50 / 25 / 25 mix.</p>
+      <p class="lede">A mock exam drawn from every coupon in the paper’s own 50 / 25 / 25 mix, grouped simple to difficult like the real thing. The rules and the lecturer’s example questions live in <strong>Exam guide</strong>, one coupon up.</p>
     </div>
-
-    <section class="block">
-      <h3>The rules</h3>
-      <div class="grid3">
-        <div class="ro"><div class="k">Time</div><div class="v">3 hours</div></div>
-        <div class="ro"><div class="k">Allowed</div><div class="v" style="font-size:14px;line-height:1.35">One-sided A4 sheet · financial calculator · writing materials</div></div>
-        <div class="ro hi"><div class="k">Simple / moderate / difficult</div><div class="v">50 / 25 / 25</div></div>
-      </div>
-      <div class="prose" style="margin-top:12px"><ul>
-        <li><strong>Material:</strong> everything covered up to <strong>15 September 2026</strong>, weighted roughly by the time spent on each topic.</li>
-        <li><strong>The textbooks are required reading.</strong> At most <strong>2 multiple-choice questions</strong> may come from the books without appearing in the slides.</li>
-        <li><strong>Your calculator must solve for yield (IRR).</strong> It's a must-have. Drill the IRR and N / I/Y / PV / PMT / FV keys — Assignment 2, ch. 3 Q1 and Q7(a) are good practice.</li>
-        <li><strong>Difficulty isn't the same as arithmetic.</strong> Simple questions can involve a calculation (the zero-coupon table below), and difficult ones can be pure reasoning.</li>
-        <li>The lecturer isn't handing out solutions to the examples. The worked answers below are this page's own, checked against the slides and textbooks.</li>
-      </ul></div>
-      <div class="note" style="margin-top:12px"><span class="eyebrow">Your A4 sheet</span>One side only. Worth the space: bank discount price, 32nds, spot rate from d(t), forward from spots, accrued interest and invoice price, the YTM annuity form, HPR and total return, Macaulay and modified duration, convexity and the duration-plus-convexity price change, effective duration and convexity, portfolio duration, and the three replication methods. Conventions — semiannual periods, halving the coupon, per 100 versus per 1,000 — cost more marks than missing formulas do.</div>
-    </section>
-
-    <section class="block">
-      <h3>The lecturer's examples, worked</h3>
-      <div class="prose"><p>Try each on paper before opening it. Tiers follow the lecturer's own labels.</p></div>
-      <div id="exEx" style="margin-top:12px"></div>
-    </section>
 
     <section class="block">
       <h3>Mock midterm</h3>
@@ -2064,7 +2090,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
   <footer class="foot">
     Built from six lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-19b</span>
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-19c</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
@@ -2162,6 +2188,7 @@ var TOPICS = [
   {id:"vol",       n:"06", t:"Duration & convexity",  panel:"p-vol",       ctx:"Measures of bond price sensitivity. Option-free bonds: price and yield move inversely, the relation is convex, longer maturity and lower coupon mean more sensitivity. PVBP/DV01 = price(y) - price(y+1bp); simple but scales with position size, is symmetric, and assumes a flat curve with parallel shifts. Macaulay duration = PV-weighted average time to cash flows (in periods; divide by 2 for years); modified duration = Macaulay/(1+y) and gives percentage price change per unit yield change; a zero's Macaulay duration equals its maturity. Duration always understates gains and overstates losses because the true curve is convex. Convexity C = (1/P) sum t(t+1)C_t/(1+y)^(t+2), divided by m^2 for years; dP/P = -D*dy + 0.5*C*dy^2. Duration and convexity of a portfolio are value-weighted sums. Effective duration for securities with unknown cash flows: D = (P- - P+)/(2 P0 dy), C = (P+ + P- - 2P0)/(P0 dy^2). All of these assume parallel shifts; a non-parallel move requires repricing off the new curve."},
   {id:"pset",      n:"PS", t:"Assignments",           panel:"p-pset",      ctx:"Assignments. Assignment 1: Fabozzi chapter 1 questions 1, 4, 5a, 6, 8, 9, 19, 20; Fabozzi chapter 2 questions 1, 2, 8, 13, 15; Tuckman chapter 1 questions 1.1-1.5 (Q1.3's second bond matures 05/15/2002 - the book has a typo). Assignment 2: Fabozzi chapter 3 questions 1, 2, 3, 6, 7a and chapter 4 questions 2, 3, 5, 8, 10, 13, 17, 22 (9th edition numbering; ch. 4 Q22 is key rate duration, Q21 in the 7th-edition instructor's manual)."},
   {id:"sheet",     n:"∑",  t:"The sheet",              panel:"p-sheet",     ctx:"A single reference page collecting every formula the course uses: quoting conventions (bank discount, 32nds, accrued interest, day counts), yield measures (current yield, YTM, effective annual versus bond-equivalent, yield to worst, equivalent taxable yield), return (holding period return, interest on interest, total return), the curve (discount factors, spot rates, forwards as a ratio of discount factors, bootstrapping, par rates, compounding conversions, the three shape theories), arbitrage (law of one price, the bid-ask test in both directions, the three replication methods, spanning, dominance), duration and convexity (PVBP, Macaulay, modified, the duration-plus-convexity expansion with the one half, effective duration and convexity, portfolio value weighting, inverse floater leverage, and the divide-by-2 and divide-by-4 unit conversions), and repo. It also lists what is worth putting on the one-sided A4 sheet the exam allows."},
+  {id:"guide",     n:"EG", t:"Exam guide",             panel:"p-guide",     ctx:"The exam guideline itself: the lecturer's own example questions, first as multiple choice and then worked in full, in the guideline's own Simple / Moderately difficult / Difficult tiers, plus the class examples on bond price sensitivity and a restatement of the rules (3 hours, one-sided A4 sheet, a financial calculator that computes yield/IRR, 50/25/25 weighting, everything taught up to 15 September 2026, at most 2 multiple-choice questions from the textbooks alone). The multiple-choice versions share their scoring with the coupon each question came from, so answering in either place counts once."},
   {id:"exam",      n:"EX", t:"Midterm prep",          panel:"p-exam",      ctx:"Midterm preparation: exam rules and weighting, the lecturer's example questions worked through, and a mock exam drawn from every quiz in a 50/25/25 easy/medium/difficult mix. Interest rate futures are not examinable on this midterm and are not on the page."}
 ];
 
@@ -2606,6 +2633,7 @@ function go(id){
   TOPICS.forEach(function(x){ $("#"+x.panel).hidden = (x.id !== id); });
   $$(".coupon").forEach(function(b){ b.setAttribute("aria-current", String(b.dataset.topic===id)); });
   if($("#yzCtx")) $("#yzCtx").textContent = "reading: " + t.t.toLowerCase();
+  if(id === "guide") buildGuide();
   questMark("topic", id);
   react("topic_" + id, false, {vars: quizProgress(id)});
   if(typeof renderSeeds === "function") renderSeeds();
@@ -2736,7 +2764,7 @@ function answer(key,i,choice,item){
   state.answers[key+":"+i] = choice;
   state.streak = right ? (state.streak||0) + 1 : 0;
   state.best = Math.max(state.best||0, state.streak);
-  reveal(key,i,choice,item);
+  qItems(key,i).forEach(function(it){ reveal(key,i,choice,it); });
   updateScore(key);
   refreshProgress();
   if(right){
@@ -3055,7 +3083,7 @@ function reveal(key,i,choice,item){
   why.appendChild(ask);
   var again = el("button", "btn sm ghost", "Try this one again");
   again.type = "button";
-  again.addEventListener("click", function(){ retryOne(key, i, item); });
+  again.addEventListener("click", function(){ retryOne(key, i); });
   why.appendChild(again);
   item.appendChild(why);
 }
@@ -3081,6 +3109,59 @@ function updateScore(key){
 /* ============================================================
    problem set
    ============================================================ */
+
+/* ============================================================
+   exam guide — the lecturer's questions gathered in one place.
+   These render the SAME question objects as their home coupon
+   and write to the same answer keys, so XP cannot double count
+   and answering in either place shows up in both.
+   ============================================================ */
+function qItems(key, i){
+  var out = [], host = $('[data-quiz="' + key + '"]');
+  if(host){ var home = $$(".qitem", host)[i]; if(home) out.push(home); }
+  $$('[data-qref="' + key + ':' + i + '"]').forEach(function(x){ out.push(x); });
+  return out;
+}
+function buildTagged(hostSel, match){
+  var host = $(hostSel);
+  if(!host) return;
+  host.innerHTML = "";
+  var groups = {e:[], m:[], d:[]}, heads = {e:"Simple", m:"Moderately difficult", d:"Difficult"};
+  Object.keys(QUIZ).forEach(function(key){
+    QUIZ[key].forEach(function(q, i){ if(match(q)) groups[q.tier].push({key:key, i:i, q:q}); });
+  });
+  var n = 0;
+  ["e","m","d"].forEach(function(t){
+    if(!groups[t].length) return;
+    var sec = el("div", "mock-sec");
+    sec.appendChild(el("h5", null, heads[t] + " · " + groups[t].length));
+    groups[t].forEach(function(x){
+      var idx = n++, item = el("div", "qitem"), opts = el("div", "opts");
+      var tp = TOPICS.filter(function(z){ return z.id === x.key; })[0];
+      item.dataset.qref = x.key + ":" + x.i;
+      item.innerHTML = '<div class="qq"><span class="n">' + String(idx+1).padStart(2,"0") + '</span>' + x.q.q +
+        '<span class="qsrc">' + (tp ? tp.n + " · " + tp.t : x.key) + '</span>' +
+        '<span class="tier t-' + t + '">' + TIER_LABEL[t] + '</span></div>';
+      x.q.o.forEach(function(text, j){
+        var o = el("button", "opt");
+        o.type = "button";
+        o.innerHTML = '<span class="k">' + KEYS[j] + '</span><span>' + text + '</span>';
+        o.addEventListener("click", function(){ answer(x.key, x.i, j, item); });
+        opts.appendChild(o);
+      });
+      item.appendChild(opts);
+      sec.appendChild(item);
+      var prev = state.answers[x.key + ":" + x.i];
+      if(prev != null) reveal(x.key, x.i, prev, item);
+    });
+    host.appendChild(sec);
+  });
+}
+function buildGuide(){
+  buildTagged("#guideQuiz",  function(q){ return /exam guide/i.test(q.src || ""); });
+  buildTagged("#guideClass", function(q){ return /class example/i.test(q.src || ""); });
+}
+
 function buildPset(){
   ["ps1","ps2","ps3","ps4","exEx"].forEach(function(k){
     var host = $("#"+k);
@@ -3115,6 +3196,7 @@ buildRail();
 buildRisks();
 buildQuizzes();
 buildPset();
+buildGuide();
 refreshProgress();
 gameBooting = false;
 go(state.topic in {intro:1,treasury:1,arbitrage:1,term:1,apply:1,vol:1,fut:1,pset:1,exam:1} ? state.topic : "intro");
@@ -4423,11 +4505,13 @@ drillCount();
 drillNew();
 
 /* ---------------- reattempting the fixed banks ---------------- */
-function retryOne(key, i, item){
+function retryOne(key, i){
   delete state.answers[key + ":" + i];
-  $$(".opt", item).forEach(function(o){ o.disabled = false; o.classList.remove("right","wrong","picked"); });
-  var why = $(".why", item);
-  if(why) why.remove();
+  qItems(key, i).forEach(function(item){
+    $$(".opt", item).forEach(function(o){ o.disabled = false; o.classList.remove("right","wrong","picked"); });
+    var why = $(".why", item);
+    if(why) why.remove();
+  });
   updateScore(key);
   refreshProgress();
   save();
@@ -4441,7 +4525,7 @@ function retryBank(key, host, btn){
   }
   btn.dataset.armed = "0";
   btn.textContent = "Reattempt";
-  $$(".qitem", host).forEach(function(item, i){ retryOne(key, i, item); });
+  QUIZ[key].forEach(function(q, i){ retryOne(key, i); });
   toast("Coupon reset · answer them fresh");
   react("retry", false, {vars:{n:QUIZ[key].length}});
 }
@@ -4776,6 +4860,7 @@ Object.assign(LINES, {
 });
 Object.assign(LINES, {
   topic_sheet:[["smug","Every formula in the course, on one page. Learn the <em>conventions</em> in the margins — halving the coupon, counting days to settlement, the ½ on convexity. That is where the marks actually go~"],["happy","The sheet ♪ If you memorise one thing from it, make it that durations come out in half-years and convexity divides by four."]],
+  topic_guide:[["intense","The guideline’s own questions. Attempt the multiple choice cold, <em>then</em> read the worked versions — recognising a question is not the same as being able to do it."],["smug","Straight from the lecturer. If anything on the paper looks familiar, it will look like these~"]],
   topic_exam:[["intense","Midterm prep. Three hours, one A4 side, a calculator that does IRR — and me. Work the lecturer's examples first, then take a mock at the bottom."]],
   mockStart:[
     ["intense","<b>{n}</b> questions, about <b>{mins}</b> minutes at exam pace. Notes away, calculator out. Go~"],

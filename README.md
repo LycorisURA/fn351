@@ -6,14 +6,14 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 
 ## What's inside
 
-- **Seven lecture coupons:** what a bond is, Treasury securities, arbitrage, term structure, pricing and returns, duration and convexity, interest rate futures.
-- **Interactive tools**, including a quote desk, auction, repo, arbitrage bench, term structure, price–yield, SOFR futures desk, conversion factor, cheapest to deliver and futures hedge.
-- **128 quiz questions**, each tiered easy / medium / difficult, with explanations. Every coupon can be **reattempted**, either one question at a time or the whole bank at once.
-- **An endless drill**, generated on the page itself from 19 parametrised templates across all seven topics. Fresh numbers every time, so it never runs out and needs no network. Each template computes its own answer and builds its wrong options out of the mistakes people actually make on that question type — Macaulay where modified was wanted, ¼ instead of ½ on the convexity term, the annual coupon where the semiannual one belongs.
+- **Six lecture coupons:** what a bond is, Treasury securities, arbitrage, term structure, pricing and returns, duration and convexity. (Interest rate futures are not on this midterm and were removed; the history is in git if they come back for the final.)
+- **Interactive tools**, including a quote desk, auction, repo, arbitrage bench, term structure, price–yield.
+- **106 quiz questions**, each tiered easy / medium / difficult, with explanations. Every coupon can be **reattempted**, either one question at a time or the whole bank at once.
+- **An endless drill**, generated on the page itself from 14 parametrised templates across all seven topics. Fresh numbers every time, so it never runs out and needs no network. Each template computes its own answer and builds its wrong options out of the mistakes people actually make on that question type — Macaulay where modified was wanted, ¼ instead of ½ on the convexity term, the annual coupon where the semiannual one belongs.
 - **Assignments 1 and 2**, with hidden worked solutions.
 - **Midterm prep:** rules, the lecturer's examples worked in full, and a mock exam in the 50 / 25 / 25 mix.
 - **The sheet** — a reference panel collecting every formula the course uses, grouped the way you would lay out the one A4 side the exam allows, with the convention traps written into each line.
-- **Textbook depth** from Fabozzi (ch. 1–6, 29) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
+- **Textbook depth** from Fabozzi (ch. 1–6) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
 
 ## Design
 

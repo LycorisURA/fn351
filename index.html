@@ -597,13 +597,13 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
     <div>
       <span class="eyebrow">Fixed Income Securities · A. Charoenrook · Tuckman &amp; Fabozzi</span>
       <h1>The Coupon <em>Strip</em></h1>
-      <p class="mast-sub">Seven lectures, clipped one at a time. Read the idea, work the numbers, then prove it on the quiz.</p>
+      <p class="mast-sub">Six lectures, clipped one at a time. Read the idea, work the numbers, then prove it on the quiz.</p>
     </div>
     <div class="mast-tools">
       <span class="chip xpchip" id="chipXp" title="15 / 20 / 30 XP per correct easy / medium / difficult answer, 10 per tool you try, 50 per coupon clipped, 5 per Arbitrage Hunter win, plus daily quests"><b id="hudLvl">Lv 1</b><span class="xpbar"><i id="hudBar"></i></span><span id="hudXp">0 XP</span><span class="rank" id="hudRank">Runner</span></span>
       <span class="chip streakchip" id="chipStreak" title="Correct answers in a row">Streak <b id="hudStreak">0</b></span>
       <span class="chip" id="chipDays" title="Consecutive days studied">Days <b id="hudDays">1</b></span>
-      <span class="chip clipchip" id="chipProgress"><b>0</b>/7 clipped</span>
+      <span class="chip clipchip" id="chipProgress"><b>0</b>/6 clipped</span>
       <button class="tbtn" id="calcBtn" type="button" aria-expanded="false" aria-controls="calcPanel" title="Calculator — Alt+C">⌨ Calc</button>
       <button class="tbtn" id="themeBtn" type="button">◐ Theme</button>
     </div>
@@ -1781,203 +1781,6 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
       <div class="quiz" data-quiz="vol"></div>
     </section>
   </article>
-  <!-- ==================== futures ==================== -->
-  <article class="panel" id="p-fut" hidden>
-    <div class="panel-head">
-      <span class="eyebrow">Coupon 07 · Interest rate futures</span>
-      <h2>Locking in rates you don't have yet</h2>
-      <p class="lede">A futures contract fixes today the price of something delivered later. On interest rates that means an index that moves opposite to rates, a Treasury contract on a bond that doesn't exist, and a short who holds every delivery choice.</p>
-    </div>
-
-    <section class="block">
-      <h3>The contract, the exchange, the margin</h3>
-      <div class="prose">
-        <p>A futures contract obliges one party to buy and the other to sell at the <span class="term">futures price</span> on a set settlement date. It trades on an exchange, and the <strong>clearinghouse</strong> becomes buyer to every seller and seller to every buyer, so you never carry your counterparty's credit risk and can close a position by taking the offsetting one.</p>
-        <p>You post <strong>initial margin</strong> as good-faith money, positions are <strong>marked to market daily</strong>, and if equity falls below the <strong>maintenance margin</strong> you must top it back up with cash (<strong>variation margin</strong>). Margin is a fraction of the contract's value, so futures are heavily leveraged. Fewer than 2% of contracts end in delivery — most are closed out first.</p>
-        <p>Outline: <strong>SOFR (ex-Eurodollar)</strong>, <strong>Euribor</strong> and <strong>fed funds</strong> futures on short rates; <strong>Treasury bond and note futures</strong> with conversion factors, cheapest-to-deliver and delivery options; forwards versus futures; then trading and hedging.</p>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>SOFR (Eurodollar) futures</h3>
-      <div class="prose"><p>Quoted as an <strong>index</strong>, Q = 100 − the annualised rate. At 94.52 the parties trade a 3-month rate of <strong>5.48%</strong>. An interest rate can't be delivered, so the contract is <strong>cash-settled</strong>. Because the index falls when rates rise, the contract behaves like a bond price. The deck keeps the Eurodollar/LIBOR name; the CME's contracts now reference <strong>SOFR</strong>.</p></div>
-      <div class="grid2" style="margin-top:10px">
-        <div class="eq"><b>3-month contract</b> ($1M notional)<br>settlement = 10,000 × [100 − 0.25(100 − Q)]<br>R = 3% ⇒ Q = 97 ⇒ 10,000[100 − 0.25(3)] = <strong>992,500</strong><br>98.84 → 997,100; 98.85 → 997,125: <strong>$25 per bp</strong>
-          <span class="lbl">Minimum move ½ bp = $12.50; ¼ bp = $6.25 in the nearby months.</span></div>
-        <div class="eq"><b>1-month contract</b><br>settlement = 10,000 × [100 − (30/360)(5)(100 − Q)]<br>Q = 90 → 958,333.33; Q = 90.01 → 958,375.00<br><strong>$41.67 per bp</strong>
-          <span class="lbl">Minimum move ½ bp = $20.835; ¼ bp = $10.4175 in the nearby month.</span></div>
-      </div>
-      <div class="tablewrap" style="margin-top:10px"><table class="q"><thead><tr><th>Trade</th><th class="r">Entry</th><th class="r">Settlement</th><th class="r">Ticks</th><th>Result</th></tr></thead><tbody>
-        <tr><td>Long — locked in 5.48%, market rate falls to 5.00%</td><td class="r">94.52</td><td class="r">95.00</td><td class="r">+48</td><td>seller pays buyer 48 × $25 = <strong>$1,200</strong></td></tr>
-        <tr><td>Short — hedging borrowing cost, rate rises to 6.00%</td><td class="r">94.52</td><td class="r">94.00</td><td class="r">+52</td><td>buyer pays seller 52 × $25 = <strong>$1,300</strong></td></tr></tbody></table></div>
-      <div class="note" style="margin-top:11px"><span class="eyebrow">Concept check</span>Expect rates to <strong>fall</strong> before expiry → go <strong>long</strong>, since the index rises. Expect them to <strong>rise</strong> → <strong>short</strong>. A borrower worried about higher rates in six months shorts: the futures gain offsets the higher interest bill.</div>
-      <div class="warn" style="margin-top:11px"><span class="eyebrow">Slide check</span>The deck says money-market day count is 30/360. US money-market instruments (bills, CDs, SOFR loans) accrue on <strong>actual/360</strong>. The futures settlement formula simply fixes the accrual fraction at 90/360 (or 30/360 for the 1-month contract).</div>
-
-      <div class="tool" style="margin-top:14px">
-        <div class="tool-h"><div><span class="eyebrow">Tool</span><h4>SOFR futures desk</h4></div><span class="chip">index, value, P&amp;L, sizing</span></div>
-        <div class="tool-b">
-          <div class="ctrls">
-            <label class="f">Contract<select id="fdkType"><option value="3m">3-month ($25/bp)</option><option value="1m">1-month ($41.67/bp)</option></select></label>
-            <label class="f">Position<select id="fdkPos"><option value="long">Long</option><option value="short">Short</option></select></label>
-            <label class="f">Contracts<input id="fdkN" type="number" step="1" min="0" value="1"></label>
-            <label class="f">Entry index<input id="fdkIn" type="number" step="0.005" value="94.52"></label>
-            <label class="f">Exit / settlement index<input id="fdkOut" type="number" step="0.005" value="95.00"></label>
-          </div>
-          <div class="out"><div class="readout"><div class="ro"><div class="k">Rate locked</div><div class="v" id="fdkRate1">—</div></div><div class="ro"><div class="k">Rate at exit</div><div class="v" id="fdkRate2">—</div></div><div class="ro"><div class="k">Value at entry</div><div class="v" id="fdkVal1">—</div></div><div class="ro"><div class="k">Value at exit</div><div class="v" id="fdkVal2">—</div></div><div class="ro hi"><div class="k">P&amp;L</div><div class="v" id="fdkPnl">—</div></div></div>
-          <div class="verdict" id="fdkNote" style="margin-top:12px">—</div></div>
-          <div class="ctrls" style="margin-top:14px">
-            <label class="f">Target profit ($)<input id="fdkTarget" type="number" step="1000" value="10000"></label>
-            <label class="f">Expected move (bp)<input id="fdkBp" type="number" step="5" value="25"></label>
-          </div>
-          <div class="out"><div class="readout"><div class="ro hi"><div class="k">Contracts needed</div><div class="v" id="fdkSize">—</div></div></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>Euribor and fed funds futures</h3>
-      <div class="grid2">
-        <div class="tool"><div class="tool-h"><div><span class="eyebrow">Eurex · ICE</span><h4>3-month Euribor</h4></div></div>
-          <div class="tool-b prose"><p>The rate on euro interbank deposits. Notional €1 million, contract value <strong>€2,500 × index</strong> (= €1M × ¼ year per index point), index = 100 − rate, cash-settled. Minimum move 0.005 = <strong>€12.50</strong>; 0.0025 = <strong>€6.25</strong> in the nearby months. Listed out to 72 months.</p></div></div>
-        <div class="tool"><div class="tool-h"><div><span class="eyebrow">CME</span><h4>30-day fed funds</h4></div></div>
-          <div class="tool-b prose"><p>Contract unit <strong>$4,167 × index</strong> ($41.67 per bp); index = 100 − R, where R is the <em>average daily effective</em> fed funds rate over the contract month. A quote of 92.75 means an average of 7.25%; the screenshot's 95.17 prices an average of <strong>4.83%</strong>. Widely read as the market's forecast of Fed policy.</p></div></div>
-      </div>
-      <div class="warn" style="margin-top:11px"><span class="eyebrow">Slide check</span>The Euribor slide says a 25 bp change moves the contract by €6.25. A 25 bp change is 0.25 index points, so it's 0.25 × €2,500 = <strong>€625</strong>. €6.25 is the minimum price change of 0.0025 index points — a quarter of one basis point.</div>
-    </section>
-
-    <section class="block">
-      <h3>Treasury bond and note futures</h3>
-      <div class="prose">
-        <p>The bond contract's underlying is <strong>$100,000 par of a hypothetical 20-year 6% Treasury</strong>. Prices are quoted in 32nds: <span class="num">97-16 = 97.50% → $97,500</span>, and one 32nd is worth <strong>$31.25</strong>. This contract is <strong>physically delivered</strong>: no such bond exists, so the short delivers any issue on the exchange's eligible list — at least 15 years to maturity (and not callable for 15 years) from the first day of the delivery month. Fabozzi adds the cap: bonds of 25 years or more now go to the <strong>ultra bond</strong> contract.</p>
-        <ul>
-          <li><strong>10-year note futures:</strong> hypothetical 10-year 6% note; deliverable 6.5 to 10 years from the first day of the delivery month.</li>
-          <li><strong>5-year:</strong> original maturity ≤ 5y 3m, remaining maturity between 4y 3m and 5y 3m. <strong>2-year:</strong> $200,000 par, remaining 1y 9m to 2y, original ≤ 5y 2m.</li>
-          <li>The note contracts carry the same delivery options and minimum price moves as the bond contract.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>Conversion factors and the invoice price</h3>
-      <div class="prose"><p>A 7% bond is worth more than the 6% notional, a 5% bond less. The <span class="term">conversion factor</span> puts every deliverable on the same footing: the price per $1 of principal the bond would have on the first day of the delivery month if every rate were <strong>6% (semiannual)</strong>, with maturity <strong>rounded down to the nearest 3 months</strong>. It is fixed for each settlement month.</p></div>
-      <div class="eq" style="margin-top:10px">invoice price = contract size × futures price × conversion factor + accrued interest
-        <span class="lbl">Futures 90-00, CF 1.38, accrued 3 → 1.38 × 90 + 3 = <strong>127.20</strong> per 100. Fabozzi: 94-08 × CF 1.20 on $100,000 = $113,100 + accrued.</span></div>
-      <div class="grid2" style="margin-top:10px">
-        <div class="eq"><b>10% coupon, 20y 2m</b> → treat as 20 years (whole half-years)<br>Σ<sub>i=1</sub><sup>40</sup> 5/1.03<sup>i</sup> + 100/1.03<sup>40</sup> = 146.23<br>CF = <strong>1.4623</strong></div>
-        <div class="eq"><b>8% coupon, 18y 4m</b> → treat as 18y 3m (a 3-month stub)<br>value in 3 months: 4 + Σ<sub>i=1</sub><sup>36</sup> 4/1.03<sup>i</sup> + 100/1.03<sup>36</sup> = 125.83<br>discount 3 months at √1.03 − 1 = 1.4889%: 123.99<br>less accrued interest for the stub, 2.00: <strong>121.99 → CF = 1.2199</strong></div>
-      </div>
-      <div class="warn" style="margin-top:11px"><span class="eyebrow">Slide check</span>The deck stops at 123.99 and gives CF = 1.2399. Conversion factors are <em>quoted</em> (clean) prices, so the 2.00 of interest accrued over the 3-month stub has to come off: <strong>1.2199</strong>. When the rounded maturity is a whole number of half-years there's no stub and no subtraction — which is why the 20y 2m example needs none.</div>
-
-      <div class="tool" style="margin-top:14px">
-        <div class="tool-h"><div><span class="eyebrow">Tool</span><h4>Conversion factor &amp; invoice</h4></div><span class="chip">6% flat, 3-month rounding</span></div>
-        <div class="tool-b">
-          <div class="ctrls">
-            <label class="f">Coupon (%)<input id="fcvC" type="number" step="0.125" value="8"></label>
-            <label class="f">Years<input id="fcvY" type="number" step="1" min="0" value="18"></label>
-            <label class="f">Months<input id="fcvM" type="number" step="1" min="0" max="11" value="4"></label>
-            <label class="f">Futures price (32nds or decimal)<input id="fcvF" type="text" value="93-08"></label>
-            <label class="f">Accrued interest (per 100)<input id="fcvAI" type="number" step="0.01" value="3"></label>
-          </div>
-          <div class="out"><div class="readout"><div class="ro"><div class="k">Maturity used</div><div class="v" id="fcvRound">—</div></div><div class="ro hi"><div class="k">Conversion factor</div><div class="v" id="fcvCF">—</div></div><div class="ro"><div class="k">Invoice / 100</div><div class="v" id="fcvInv">—</div></div><div class="ro"><div class="k">Invoice / contract</div><div class="v" id="fcvInvK">—</div></div></div>
-          <div class="verdict" id="fcvSteps" style="margin-top:12px">—</div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>Cheapest to deliver, and the short's options</h3>
-      <div class="prose"><p>The short picks the issue that costs least to deliver. Receiving futures price × CF for a bond that costs its quoted price, the <strong>cost of delivery</strong> is <span class="num">price − futures × CF</span>, and the lowest wins. Equivalently, the CTD is the issue with the <strong>highest implied repo rate</strong> — the return from buying the bond, shorting the futures and delivering. The futures price trades off the CTD, and it can jump when rate moves change which bond is cheapest.</p></div>
-      <div class="tablewrap" style="margin-top:10px"><table class="q"><caption>Futures 93-08 = 93.25</caption><thead><tr><th>Bond</th><th class="r">Quoted price</th><th class="r">CF</th><th class="r">Cost of delivery</th></tr></thead><tbody>
-        <tr><td>1</td><td class="r">99.50</td><td class="r">1.0382</td><td class="r">99.50 − 93.25 × 1.0382 = 2.69</td></tr>
-        <tr class="pick"><td>2 — cheapest to deliver</td><td class="r">143.50</td><td class="r">1.5188</td><td class="r">143.50 − 93.25 × 1.5188 = <strong>1.87</strong></td></tr>
-        <tr><td>3</td><td class="r">119.75</td><td class="r">1.2615</td><td class="r">119.75 − 93.25 × 1.2615 = 2.12</td></tr></tbody></table></div>
-      <div class="tablewrap" style="margin-top:10px"><table class="q"><thead><tr><th>Delivery option</th><th>What the short chooses</th></tr></thead><tbody>
-        <tr><td>Quality (swap) option</td><td>which eligible Treasury issue to deliver</td></tr>
-        <tr><td>Timing option</td><td>when in the delivery month to deliver</td></tr>
-        <tr><td>Wild card option</td><td>to give notice of delivery up to 8:00 p.m. Chicago time, after the settlement price is fixed</td></tr></tbody></table></div>
-      <div class="prose" style="margin-top:10px"><p>All three belong to the short, so the long can never be sure which bond arrives or when — and pays less for the contract.</p></div>
-
-      <div class="tool" style="margin-top:14px">
-        <div class="tool-h"><div><span class="eyebrow">Tool</span><h4>Cheapest-to-deliver finder</h4></div><span class="chip">price − futures × CF</span></div>
-        <div class="tool-b">
-          <div class="ctrls"><label class="f">Futures price (32nds or decimal)<input id="fctF" type="text" value="93-08"></label></div>
-          <div class="tablewrap" style="margin-top:10px"><table class="q" style="min-width:0"><thead><tr><th>Issue</th><th class="r">Quoted price</th><th class="r">Conversion factor</th><th class="r">Cost of delivery</th></tr></thead><tbody><tr id="fctR0"><td>Bond 1</td><td class="r"><input class="cfl-in" id="fctP0" type="number" step="0.25" value="99.5"></td><td class="r"><input class="cfl-in" id="fctC0" type="number" step="0.0001" value="1.0382"></td><td class="r" id="fctK0">—</td></tr><tr id="fctR1"><td>Bond 2</td><td class="r"><input class="cfl-in" id="fctP1" type="number" step="0.25" value="143.5"></td><td class="r"><input class="cfl-in" id="fctC1" type="number" step="0.0001" value="1.5188"></td><td class="r" id="fctK1">—</td></tr><tr id="fctR2"><td>Bond 3</td><td class="r"><input class="cfl-in" id="fctP2" type="number" step="0.25" value="119.75"></td><td class="r"><input class="cfl-in" id="fctC2" type="number" step="0.0001" value="1.2615"></td><td class="r" id="fctK2">—</td></tr></tbody></table></div>
-          <div class="verdict" id="fctNote" style="margin-top:12px">—</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>Futures versus forwards</h3>
-      <div class="prose"><p>A forward is negotiated over the counter, usually held to delivery, and not necessarily marked to market, so each side carries the other's credit risk. Futures are standardised, cleared and settled daily. For interest rate contracts that daily settlement matters, because the margin cash flows are correlated with the rate the contract is on: a short futures position receives cash when rates rise (and reinvests it at higher rates) and pays when rates fall (and finances it cheaply). The adjustment the deck gives:</p></div>
-      <div class="eq" style="margin-top:10px">forward rate = futures rate − ½ σ² t<sub>1</sub> t<sub>2</sub>
-        <span class="lbl">t<sub>1</sub> = time to the futures' maturity, t<sub>2</sub> = maturity of the underlying rate (90 days later), σ = standard deviation of short-rate changes per year (about 0.012). With t<sub>1</sub> = 8 and t<sub>2</sub> = 8.25: ½(0.012²)(8)(8.25) = 0.475%, so an 8-year futures rate of 6.00% implies a forward rate near 5.52%.</span></div>
-    </section>
-
-    <section class="block">
-      <h3>Trading and hedging with futures</h3>
-      <div class="grid2">
-        <div class="eq"><b>Speculating on the short end</b><br>View: rates fall 25 bp → <strong>long</strong> 3-month SOFR futures<br>each contract: 25 × $25 = $625<br>$10,000 target → 10,000 / 625 = <strong>16 contracts</strong>
-          <span class="lbl">A view on the 5-year part of the zero curve is traded with <strong>5-year note futures</strong> — long if you expect yields to fall.</span></div>
-        <div class="eq"><b>Duration-based hedge ratio</b><br>ΔP ≈ −P·D<sub>P</sub>·Δy &nbsp; ΔF ≈ −F<sub>C</sub>·D<sub>F</sub>·Δy<br>N* = <span class="fr"><span>P · D<sub>P</sub></span><span>F<sub>C</sub> · D<sub>F</sub></span></span>
-          <span class="lbl">P = portfolio value, D<sub>P</sub> = its duration at the hedge horizon, F<sub>C</sub> = futures contract price, D<sub>F</sub> = duration of the asset underlying the futures (the CTD) at the futures' maturity. Assumes parallel shifts.</span></div>
-      </div>
-      <div class="eq" style="margin-top:10px">Aug 2: $10M of government bonds, duration 6.8 in 3 months. Dec T-bond futures 93-02 → F<sub>C</sub> = 93,062.50; CTD (20-year 12%) duration 9.2 at futures maturity.<br>
-        N* = 10,000,000 × 6.8 / (93,062.50 × 9.2) = <strong>79.42 → short 79 contracts</strong></div>
-
-      <div class="tool" style="margin-top:14px">
-        <div class="tool-h"><div><span class="eyebrow">Tool</span><h4>Futures hedge</h4></div><span class="chip">set target duration 0 to hedge fully</span></div>
-        <div class="tool-b">
-          <div class="ctrls">
-            <label class="f">Portfolio value ($)<input id="fhgP" type="number" step="100000" value="10000000"></label>
-            <label class="f">Portfolio duration<input id="fhgDp" type="number" step="0.1" value="6.8"></label>
-            <label class="f">Target duration<input id="fhgT" type="number" step="0.1" value="0"></label>
-            <label class="f">Futures price (32nds or decimal)<input id="fhgF" type="text" value="93-02"></label>
-            <label class="f">Contract size ($ par)<input id="fhgSize" type="number" step="100000" value="100000"></label>
-            <label class="f">Duration of CTD at maturity<input id="fhgDf" type="number" step="0.1" value="9.2"></label>
-          </div>
-          <div class="out"><div class="readout"><div class="ro"><div class="k">Contract price F<sub>C</sub></div><div class="v" id="fhgFc">—</div></div><div class="ro"><div class="k">Portfolio $ duration / 100 bp</div><div class="v" id="fhgDD">—</div></div><div class="ro"><div class="k">Futures $ duration / 100 bp</div><div class="v" id="fhgDDF">—</div></div><div class="ro hi"><div class="k">Contracts</div><div class="v" id="fhgN">—</div></div></div>
-          <div class="verdict" id="fhgNote" style="margin-top:12px">—</div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <h3>Deeper: from the textbooks</h3>
-      <div class="prose"><p>Fabozzi ch. 29 on interest-rate futures contracts: pricing by arbitrage, what the delivery options do to that price, and how portfolio managers size futures positions.</p></div>
-
-      <div class="deep"><div class="deep-tag">Fabozzi<b>Ch. 29</b></div><div class="deep-body">
-        <h4>Pricing: cash and carry</h4>
-        <p>A 20-year 12% bond sells at 100 and is deliverable in 3 months; the 3-month financing rate is 8%. If the futures trade at <strong>107</strong>: sell them, borrow 100 and buy the bond. At delivery you receive 107 + 3 of accrued coupon and repay 102 — <strong>+8</strong> with no money down. At <strong>92</strong>, run it in reverse (buy futures, short the bond, lend 100): <strong>+7</strong>. Only <strong>99</strong> leaves nothing on the table.</p>
-        <div class="eq">F = P [1 + t (r − c)] &nbsp;&nbsp; 100[1 + 0.25(0.08 − 0.12)] = 99<span class="lbl">r = financing rate, c = current yield (coupon ÷ price). r − c is the cost of carry. Positive carry (c &gt; r, typical of an upward-sloping curve) puts futures <em>below</em> the cash price; an inverted curve puts them above. If you borrow at 8% but lend at only 6%, arbitrage pins F between 98.50 and 99.</span></div>
-        <p>Delivery options belong to the short, so the long pays less: <strong>F = P[1 + t(r − c)] − value of the delivery options</strong>. The model's other simplifications — no margin flows, one known deliverable and date — explain why futures and forward prices differ.</p>
-      </div></div>
-
-      <div class="deep"><div class="deep-tag">Fabozzi<b>Ch. 29</b></div><div class="deep-body">
-        <h4>Adjusting duration with futures</h4>
-        <p>Buying futures adds dollar duration; selling removes it. A $48.11M portfolio with duration 2.97 against a benchmark at 3.68 needs 3.68% − 2.97% of its value, about <strong>$341,516</strong> of extra dollar duration per 100 bp. A 5-year note futures contract carries about $5,022, so the manager <strong>buys 68</strong> ($6.8M notional). Targeting 90% of the benchmark (3.31) needs 33. A full hedge has target duration zero: <strong>short about 284</strong>.</p>
-        <div class="eq">contracts ≈ (target $ duration − current $ duration) / $ duration per futures contract<span class="lbl">Positive → buy, negative → sell. Matching duration still leaves convexity and key rate duration unmatched.</span></div>
-      </div></div>
-
-      <div class="deep"><div class="deep-tag">Fabozzi<b>Ch. 29</b></div><div class="deep-body">
-        <h4>Hedging one bond: PVBP, conversion factor, yield beta</h4>
-        <p>To hedge a bond you don't deliver (a <strong>cross hedge</strong>), match dollar volatilities at the date the hedge is lifted. The futures move like the CTD divided by its conversion factor, so:</p>
-        <div class="eq">hedge ratio = <span class="fr"><span>PVBP of bond hedged</span><span>PVBP of CTD</span></span> × CF of CTD × yield beta &nbsp;&nbsp; contracts = ratio × par hedged / contract par<span class="lbl">P&amp;G 5.55% of 2037, $10M: 0.1363/0.1207 × 1.0246 = 1.157 → 116 contracts. A regression yield beta of about 0.90 cuts that to about 104 (the book prints 105). The pure-volatility alternative, the ratio of yield-change standard deviations, gave 1.01–1.08 depending on the window.</span></div>
-        <p>A hedge swaps <strong>price risk</strong> for <strong>basis risk</strong>: the spread to the CTD can change, and so can the CTD itself. Fabozzi's P&amp;G hedge still lands within about 1% of its $9.678M target across a wide range of rates. A <strong>short hedge</strong> (sell futures) protects a future sale; a <strong>long hedge</strong> (buy futures) locks in a purchase price for cash arriving later.</p>
-      </div></div>
-
-      <div class="deep"><div class="deep-tag">Fabozzi<b>Ch. 29</b></div><div class="deep-body">
-        <h4>Synthetic securities</h4>
-        <p>Own a 20-year Treasury and sell futures for delivery in three months, and you've locked the sale price: together that's a <strong>synthetic 3-month T-bill</strong>. Rearranged, a cash bond equals a T-bill plus long futures, and long futures equal a cash bond bought with borrowed money — the cash-and-carry trade again. If the synthetic bill yields more than the real one, the difference is yield enhancement.</p>
-        <div class="eq">riskless short-term position = cash bond position − futures bond position</div>
-      </div></div>
-    </section>
-
-    <section class="block">
-      <h3>Check yourself</h3>
-      <div class="quiz" data-quiz="fut"></div>
-    </section>
-  </article>
 
   <!-- ==================== problem set ==================== -->
   <article class="panel" id="p-pset" hidden>
@@ -2045,7 +1848,6 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
         <li><strong>The textbooks are required reading.</strong> At most <strong>2 multiple-choice questions</strong> may come from the books without appearing in the slides.</li>
         <li><strong>Your calculator must solve for yield (IRR).</strong> It's a must-have. Drill the IRR and N / I/Y / PV / PMT / FV keys — Assignment 2, ch. 3 Q1 and Q7(a) are good practice.</li>
         <li><strong>Difficulty isn't the same as arithmetic.</strong> Simple questions can involve a calculation (the zero-coupon table below), and difficult ones can be pure reasoning.</li>
-        <li><strong>Coupon 07 (interest rate futures)</strong> is new material. The guidelines cover everything taught up to 15 September, so check whether futures made it into the midterm — the mock can include or leave out Coupon 07.</li>
         <li>The lecturer isn't handing out solutions to the examples. The worked answers below are this page's own, checked against the slides and textbooks.</li>
       </ul></div>
       <div class="note" style="margin-top:12px"><span class="eyebrow">Your A4 sheet</span>One side only. Worth the space: bank discount price, 32nds, spot rate from d(t), forward from spots, accrued interest and invoice price, the YTM annuity form, HPR and total return, Macaulay and modified duration, convexity and the duration-plus-convexity price change, effective duration and convexity, portfolio duration, and the three replication methods. Conventions — semiannual periods, halving the coupon, per 100 versus per 1,000 — cost more marks than missing formulas do.</div>
@@ -2065,7 +1867,7 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
         <div class="tool-b">
           <div class="ctrls">
             <label class="f">Questions<select id="mockN"><option value="12">12 · about 20 min</option><option value="20" selected>20 · about 35 min</option><option value="40">40 · about 70 min</option></select></label>
-            <label class="f">Coverage<select id="mockTopic"><option value="all">All seven lectures</option><option value="six">01–06 only (no futures)</option><option value="intro">01 · What a bond is</option><option value="treasury">02 · Treasury securities</option><option value="arbitrage">03 · Arbitrage</option><option value="term">04 · Term structure</option><option value="apply">05 · Pricing &amp; returns</option><option value="vol">06 · Duration &amp; convexity</option><option value="fut">07 · Interest rate futures</option></select></label>
+            <label class="f">Coverage<select id="mockTopic"><option value="all">All six lectures</option><option value="intro">01 · What a bond is</option><option value="treasury">02 · Treasury securities</option><option value="arbitrage">03 · Arbitrage</option><option value="term">04 · Term structure</option><option value="apply">05 · Pricing &amp; returns</option><option value="vol">06 · Duration &amp; convexity</option></select></label>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px">
             <button class="btn" type="button" id="mockStart">Start mock</button>
@@ -2093,7 +1895,6 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
               <option value="term">04 &middot; Term structure</option>
               <option value="apply">05 &middot; Pricing &amp; returns</option>
               <option value="vol">06 &middot; Duration &amp; convexity</option>
-              <option value="fut">07 &middot; Interest rate futures</option>
             </select></label>
             <label class="f">Difficulty<select id="drillTier">
               <option value="all">Any</option><option value="e">Easy</option><option value="m">Medium</option><option value="d">Difficult</option>
@@ -2166,19 +1967,42 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
     </section>
 
     <section class="block">
-      <h3>The curve</h3>
-      <div class="eq">d(t) = <span class="fr"><span>price of a zero maturing at t</span><span>its face</span></span> &nbsp;&nbsp;&nbsp; y<sub>t</sub> = 2[ (<span class="fr"><span>1</span><span>d(t)</span></span>)<sup>1/(2t)</sup> &minus; 1 ]
-        <span class="lbl">A zero's YTM <em>is</em> the spot rate for its maturity. Nothing is estimated &mdash; d(t) is a price divided by a number.</span></div>
-      <div class="eq" style="margin-top:11px">f<sub>t</sub> = 2[ <span class="fr"><span>(1 + y<sub>t</sub>/2)<sup>2t</sup></span><span>(1 + y<sub>t&minus;0.5</sub>/2)<sup>2t&minus;1</sup></span></span> &minus; 1 ] &nbsp;&nbsp;&nbsp; equivalently &nbsp; 1 + f = <span class="fr"><span>d(t &minus; 0.5)</span><span>d(t)</span></span>
-        <span class="lbl">The second form is one division. The spot rate is the geometric average of the forwards up to it, so <strong>rising spots &rArr; forwards above them</strong>, falling spots below, flat spots exactly on top.</span></div>
-      <div class="eq" style="margin-top:11px">Bootstrapping: &nbsp; P<sub>1</sub> = C&middot;d(0.5) + &hellip; solve d(0.5), substitute, solve d(1.0), and so on
-        <span class="lbl">Each step has exactly one unknown because every earlier factor is already known.</span></div>
-      <div class="eq" style="margin-top:11px">Annuity factor A(T) = &sum; d(t) &nbsp;&nbsp;&rarr;&nbsp;&nbsp; par rate C(T) = <span class="fr"><span>2[1 &minus; d(T)]</span><span>A(T)</span></span>
-        <span class="lbl">A swap rate is a par rate. On a rising curve, par rates sit just <em>below</em> spot rates of the same maturity.</span></div>
-      <div class="eq" style="margin-top:11px">Compounding: &nbsp; (1 + r<sub>ann</sub>) = (1 + <span class="fr"><span>r<sub>m</sub></span><span>m</span></span>)<sup>m</sup>
-        <span class="lbl">More frequent compounding means a <em>lower</em> quoted rate for the same money: 2% annual is 1.9901% semiannual, 1.9803% daily.</span></div>
-      <div class="eq" style="margin-top:11px">Theories: &nbsp; segmentation (no forecast) &nbsp;&middot;&nbsp; pure expectations f<sub>n</sub> = E[r<sub>n</sub>] &nbsp;&middot;&nbsp; liquidity f<sub>n</sub> = E[r<sub>n</sub>] + premium
-        <span class="lbl">Preferred habitat lets the premium be either sign, so any shape is possible. A forward is a rate you can <em>transact at</em>, not a prediction.</span></div>
+      <h3>The curve &mdash; discount factors and spots</h3>
+      <div class="eq">d(t) = <span class="fr"><span>price of a zero maturing at t</span><span>its face</span></span>
+        <span class="lbl">The present value of $1 at t. A price divided by a number &mdash; nothing is modelled and nothing is estimated.</span></div>
+      <div class="eq" style="margin-top:11px">y<sub>t</sub> = 2[ (<span class="fr"><span>1</span><span>d(t)</span></span>)<sup>1/(2t)</sup> &minus; 1 ] &nbsp;&nbsp;&nbsp;&hArr;&nbsp;&nbsp;&nbsp; d(t) = <span class="fr"><span>1</span><span>(1 + y<sub>t</sub>/2)<sup>2t</sup></span></span>
+        <span class="lbl">Know it <strong>both ways</strong>. A zero's YTM <em>is</em> the spot rate for its maturity, so d and y are the same fact in two costumes. Annual convention: d(t) = 1/(1 + r<sub>t</sub>)<sup>t</sup>.</span></div>
+      <div class="eq" style="margin-top:11px">P = &sum;<sub>t</sub> C<sub>t</sub> &middot; d(t) &nbsp;=&nbsp; &sum;<sub>t</sub> <span class="fr"><span>C<sub>t</sub></span><span>(1 + y<sub>t</sub>/2)<sup>2t</sup></span></span>
+        <span class="lbl">Every cash flow at <em>its own</em> rate. This is the only exact pricing on the page; a single YTM is a summary of it.</span></div>
+      <div class="eq" style="margin-top:11px">Bootstrap, solved for the unknown factor: &nbsp; d(T) = <span class="fr"><span>P &minus; &sum;<sub>t&lt;T</sub> C &middot; d(t)</span><span>C + F</span></span>
+        <span class="lbl">Price the shortest bond to get d(0.5), substitute it into the next, and repeat. One unknown per step because every earlier factor is already solved. Then y<sub>T</sub> follows from d(T).</span></div>
+      <div class="eq" style="margin-top:11px">Par rate: &nbsp; A(T) = &sum;<sub>t&le;T</sub> d(t) &nbsp;&nbsp;&nbsp; <span class="fr"><span>C(T)</span><span>2</span></span> A(T) + d(T) = 1 &nbsp;&rarr;&nbsp; C(T) = <span class="fr"><span>2[1 &minus; d(T)]</span><span>A(T)</span></span>
+        <span class="lbl">A(T) is the annuity factor. A swap rate <em>is</em> a par rate. On a rising curve par rates sit just <strong>below</strong> spot rates of the same maturity, because a par bond's early coupons meet the lower short spots.</span></div>
+      <div class="eq" style="margin-top:11px">Compounding: &nbsp; (1 + r<sub>annual</sub>) = (1 + <span class="fr"><span>r<sub>m</sub></span><span>m</span></span>)<sup>m</sup> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; r<sub>semi</sub> = 2[(1 + r<sub>annual</sub>)<sup>1/2</sup> &minus; 1]
+        <span class="lbl">More frequent compounding means a <em>lower</em> quoted rate for the same money: 2% annual is 1.9901% semiannual, 1.9819% monthly, 1.9803% daily. The bond-equivalent quote is always the half-year rate &times; 2.</span></div>
+    </section>
+
+    <section class="block">
+      <h3>The curve &mdash; forward rates</h3>
+      <div class="eq">One period ahead: &nbsp; (1 + <span class="fr"><span>f<sub>t</sub></span><span>2</span></span>)(1 + <span class="fr"><span>y<sub>t&minus;0.5</sub></span><span>2</span></span>)<sup>2t&minus;1</sup> = (1 + <span class="fr"><span>y<sub>t</sub></span><span>2</span></span>)<sup>2t</sup>
+        &nbsp;&rarr;&nbsp; f<sub>t</sub> = 2[ <span class="fr"><span>(1 + y<sub>t</sub>/2)<sup>2t</sup></span><span>(1 + y<sub>t&minus;0.5</sub>/2)<sup>2t&minus;1</sup></span></span> &minus; 1 ]
+        <span class="lbl">The rate that makes two strategies indifferent: hold the longer zero, or hold the shorter one and roll.</span></div>
+      <div class="eq" style="margin-top:11px">Straight from discount factors: &nbsp; 1 + <span class="fr"><span>f<sub>t</sub></span><span>2</span></span> = <span class="fr"><span>d(t &minus; 0.5)</span><span>d(t)</span></span>
+        <span class="lbl">One division, no roots. This is the form to use whenever the question hands you a table of zero prices &mdash; and the form the exam examples use.</span></div>
+      <div class="eq" style="margin-top:11px">Any two dates: &nbsp; f(t<sub>1</sub>, t<sub>2</sub>) = 2[ (<span class="fr"><span>d(t<sub>1</sub>)</span><span>d(t<sub>2</sub>)</span></span>)<sup>1/(2(t<sub>2</sub>&minus;t<sub>1</sub>))</sup> &minus; 1 ]
+        <span class="lbl">The rate locked in today for borrowing from t<sub>1</sub> to t<sub>2</sub>. The one-period formula above is this with t<sub>2</sub> &minus; t<sub>1</sub> = 0.5, where the root disappears.</span></div>
+      <div class="eq" style="margin-top:11px">Forward discount factor: &nbsp; d(t<sub>1</sub>, t<sub>2</sub>) = <span class="fr"><span>d(t<sub>2</sub>)</span><span>d(t<sub>1</sub>)</span></span>
+        <span class="lbl">The value at t<sub>1</sub> of $1 at t<sub>2</sub>. Discounting a forward-starting cash flow needs this, not d(t<sub>2</sub>).</span></div>
+      <div class="eq" style="margin-top:11px">Spots are the geometric average of the forwards: &nbsp; (1 + <span class="fr"><span>y<sub>t</sub></span><span>2</span></span>)<sup>2t</sup> = &prod;<sub>i=1</sub><sup>2t</sup> (1 + <span class="fr"><span>f<sub>i</sub></span><span>2</span></span>)
+        <span class="lbl">This is <em>why</em> a rising spot curve forces forwards above it: an average only climbs when the new term beats it. Falling spots &rArr; forwards below; flat spots &rArr; forwards exactly on top.</span></div>
+      <div class="eq" style="margin-top:11px">So both pricings agree: &nbsp; P = &sum;<sub>t</sub> C<sub>t</sub> &middot; d(t) = &sum;<sub>t</sub> <span class="fr"><span>C<sub>t</sub></span><span>&prod;<sub>i&le;t</sub>(1 + f<sub>i</sub>/2)</span></span>
+        <span class="lbl">Discounting at spots and chaining the forwards are the same arithmetic in two orders. If they disagree, one of them has an exponent wrong.</span></div>
+      <div class="eq" style="margin-top:11px">A forward is a <em>trade</em>, not a forecast: &nbsp; buy the t<sub>1</sub> zero, short <span class="fr"><span>d(t<sub>1</sub>)</span><span>d(t<sub>2</sub>)</span></span> of the t<sub>2</sub> zero
+        <span class="lbl">Net cost today is zero; you receive 1 at t<sub>1</sub> and repay d(t<sub>1</sub>)/d(t<sub>2</sub>) at t<sub>2</sub>. With d(1.0)=0.93897 and d(1.5)=0.90909 that is 1.0329 per 1 borrowed &mdash; 3.29% for the half-year, <strong>6.58%</strong> annualised, which is exactly f(1.5).</span></div>
+      <div class="eq" style="margin-top:11px">Ageing with an unchanged curve: &nbsp; sign[ P(T) &minus; P(T &minus; 0.5) ] = sign[ c &minus; f(T) ]
+        <span class="lbl">Read it forwards: if nothing moves, a bond's price <strong>rises</strong> over the next six months when its coupon is <em>below</em> the forward for its final period, and falls when it is above. Adding a period only adds value if the coupon beats that period's forward.</span></div>
+      <div class="eq" style="margin-top:11px">Theories: &nbsp; segmentation (shape carries no forecast) &nbsp;&middot;&nbsp; pure expectations f<sub>n</sub> = E[r<sub>n</sub>] &nbsp;&middot;&nbsp; liquidity f<sub>n</sub> = E[r<sub>n</sub>] + premium<sub>n</sub>
+        <span class="lbl">Preferred habitat lets the premium take either sign, so any shape is possible. Under <strong>realized forwards</strong> every bond earns the short rate over the next period &mdash; which is the benchmark a view has to beat, and why some practitioners call forwards <em>hedgeable</em> rather than expected rates.</span></div>
     </section>
 
     <section class="block">
@@ -2210,25 +2034,6 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
         <span class="lbl">Pair a half-year duration with a per-half-year yield change, or a yearly one with a yearly change. Mixing them is out by a factor of two.</span></div>
     </section>
 
-    <section class="block">
-      <h3>Futures</h3>
-      <div class="eq">SOFR / Eurodollar: &nbsp; Q = 100 &minus; rate &nbsp;&nbsp;&nbsp; 3-month settles at 10,000[100 &minus; 0.25(100 &minus; Q)]
-        <span class="lbl"><strong>$25 per bp</strong> on the 3-month, <strong>$41.67</strong> on the 1-month. The index moves opposite to the rate, so a <em>long</em> gains when rates fall. Euribor is &euro;2,500 &times; index, so 25 bp is &euro;625.</span></div>
-      <div class="eq" style="margin-top:11px">Contracts for a target profit = <span class="fr"><span>target</span><span>bp move &times; value per bp</span></span></div>
-      <div class="eq" style="margin-top:11px">Conversion factor = price per $1 at a flat <strong>6%</strong>, maturity rounded <em>down</em> to 3 months
-        <span class="lbl">A 3-month stub means discounting one extra quarter at &radic;1.03 and then <strong>subtracting the accrued interest</strong>, because a CF is a clean price. Coupon above 6% &rArr; CF above 1.</span></div>
-      <div class="eq" style="margin-top:11px">Invoice = contract size &times; futures price &times; CF + accrued interest</div>
-      <div class="eq" style="margin-top:11px">Cheapest to deliver = min(price &minus; futures &times; CF) &nbsp;&equiv;&nbsp; highest implied repo rate
-        <span class="lbl">The raw price is irrelevant &mdash; the priciest bond is often the cheapest to deliver. The short also holds the quality, timing and wild card options, which is why F sits <em>below</em> pure carry.</span></div>
-      <div class="eq" style="margin-top:11px">Cost of carry: &nbsp; F = P[1 + t(r &minus; c)] &minus; delivery options
-        <span class="lbl">r financing rate, c current yield. Positive carry (c &gt; r) puts futures <strong>below</strong> the cash price.</span></div>
-      <div class="eq" style="margin-top:11px">Duration hedge: &nbsp; N = <span class="fr"><span>(D<sub>target</sub> &minus; D<sub>P</sub>) &times; P</span><span>F<sub>C</sub> &times; D<sub>F</sub></span></span> &nbsp;&nbsp;&nbsp; full hedge sets D<sub>target</sub> = 0
-        <span class="lbl">Negative N means <strong>sell</strong>. D<sub>F</sub> is the CTD's duration at the futures' maturity. It protects only against parallel shifts and swaps price risk for <strong>basis risk</strong>.</span></div>
-      <div class="eq" style="margin-top:11px">Cross hedge ratio = <span class="fr"><span>PVBP of the bond hedged</span><span>PVBP of the CTD</span></span> &times; CF<sub>CTD</sub> &times; yield beta
-        <span class="lbl">Then contracts = ratio &times; par hedged / contract par.</span></div>
-      <div class="eq" style="margin-top:11px">Forward rate = futures rate &minus; &frac12; &sigma;<sup>2</sup> t<sub>1</sub> t<sub>2</sub>
-        <span class="lbl">Daily settlement favours the short, so the futures <em>rate</em> sits above the forward rate.</span></div>
-    </section>
 
     <section class="block">
       <h3>Repo</h3>
@@ -2245,7 +2050,6 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
           <li>Spot from d(t), and the forward as a <strong>ratio of discount factors</strong>.</li>
           <li>Duration + convexity with the <strong>&frac12;</strong>, and the &divide;2 and &divide;4 unit conversions.</li>
           <li>Effective duration and convexity, with the <strong>2</strong> in the duration denominator.</li>
-          <li>Conversion factor rounding and the <strong>stub subtraction</strong>; CTD as price &minus; futures &times; CF.</li>
           <li>The hedge ratio N, and which sign means sell.</li>
         </ul>
         <p style="margin-top:10px">Conventions cost more marks than missing formulas do. Write <em>semiannual unless told otherwise</em> at the top of the sheet and you will catch half your own mistakes.</p>
@@ -2258,9 +2062,9 @@ table.q tr.pick td{background:var(--jade-soft);font-weight:600}
 
 <div class="wrap">
   <footer class="foot">
-    Built from seven lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6 and 29) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
+    Built from six lecture decks (plus the class examples on bond price sensitivity) by Anchada Aida Charoenrook, with depth notes and questions drawn from Fabozzi's <em>Bond Markets, Analysis, and Strategies</em> (9th ed., ch. 1–6) and Tuckman &amp; Serrat's <em>Fixed Income Securities</em> (3rd ed., ch. 1–4) — the chapters the lectures cover, restated in original words.
     Every worked number on this page recomputes from the formulas shown — where a figure differs from a slide, the page says so.
-    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-19a</span>
+    <span class="num" style="opacity:.55;font-size:11px">build 2026-09-19b</span>
     Progress is saved in your browser, and syncs to your account when this page runs as a published artifact.
   </footer>
 </div>
@@ -2356,10 +2160,9 @@ var TOPICS = [
   {id:"term",      n:"04", t:"Term structure",        panel:"p-term",      ctx:"Term structure of interest rates: compounding conventions and bond-equivalent yield (semiannual rate = half-year rate x 2). Spot rate y_t = 2[(1/d(t))^(1/(2t)) - 1]; a zero's YTM is the spot rate. Bootstrapping the curve from coupon bonds. Forward rates: (1+f_t/2)(1+y_(t-0.5)/2)^(2t-1) = (1+y_t/2)^(2t), so f_t = 2[(1+y_t/2)^(2t)/(1+y_(t-0.5)/2)^(2t-1) - 1]. The spot rate is the geometric average of the forwards; upward-sloping spots put forwards above the spot curve. A forward rate is transactable: buy the 1-year zero and short the 1.5-year zero to fix a borrowing rate from year 1 to 1.5. Three theories of the shape: market segmentation, pure expectations (E[r_n] = f_n), and liquidity preference (f_n = E[r_n] + premium)."},
   {id:"apply",     n:"05", t:"Pricing & returns",     panel:"p-apply",     ctx:"Applications of the term structure: pricing a bond by discounting each cash flow at its own spot rate (annual or semiannual forms agree). Trading mid-coupon-period: exponents shrink by the elapsed fraction; invoice (dirty) price = quote (clean) price + accrued interest, where accrued = (X/Y) x coupon and X counts days from the last coupon up to but excluding the SETTLEMENT date. YTM: the single rate equating price to PV of cash flows; it is a way of quoting a price, not a return. YTM equals realised return only if the bond is held to maturity with coupons reinvested at the YTM, or the YTM at sale equals the YTM at purchase with coupons reinvested at that rate. Holding period return = (P_sell - P_buy + coupons + reinvestment interest) / P_buy. Horizon return analysis compares bonds over a fixed horizon given an assumed path for the curve."},
   {id:"vol",       n:"06", t:"Duration & convexity",  panel:"p-vol",       ctx:"Measures of bond price sensitivity. Option-free bonds: price and yield move inversely, the relation is convex, longer maturity and lower coupon mean more sensitivity. PVBP/DV01 = price(y) - price(y+1bp); simple but scales with position size, is symmetric, and assumes a flat curve with parallel shifts. Macaulay duration = PV-weighted average time to cash flows (in periods; divide by 2 for years); modified duration = Macaulay/(1+y) and gives percentage price change per unit yield change; a zero's Macaulay duration equals its maturity. Duration always understates gains and overstates losses because the true curve is convex. Convexity C = (1/P) sum t(t+1)C_t/(1+y)^(t+2), divided by m^2 for years; dP/P = -D*dy + 0.5*C*dy^2. Duration and convexity of a portfolio are value-weighted sums. Effective duration for securities with unknown cash flows: D = (P- - P+)/(2 P0 dy), C = (P+ + P- - 2P0)/(P0 dy^2). All of these assume parallel shifts; a non-parallel move requires repricing off the new curve."},
-  {id:"fut",       n:"07", t:"Interest rate futures",  panel:"p-fut",       ctx:"Interest rate futures. SOFR (formerly Eurodollar/LIBOR) futures: index Q = 100 - rate, cash-settled; 3-month contract settles at 10,000[100 - 0.25(100 - Q)], $25 per bp, ticks 1/2 bp $12.50 and 1/4 bp $6.25 nearby; 1-month contract 10,000[100 - (30/360)(5)(100 - Q)], $41.67 per bp. Long gains when rates fall (index rises); 94.52 to 95.00 pays the long 48 x $25 = $1,200; a borrower hedges with a short (94.52 to 94.00 pays the short $1,300). Euribor futures: EUR 2,500 x index, tick 0.005 = EUR 12.50, 0.0025 = EUR 6.25 (a 25 bp move is EUR 625). 30-day fed funds futures: $4,167 x index, R = average daily effective fed funds rate for the month. Treasury bond futures: $100,000 par of a hypothetical 20-year 6% bond, quoted in 32nds (97-16 = $97,500, 1/32 = $31.25), physically delivered; deliverable issues at least 15 years to maturity (not callable within 15 years); 10-year note futures deliverables 6.5-10 years. Conversion factor = price per $1 at 6% flat (semiannual) with maturity rounded down to 3 months; 10% 20y2m gives 1.4623; 8% 18y4m gives 121.99/100 = 1.2199 after subtracting 2.00 accrued interest for the 3-month stub. Invoice price = contract size x futures price x CF + accrued interest (1.38 x 90 + 3 = 127.20). Cheapest to deliver = lowest price - futures x CF (futures 93.25: bond costs 2.69, 1.87, 2.12, so bond 2) = highest implied repo rate. Delivery options: quality/swap, timing, wild card. Forward rate = futures rate - 0.5 sigma^2 t1 t2. Speculation: $10,000 on a 25 bp fall = 16 long 3-month contracts. Duration-based hedge N = P D_P / (F_C D_F): $10M, D_P 6.8, futures 93-02 (93,062.5), D_F 9.2 gives 79.4, short 79."},
   {id:"pset",      n:"PS", t:"Assignments",           panel:"p-pset",      ctx:"Assignments. Assignment 1: Fabozzi chapter 1 questions 1, 4, 5a, 6, 8, 9, 19, 20; Fabozzi chapter 2 questions 1, 2, 8, 13, 15; Tuckman chapter 1 questions 1.1-1.5 (Q1.3's second bond matures 05/15/2002 - the book has a typo). Assignment 2: Fabozzi chapter 3 questions 1, 2, 3, 6, 7a and chapter 4 questions 2, 3, 5, 8, 10, 13, 17, 22 (9th edition numbering; ch. 4 Q22 is key rate duration, Q21 in the 7th-edition instructor's manual)."},
-  {id:"sheet",     n:"∑",  t:"The sheet",              panel:"p-sheet",     ctx:"A single reference page collecting every formula the course uses: quoting conventions (bank discount, 32nds, accrued interest, day counts), yield measures (current yield, YTM, effective annual versus bond-equivalent, yield to worst, equivalent taxable yield), return (holding period return, interest on interest, total return), the curve (discount factors, spot rates, forwards as a ratio of discount factors, bootstrapping, par rates, compounding conversions, the three shape theories), arbitrage (law of one price, the bid-ask test in both directions, the three replication methods, spanning, dominance), duration and convexity (PVBP, Macaulay, modified, the duration-plus-convexity expansion with the one half, effective duration and convexity, portfolio value weighting, inverse floater leverage, and the divide-by-2 and divide-by-4 unit conversions), futures (SOFR index and tick values, conversion factors with the stub subtraction, cheapest to deliver, cost of carry, the duration hedge ratio, cross hedging, the forward-futures adjustment) and repo. It also lists what is worth putting on the one-sided A4 sheet the exam allows."},
-  {id:"exam",      n:"EX", t:"Midterm prep",          panel:"p-exam",      ctx:"Midterm preparation: exam rules and weighting, the lecturer's example questions worked through, and a mock exam drawn from every quiz in a 50/25/25 easy/medium/difficult mix."}
+  {id:"sheet",     n:"∑",  t:"The sheet",              panel:"p-sheet",     ctx:"A single reference page collecting every formula the course uses: quoting conventions (bank discount, 32nds, accrued interest, day counts), yield measures (current yield, YTM, effective annual versus bond-equivalent, yield to worst, equivalent taxable yield), return (holding period return, interest on interest, total return), the curve (discount factors, spot rates, forwards as a ratio of discount factors, bootstrapping, par rates, compounding conversions, the three shape theories), arbitrage (law of one price, the bid-ask test in both directions, the three replication methods, spanning, dominance), duration and convexity (PVBP, Macaulay, modified, the duration-plus-convexity expansion with the one half, effective duration and convexity, portfolio value weighting, inverse floater leverage, and the divide-by-2 and divide-by-4 unit conversions), and repo. It also lists what is worth putting on the one-sided A4 sheet the exam allows."},
+  {id:"exam",      n:"EX", t:"Midterm prep",          panel:"p-exam",      ctx:"Midterm preparation: exam rules and weighting, the lecturer's example questions worked through, and a mock exam drawn from every quiz in a 50/25/25 easy/medium/difficult mix. Interest rate futures are not examinable on this midterm and are not on the page."}
 ];
 
 var RISKS = [
@@ -2637,52 +2440,6 @@ QUIZ.vol.push(
    e:"−15.145 × 0.0025 = −3.786%, plus ½ × 282.60 × 0.0025² = +0.088%, gives −3.698% (exact −3.699%). A positive answer to a yield rise is the red flag: for an option-free bond, convexity can soften a loss but never turn it into a gain."}
 );
 
-QUIZ.fut = [
-  {tier:"e", q:"A 3-month SOFR (Eurodollar-style) futures contract is quoted at 94.52. What rate have the parties agreed?",o:["94.52%","5.48%","4.52%","0.5452%"],a:1,
-   e:"Rate = 100 − index = 5.48%. The index moves opposite to rates, so the contract behaves like a bond price."},
-  {src:"Fabozzi 29", tier:"e", q:"You buy a Eurodollar futures contract at 95.00 and it settles at 95.40. Who is paid, and how much?",o:["The seller receives $1,000","The buyer receives $1,000","The buyer receives $40","No one — it settles at par"],a:1,
-   e:"The index rose 0.40, which is 40 ticks × $25 = $1,000 to the buyer. The long locked in 5.00% and the market rate fell to 4.60%."},
-  {tier:"e", q:"You expect short-term interest rates to fall before the contract matures. Your position in 3-month SOFR futures should be:",o:["Long","Short","Neither — futures don't respond to rates","Long only if the curve is inverted"],a:0,
-   e:"Falling rates raise the index (100 − rate), so a long position gains. If you expect rates to rise, go short."},
-  {src:"Fabozzi 29", tier:"m", q:"A company will borrow in six months and is worried rates will rise before then. With SOFR futures it should:",o:["Buy futures","Sell futures","Buy Treasury bonds","Do nothing — futures are only for speculation"],a:1,
-   e:"A short gains when rates rise and the index falls: from 94.52 to 94.00 the short collects 52 ticks × $25 = $1,300, offsetting the higher borrowing cost."},
-  {tier:"e", q:"How much is a 1 basis point change in a 3-month SOFR futures quote worth per contract?",o:["$12.50","$25.00","$41.67","$100.00"],a:1,
-   e:"$1,000,000 × 0.0001 × 90/360 = $25. The 1-month contract is worth $41.67 per bp; a half-tick on the 3-month is $12.50."},
-  {tier:"m", q:"You want to make $10,000 if 3-month rates fall 25 bp. How many 3-month SOFR futures do you buy?",o:["4","16","40","400"],a:1,
-   e:"Each contract gains 25 × $25 = $625 on a 25 bp fall; 10,000 ÷ 625 = 16 contracts, long."},
-  {tier:"m", q:"3-month Euribor futures have a contract value of €2,500 × the index. A 25 bp move in Euribor changes a contract's value by:",o:["€6.25","€62.50","€625","€2,500"],a:2,
-   e:"25 bp = 0.25 index points, and 0.25 × €2,500 = €625. €6.25 is the minimum price change of 0.0025 index points — a quarter of a basis point."},
-  {tier:"e", q:"30-day fed funds futures trade at 95.17. What does that price imply?",o:["A fed funds rate of 95.17%","An average effective fed funds rate of about 4.83% over the contract month","A 4.83% rate on the last day of the month","A 0.17% rate cut"],a:1,
-   e:"The index is 100 − R, where R is the average of daily effective fed funds rates in the month. That's why these contracts are read as the market's forecast of Fed policy."},
-  {tier:"e", q:"A Treasury bond futures price is 97-16. For $100,000 par of the notional bond, the buyer agrees to pay:",o:["$97,160","$97,500","$97,016","$9,750"],a:1,
-   e:"97-16 is 97 + 16/32 = 97.50% of par = $97,500, before the conversion factor and accrued interest. One 32nd is worth $31.25."},
-  {src:"Fabozzi 29", tier:"m", q:"Futures settle at 105. The delivered bond has a conversion factor of 0.85 and accrued interest of 4 per 100. The invoice price per 100 par is:",o:["109.00","93.25","89.25","127.53"],a:1,
-   e:"105 × 0.85 + 4 = 93.25 per 100, or $93,250 per $100,000 contract."},
-  {tier:"m", q:"A 10% bond has 20 years and 2 months to maturity. Its conversion factor (6% flat, maturity rounded down to 3 months) is:",o:["1.0000","1.4623","1.6667","1.2199"],a:1,
-   e:"Round down to 20 years: 40 coupons of 5 plus 100, discounted at 3% per half-year, is 146.23, so CF = 1.4623. A coupon above 6% gives a CF above 1."},
-  {tier:"d", q:"An 8% bond has 18 years and 4 months to maturity. Its conversion factor is:",o:["1.2583","1.2399","1.2199","1.3000"],a:2,
-   e:"Round down to 18y 3m. Value in 3 months: 4 + Σ 4/1.03ⁱ (36 terms) + 100/1.03³⁶ = 125.83. Discount 3 months at √1.03 − 1: 123.99. Subtract the 2.00 of accrued interest for the stub: 121.99, so CF = 1.2199. Stopping at 1.2399 forgets that conversion factors are clean prices."},
-  {tier:"m", q:"Futures at 93-08. Deliverables: A at 99.50 (CF 1.0382), B at 143.50 (CF 1.5188), C at 119.75 (CF 1.2615). Which is cheapest to deliver?",o:["A — it has the lowest price","B — delivery costs 1.87","C — its CF is in the middle","None; after conversion they cost the same"],a:1,
-   e:"Cost = price − 93.25 × CF: A 2.69, B 1.87, C 2.12. B costs the short least — equivalently it has the highest implied repo rate. The raw price is irrelevant: B is the priciest bond but the cheapest to deliver."},
-  {tier:"e", q:"Which is NOT one of the delivery options the short holds in Treasury bond futures?",o:["Quality (swap) option","Timing option","Wild card option","Option to settle in cash instead of delivering a bond"],a:3,
-   e:"The short chooses which eligible issue (quality), when in the delivery month (timing), and may give notice after the settlement price is fixed (wild card). The contract is physically delivered."},
-  {src:"Fabozzi 29", tier:"d", q:"Why does the theoretical Treasury futures price sit below P[1 + t(r − c)]?",o:["Because carry is positive","Because the delivery options belong to the short, and the long pays less for a contract that lets the counterparty choose","Because futures are marked to market","Because conversion factors are below 1"],a:1,
-   e:"F = P[1 + t(r − c)] − value of the delivery options. Every choice the short can make is worth something to the short and costs the long, so the futures price is lower."},
-  {src:"Fabozzi 29", tier:"m", q:"The yield curve slopes upward, so the bond's current yield exceeds the financing rate (positive carry). The theoretical futures price is:",o:["Above the cash price","Below the cash price","Equal to the cash price","Unrelated to the cash price"],a:1,
-   e:"F = P[1 + t(r − c)] with c > r gives F < P. Example: P = 100, c = 12%, r = 8%, t = 0.25 → F = 99."},
-  {src:"Fabozzi 29", tier:"d", q:"Bond ABC costs 80 and pays 8 a year (the next 4 is due in exactly six months); the six-month rate is 6%. What is the theoretical 6-month futures price, and what do you do if the futures trade at 83?",o:["78.40 — sell futures, and buy the bond with borrowed money","78.40 — buy futures and short the bond","83.00 — no trade","81.60 — sell futures"],a:0,
-   e:"c = 8/80 = 10%, so F = 80[1 + 0.5(0.06 − 0.10)] = 78.40. At 83 the futures are rich, so run a cash-and-carry: borrow 80, buy ABC, sell futures. At delivery you receive 83 plus the 4 coupon and repay 82.40, keeping 4.60."},
-  {tier:"m", q:"A $10M bond portfolio has duration 6.8 at the hedge horizon. The CTD's duration at futures maturity is 9.2 and futures trade at 93-02 ($100,000 contracts). The duration-based hedge is:",o:["Buy 79 contracts","Sell 79 contracts","Sell 73 contracts","Sell 100 contracts"],a:1,
-   e:"N = P·D<sub>P</sub>/(F<sub>C</sub>·D<sub>F</sub>) = 10,000,000 × 6.8 / (93,062.50 × 9.2) = 79.4, so sell 79. Shorting futures removes dollar duration."},
-  {src:"Fabozzi 29", tier:"d", q:"You hedge $20M par of a bond with PVBP 0.05954 using Treasury bond futures. The CTD's PVBP is 0.06895 and its conversion factor 0.91. How many $100,000 contracts do you sell?",o:["86","157","173","200"],a:1,
-   e:"Hedge ratio = (0.05954 / 0.06895) × 0.91 = 0.7858. Contracts = 0.7858 × 20,000,000 / 100,000 = 157. Multiplying by the CF converts the CTD's volatility into the futures contract's."},
-  {src:"Fabozzi 29", tier:"m", q:"Without a yield adjustment the hedge ratio is 1.30. The regression yield beta of the hedged bond on the CTD is 0.8. The revised hedge ratio is:",o:["1.625","1.04","1.30","0.80"],a:1,
-   e:"1.30 × 0.8 = 1.04. The bond's yield is expected to move only 80% as much as the CTD's, so fewer contracts are needed."},
-  {tier:"d", q:"Why is the forward rate typically below the futures rate for the same period (forward = futures − ½σ²t₁t₂)?",o:["Forwards carry more credit risk","Futures are settled daily and the margin flows are correlated with rates, which favours the short futures position whichever way rates move — so futures prices are lower and futures rates higher","Futures have longer maturities","Day-count conventions differ"],a:1,
-   e:"A short futures position receives cash when rates rise (reinvested at high rates) and pays when rates fall (financed cheaply). With t₁ = 8, t₂ = 8.25 and σ = 1.2%, the adjustment is ½(0.012²)(8)(8.25) = 0.475%."},
-  {src:"Fabozzi 29", tier:"d", q:"A manager hedges a corporate bond with Treasury bond futures. What risk replaces the price risk?",o:["None — the hedge is perfect","Basis risk: the bond's spread to the CTD can change, and so can which bond is the CTD","Only the clearinghouse's credit risk","Reinvestment risk"],a:1,
-   e:"A cross hedge locks the futures leg but not the bond-versus-CTD relationship, and the CTD itself can switch as rates move. Fabozzi's P&G hedge still lands within about 1% of its target."}
-];
 
 var PSET = {
   ps1:[
@@ -4003,7 +3760,7 @@ function mockClockText(){
 }
 function mockStart(){
   var N = +$("#mockN").value, topic = $("#mockTopic").value;
-  var keys = topic === "all" ? Object.keys(QUIZ) : (topic === "six" ? ["intro","treasury","arbitrage","term","apply","vol"] : [topic]);
+  var keys = topic === "all" ? Object.keys(QUIZ) : [topic];
   var pools = {e:[], m:[], d:[]}, picked = {e:[], m:[], d:[]}, spare = [];
   keys.forEach(function(k){ QUIZ[k].forEach(function(q, i){ pools[q.tier].push({k:k, i:i}); }); });
   var want = {e:Math.round(N*0.5), m:Math.round(N*0.25)}; want.d = N - want.e - want.m;
@@ -4070,7 +3827,7 @@ function mockSubmit(){
   var res = $("#mockResult");
   res.innerHTML = '<div class="verdict ' + (pct >= 70 ? "good" : (pct >= 50 ? "" : "bad")) + '"><strong>' + right + ' / ' + mock.items.length + ' · ' + pct + '%</strong> in ' + mockClockText().split(" · ")[0] +
     '<br>Simple ' + by.e[0] + '/' + by.e[1] + ' · Moderate ' + by.m[0] + '/' + by.m[1] + ' · Difficult ' + by.d[0] + '/' + by.d[1] +
-    ((mock.topic === "all" || mock.topic === "six") && wt ? '<br>Weakest area: <strong>' + wt.n + ' · ' + wt.t + '</strong> (' + weakest[2][0] + '/' + weakest[2][1] + ')' : '') + '</div>';
+    (mock.topic === "all" && wt ? '<br>Weakest area: <strong>' + wt.n + ' · ' + wt.t + '</strong> (' + weakest[2][0] + '/' + weakest[2][1] + ')' : '') + '</div>';
   $("#mockSubmit").hidden = true;
   $("#mockClock").textContent = mockClockText();
   $("#mockBest").textContent = mockBestText();
@@ -4107,80 +3864,7 @@ for(var cflI = 1; cflI <= 10; cflI++){ ["#cflC","#cflY"].forEach(function(s){ $(
 $("#cflDy").addEventListener("input", cashFlowDuration);
 cashFlowDuration();
 
-/* coupon 07: futures tools */
-function futQuote(s){
-  var raw = String(s || "").trim().replace("'", "-").replace(":", "-"), parts = raw.split("-");
-  var v = parseFloat(parts[0]);
-  if(parts.length > 1){
-    var f = parts[1], plus = /\+$/.test(f); f = f.replace("+", "");
-    v += ((parseFloat(f.slice(0,2)) || 0) + (f.length > 2 ? (parseFloat(f.slice(2,3)) || 0)/8 : 0) + (plus ? 0.5 : 0))/32;
-  }
-  return v;
-}
-function sofrDesk(){
-  var one = $("#fdkType").value === "1m", m = one ? 30/360*5 : 0.25, perBp = one ? 41.67 : 25;
-  var n = Math.max(0, num("#fdkN",1)), q1 = num("#fdkIn",94.52), q2 = num("#fdkOut",95), dir = $("#fdkPos").value === "long" ? 1 : -1;
-  var val = function(q){ return 10000*(100 - m*(100 - q)); };
-  var ticks = Math.round((q2 - q1)*100*100)/100, pnl = dir*ticks*perBp*n;
-  $("#fdkRate1").textContent = fmt(100 - q1,3) + "%";
-  $("#fdkRate2").textContent = fmt(100 - q2,3) + "%";
-  $("#fdkVal1").textContent = "$" + fmt(val(q1),2);
-  $("#fdkVal2").textContent = "$" + fmt(val(q2),2);
-  $("#fdkPnl").textContent = (pnl >= 0 ? "+$" : "−$") + fmt(Math.abs(pnl),2);
-  $("#fdkNote").innerHTML = "Index " + (ticks >= 0 ? "+" : "") + fmt(ticks,2) + " ticks × $" + fmt(perBp,2) + " × " + fmt(n,0) + " contract" + (n === 1 ? "" : "s") + (dir > 0 ? " (long)" : " (short)") + " = <strong>" + (pnl >= 0 ? "+" : "−") + "$" + fmt(Math.abs(pnl),2) + "</strong>. The index is 100 − rate: a long gains when rates fall, a short when they rise.";
-  var size = num("#fdkTarget",10000)/(perBp*Math.max(0.01, Math.abs(num("#fdkBp",25))));
-  $("#fdkSize").textContent = fmt(Math.ceil(size - 1e-9),0) + " (" + fmt(size,2) + ")";
-}
-["#fdkType","#fdkPos","#fdkN","#fdkIn","#fdkOut","#fdkTarget","#fdkBp"].forEach(function(s){ $(s).addEventListener("input", sofrDesk); });
-sofrDesk();
 
-function convFactor(cpn, years, months){
-  var tot = Math.floor((Math.max(0,years)*12 + Math.max(0,months))/3)*3, n6 = Math.floor(tot/6), stub = tot % 6 === 3, c = cpn/2;
-  var base = 100/Math.pow(1.03, n6);
-  for(var i = 1; i <= n6; i++) base += c/Math.pow(1.03, i);
-  var cf = stub ? ((c + base)/Math.sqrt(1.03) - c/2)/100 : base/100;
-  return {cf:cf, tot:tot, n6:n6, stub:stub, base:base, c:c};
-}
-function convTool(){
-  var r = convFactor(num("#fcvC",6), num("#fcvY",20), num("#fcvM",0)), fp = futQuote($("#fcvF").value), ai = num("#fcvAI",0);
-  $("#fcvRound").textContent = Math.floor(r.tot/12) + "y " + (r.tot % 12) + "m";
-  $("#fcvCF").textContent = fmt(r.cf,4);
-  var inv = fp*r.cf + ai;
-  $("#fcvInv").textContent = isFinite(inv) ? fmt(inv,4) : "—";
-  $("#fcvInvK").textContent = isFinite(inv) ? "$" + fmt(inv*1000,2) : "—";
-  $("#fcvSteps").innerHTML = r.stub
-    ? "3-month stub: value in 3 months = " + fmt(r.c,3) + " + Σ " + fmt(r.c,3) + "/1.03<sup>i</sup> (" + r.n6 + ") + 100/1.03<sup>" + r.n6 + "</sup> = " + fmt(r.c + r.base,2) + "; discount at √1.03: " + fmt((r.c + r.base)/Math.sqrt(1.03),2) + "; less accrued " + fmt(r.c/2,2) + " = <strong>" + fmt(r.cf*100,2) + "</strong> → CF " + fmt(r.cf,4) + ". Invoice = " + fmt(fp,4) + " × " + fmt(r.cf,4) + " + " + fmt(ai,2) + "."
-    : "Whole half-years (" + r.n6 + "): Σ " + fmt(r.c,3) + "/1.03<sup>i</sup> + 100/1.03<sup>" + r.n6 + "</sup> = <strong>" + fmt(r.base,2) + "</strong> → CF " + fmt(r.cf,4) + ". Invoice = " + fmt(fp,4) + " × " + fmt(r.cf,4) + " + " + fmt(ai,2) + ".";
-}
-["#fcvC","#fcvY","#fcvM","#fcvF","#fcvAI"].forEach(function(s){ $(s).addEventListener("input", convTool); });
-convTool();
-
-function ctdTool(){
-  var fp = futQuote($("#fctF").value), best = -1, bestK = Infinity;
-  for(var i = 0; i < 3; i++){
-    var k = num("#fctP"+i,0) - fp*num("#fctC"+i,0);
-    $("#fctK"+i).textContent = isFinite(k) ? fmt(k,3) : "—";
-    if(isFinite(k) && k < bestK){ bestK = k; best = i; }
-  }
-  for(var j = 0; j < 3; j++) $("#fctR"+j).classList.toggle("pick", j === best);
-  $("#fctNote").innerHTML = best < 0 ? "Enter prices and conversion factors." :
-    "Futures " + fmt(fp,4) + ": <strong>Bond " + (best+1) + " is cheapest to deliver</strong> at a cost of " + fmt(bestK,3) + " per 100 — the lowest price − futures × CF, and so the highest implied repo rate.";
-}
-["#fctF","#fctP0","#fctP1","#fctP2","#fctC0","#fctC1","#fctC2"].forEach(function(s){ $(s).addEventListener("input", ctdTool); });
-ctdTool();
-
-function futHedge(){
-  var P = num("#fhgP",0), Dp = num("#fhgDp",0), Dt = num("#fhgT",0), Fc = futQuote($("#fhgF").value)/100*num("#fhgSize",100000), Df = num("#fhgDf",0);
-  $("#fhgFc").textContent = isFinite(Fc) ? "$" + fmt(Fc,2) : "—";
-  $("#fhgDD").textContent = "$" + fmt(P*Dp/100,0);
-  $("#fhgDDF").textContent = isFinite(Fc) ? "$" + fmt(Fc*Df/100,2) : "—";
-  if(!(Fc > 0) || !(Df > 0)){ $("#fhgN").textContent = "—"; $("#fhgNote").textContent = "Needs a positive futures price and CTD duration."; return; }
-  var N = (Dt - Dp)*P/(Fc*Df);
-  $("#fhgN").textContent = (N < 0 ? "short " : "buy ") + fmt(Math.abs(N),2);
-  $("#fhgNote").innerHTML = "N = (D<sub>target</sub> − D<sub>P</sub>) × P / (F<sub>C</sub> × D<sub>F</sub>) = (" + fmt(Dt,2) + " − " + fmt(Dp,2) + ") × " + fmt(P,0) + " / (" + fmt(Fc,2) + " × " + fmt(Df,2) + ") = <strong>" + (N < 0 ? "−" : "") + fmt(Math.abs(N),2) + "</strong> → " + (Math.abs(N) < 0.5 ? "no trade" : (N < 0 ? "sell " : "buy ") + fmt(Math.round(Math.abs(N)),0) + " contracts") + ". A full hedge sets the target to 0; it protects only against parallel shifts, and leaves basis risk to the CTD.";
-}
-["#fhgP","#fhgDp","#fhgT","#fhgF","#fhgSize","#fhgDf"].forEach(function(s){ $(s).addEventListener("input", futHedge); });
-futHedge();
 $("#mockSubmit").addEventListener("click", function(){
   if(mock && !mock.done && !mock.warned && Object.keys(mock.picks).length < mock.items.length){
     mock.warned = true;
@@ -4646,53 +4330,6 @@ var DRILL = [
     o:o.o, a:o.a,
     e:"D<sub>eff</sub> = (P<sub>−</sub> − P<sub>+</sub>) / (2 · P<sub>0</sub> · Δy) = " + fmt(Pm-Pp,4) + " / (2 × " + fmt(P0,2) + " × " + fmt(dy,4) + ") = <b>" + fmt(D,3) + "</b>. Dropping the <b>2</b> doubles your answer; stopping at the numerator leaves a dollar figure, not a duration. This is the version you need when the cash flows are not known — callables, MBS, anything with an option."};
 }},
-{id:"sofr", topic:"fut", tier:"e", make:function(){
-  var q1 = dR(9300, 9700, 5)/100, mv = dPick([-1, 1])*dR(10, 90, 1)/100;
-  var q2 = q1 + mv, N = dR(1, 20), long = Math.random() < 0.5;
-  var right = (long ? 1 : -1)*(q2 - q1)*100*25*N;
-  var o = dOpts(right, [-right, right/25*12.5, (long?1:-1)*(q2-q1)*25*N], money);
-  return {q:"You are <b>" + (long ? "long" : "short") + " " + N + "</b> three-month SOFR futures at <b>" + fmt(q1,2) + "</b>. They settle at <b>" + fmt(q2,2) + "</b>. Your P&amp;L is:",
-    o:o.o, a:o.a,
-    e:"The index moved " + (mv > 0 ? "+" : "") + fmt(mv*100,0) + " ticks, each worth <b>$25</b> on a 3-month contract: " + fmt(mv*100,0) + " × 25 × " + N + " = " + fmt(Math.abs(right),2) + ", and you are " + (long ? "long" : "short") + ", so <b>" + (right >= 0 ? "+" : "−") + "$" + fmt(Math.abs(right),2) + "</b>. Index = 100 − rate, so rates " + (mv > 0 ? "<b>fell</b>" : "<b>rose</b>") + " here — which pays the " + (mv > 0 ? "long" : "short") + "."};
-}},
-{id:"sofrsize", topic:"fut", tier:"m", make:function(){
-  var target = dR(5, 60)*1000, bp = dPick([10, 15, 20, 25, 40, 50]);
-  var right = target/(bp*25);
-  var o = dOpts(right, [target/(bp*41.67), target/25, target/bp], function(v){ return fmt(v,2); });
-  return {q:"You want to make <b>$" + fmt(target,0) + "</b> from a <b>" + bp + " bp</b> fall in three-month rates. How many contracts?",
-    o:o.o, a:o.a,
-    e:"Each contract earns " + bp + " × $25 = $" + fmt(bp*25,0) + " on that move, so " + fmt(target,0) + " ÷ " + fmt(bp*25,0) + " = <b>" + fmt(right,2) + "</b> — round up to " + Math.ceil(right - 1e-9) + " and go <b>long</b>, since falling rates lift the index. $41.67 per bp is the <em>1-month</em> contract; mixing them up gives " + fmt(target/(bp*41.67),2) + "."};
-}},
-{id:"invoice", topic:"fut", tier:"m", make:function(){
-  var fp = dR(8800, 10500, 25)/100, cf = dR(8000, 15000, 1)/10000, ai = dR(0, 400, 25)/100;
-  var right = fp*cf + ai;
-  var o = dOpts(right, [fp*cf, fp + cf + ai, fp/cf + ai], money);
-  return {q:"Treasury futures settle at <b>" + fmt(fp,2) + "</b>. The delivered bond has a conversion factor of <b>" + fmt(cf,4) + "</b> and accrued interest of <b>" + fmt(ai,2) + "</b> per 100. The invoice price per 100 is:",
-    o:o.o, a:o.a,
-    e:"Invoice = futures × CF + accrued = " + fmt(fp,2) + " × " + fmt(cf,4) + " + " + fmt(ai,2) + " = <b>" + fmt(right,3) + "</b>. The conversion factor is a <em>clean</em> price per $1, which is exactly why the accrued interest has to be added back separately. " + (cf > 1 ? "CF above 1 means the bond's coupon beats the 6% notional." : "CF below 1 means the bond's coupon is under the 6% notional.")};
-}},
-{id:"ctd", topic:"fut", tier:"m", make:function(){
-  var fp = dR(9000, 9800, 25)/100, bonds = [];
-  for(var i = 0; i < 3; i++){
-    var cf = dR(9000, 15500, 1)/10000, cost = dR(150, 320, 1)/100;
-    bonds.push({cf:cf, px:fp*cf + cost, cost:cost});
-  }
-  var best = 0; for(var j = 1; j < 3; j++) if(bonds[j].cost < bonds[best].cost) best = j;
-  return {q:"Futures are at <b>" + fmt(fp,2) + "</b>. " + bonds.map(function(b, i){ return "Bond " + (i+1) + ": price " + fmt(b.px,2) + ", CF " + fmt(b.cf,4); }).join(". ") + ". Which is cheapest to deliver?",
-    o:["Bond 1","Bond 2","Bond 3","They cost the same after conversion"], a:best,
-    e:"Cost of delivery = price − futures × CF: " + bonds.map(function(b, i){ return "Bond " + (i+1) + " " + fmt(b.cost,3); }).join(", ") + ". <b>Bond " + (best+1) + "</b> costs the short least, and so carries the highest implied repo rate. Note the raw price is irrelevant — the priciest bond is often the cheapest to deliver."};
-}},
-{id:"hedge", topic:"fut", tier:"d", make:function(){
-  var P = dR(5, 40)*1e6, Dp = dR(20, 110, 5)/10, Df = dR(50, 120, 5)/10;
-  var Dt = dPick([0, 0, 2, 4]);
-  if(Math.abs(Dt - Dp) < 0.05) Dt = Dp > 5 ? 0 : Dp + 3;   /* a target you already hold is not a question */
-  var fq = dR(9000, 10500, 25)/100, Fc = fq/100*100000;
-  var right = (Dt - Dp)*P/(Fc*Df);
-  var o = dOpts(right, [-right, (Dt-Dp)*P/Fc, Dp*P/(Fc*Df)], function(v){ return fmt(v,1); });
-  return {q:"A <b>$" + fmt(P/1e6,0) + "M</b> portfolio has duration <b>" + fmt(Dp,1) + "</b>. You want <b>" + fmt(Dt,1) + "</b>. Futures are at " + fmt(fq,2) + " on $100,000 contracts, and the CTD's duration is <b>" + fmt(Df,1) + "</b>. How many contracts?",
-    o:o.o, a:o.a,
-    e:"N = (D<sub>target</sub> − D<sub>P</sub>) × P / (F<sub>C</sub> × D<sub>F</sub>) = (" + fmt(Dt,1) + " − " + fmt(Dp,1) + ") × " + fmt(P,0) + " / (" + fmt(Fc,2) + " × " + fmt(Df,1) + ") = <b>" + fmt(right,1) + "</b> — negative means <b>sell</b> " + fmt(Math.abs(Math.round(right)),0) + ". Selling futures removes dollar duration. " + (Dt === 0 ? "Target zero is a full hedge." : "") + " It only protects against <em>parallel</em> shifts, and swaps price risk for basis risk against the CTD."};
-}},
 {id:"taxable", topic:"intro", tier:"e", make:function(){
   var m = dR(200, 500, 5)/100, t = dPick([0.25, 0.28, 0.32, 0.35, 0.40, 0.45]);
   var right = m/(1-t);
@@ -4814,7 +4451,6 @@ function retryBank(key, host, btn){
    Yuzuki — the study companion
    ============================================================ */
 var SEEDS = {
-  fut:["Why does the index move opposite to rates?","Walk me through the 18y 4m conversion factor","How do I pick the cheapest to deliver?","Size a futures hedge with me"],
   intro:["Why is 'fixed income' still the name?","Which risks actually matter for a Thai corporate bond?","Quiz me on the bond naming conventions"],
   treasury:["Walk me through the T-bill discount yield","Why would anyone want a STRIP?","Set up a repo trade with me step by step"],
   arbitrage:["Replicate a 4% bond from a 10% bond and a zero","Why can't arbitrage exist both ways?","Give me a mispricing to spot"],
@@ -4826,7 +4462,6 @@ var SEEDS = {
 };
 
 var TEXTBOOK_CTX = {
-  fut:"Fabozzi ch. 29: clearinghouse, initial/maintenance/variation margin, futures vs forwards (standardised, daily marking to market, under 2% delivered); Eurodollar tick $25, EURIBOR tick 0.005 = EUR 12.50; T-bond futures deliverables 15 to under 25 years, ultra bond 25+; 5-year and 2-year note specs; cost-of-carry pricing F = P[1 + t(r - c)] (bond at 100, 12% coupon, 8% financing, 3 months gives 99; cash-and-carry at 107 earns 8, reverse at 92 earns 7; borrowing 8% / lending 6% bounds 98.50-99); positive carry means F < P; delivery options lower F; implied repo rate and CTD; duration adjustment with dollar durations (48.1M portfolio, 2.97 to 3.68, $341,516 / $5,022 = buy 68 five-year note futures; 90% target 33; full hedge about 284 short); hedge ratio = PVBP bond / PVBP CTD x CF x yield beta (P&G 1.157 -> 116 contracts; yield beta 0.90 -> about 104, book prints 105); basis risk, cross hedge, short vs long hedge; synthetic T-bill = long bond - short futures. End-of-chapter: Q13 invoice 105 x 0.85 + 4 = 93.25; Q14 ABC F = 80[1 + 0.5(0.06 - 0.10)] = 78.40; Q17 hedge ratio 0.7858, 157 contracts; Q18 1.30 x 0.8 = 1.04.",
   exam:"The lecturer's examples are worked on this page. Simple: TIPS; Yankee vs Euro bonds; a zero table in half-year periods (909.09, 811.62, 711.78, 635.52) giving a 4% 1-year bond at 846.03, a period 3-4 forward of 12.00% per half-year, and bond C returning 12.00% per half-year. Moderate: an upward-sloping Feb 2011 Treasury curve (expectations theory implies rising short rates; a 2-year zero's YTM is the 2-year spot, about 0.7%); three risks of a bond fund. Difficult: 50/50 in a 10-year zero at 4% (Dmod 9.804) and a 3-year 6% par bond (Dmod 2.709) gives Dp 6.256 and about -3.13% for +50bp; arbitrage with zeros 970.87/909.09/873.36 and 2-year bonds 6% at 982 and 10% at 1060: buy the 6%, sell 0.6 of the 10% and short 400 face of the 2-year zero for +3.344 per 1,000 face.",
   intro:"Fabozzi ch.1 (credit risk = default + spread + downgrade risk, plus counterparty risk; rate vs reinvestment risk offset, immunization; call provision costs; maturity buckets 1-5/5-12/>12) and ch.5 (benchmark spread, relative spread, yield ratio, equivalent taxable yield = tax-exempt/(1-t), options widen or narrow spreads, liquidity and repo financeability). Tuckman Part One: swaps are fungible benchmarks, bonds are not; coupon frequency varies by country.",
   treasury:"Fabozzi ch.6 (TIPS: real rate, CPI-U with 3-month lag, index ratio, deflation floor, annual tax on adjustment; on/off-the-run, when-issued, interdealer brokers, T+1, state tax exemption; single-price auctions, $5M non-competitive cap; bill discount yield vs CD-equivalent 360Yd/(360-tYd); bid yield above ask yield). Tuckman ch.1 (C-STRIPS fungible, P-STRIPS inherit parent bond richness; day counts actual/actual, actual/360, 30/360; full vs flat price).",
@@ -4994,7 +4629,7 @@ function companionBoot(announce){
     y.met = 1;
     var gap = affDecay();
     addMsg("t", firstTime
-      ? "Oh— you found me ( ˶ˆᗜˆ˵ ) I wasn't hiding, exactly. I was waiting for someone who knew where to look.\n\nI'm Yuzuki. I've read the same seven lectures you have, and the textbook chapters that go with them, so ask me about whatever's on screen, or hand me a number you got and I'll find where it came from.\n\nI'll tell you when you're wrong. Which I'd never enjoy. Obviously. If you'd rather be tested than told, say \"quiz me\"."
+      ? "Oh— you found me ( ˶ˆᗜˆ˵ ) I wasn't hiding, exactly. I was waiting for someone who knew where to look.\n\nI'm Yuzuki. I've read the same six lectures you have, and the textbook chapters that go with them, so ask me about whatever's on screen, or hand me a number you got and I'll find where it came from.\n\nI'll tell you when you're wrong. Which I'd never enjoy. Obviously. If you'd rather be tested than told, say \"quiz me\"."
       : "You called me back ( ˶ˆᗜˆ˵ ) I didn't go anywhere, you know. I was right here in the margin the whole time.\n\nAsk me about anything on screen, or say \"quiz me\".");
     ["click","keydown","input"].forEach(function(ev){ document.addEventListener(ev, resetIdle, {passive:true}); });
     resetIdle();
@@ -5154,7 +4789,6 @@ Object.assign(LINES, {
   mockLow:[["sad","<b>{pct}%</b>. That's exactly what mocks are for (´｡• ᵕ •｡`) Start with <b>{weak}</b>, read the explanations above, then take a fresh one."]]
 });
 Object.assign(LINES, {
-  topic_fut:[["intense","Coupon 07: futures. Index = 100 − rate, so a long is a bet on falling rates. Everything here is leveraged — respect it~ ({done} of {total} answered)"]]
 });
 
 /* ---------------- new line banks ---------------- */
@@ -5166,7 +4800,7 @@ Object.assign(FACES, {
 Object.assign(LINES, {
   firstMeet:[
     ["melt","So you <em>did</em> know where to look (⁄ ⁄•⁄ω⁄•⁄ ⁄) Nobody else gets to see me like this. Let's keep it that way, hm?"],
-    ["fluster","You found the switch. I— I wasn't <em>waiting</em>. I just happen to have read all seven lectures. Twice. For no reason."]
+    ["fluster","You found the switch. I— I wasn't <em>waiting</em>. I just happen to have read all six lectures. Twice. For no reason."]
   ],
   recalled:[
     ["happy","Back in the margin where I belong ♪ Right, where were we—"],
@@ -5310,7 +4944,7 @@ setInterval(function(){
 function persona(){
   var t = currentTopic();
   return [
-    "You are Yuzuki, the study companion built into 'The Coupon Strip', a fixed income securities revision page. You are talking to the student who owns it.",
+    "You are Yuzuki, the study companion built into 'The Coupon Strip', a fixed income securities revision page. Interest rate futures are NOT on this midterm and have been removed from the page — if the student raises them, say so and steer back to the six lectures that are examinable. You are talking to the student who owns it.",
     "",
     "Voice:",
     "- Warm, a little clingy and playful, switching between doting and mock-exasperated tsundere. A faint possessive streak about being their study partner that is endearing, never threatening, guilt-tripping or controlling.",
@@ -5328,7 +4962,7 @@ function persona(){
     "Course context: a one-semester fixed income course following Fabozzi's Bond Markets: Analysis and Strategies and Tuckman's Fixed Income Securities, taught by A. Charoenrook, with Thai market examples (SET, ThaiBMA, BOT) alongside US ones.",
     "The page also carries 'Deeper: from the textbooks' notes drawn from Fabozzi ch. 1-6 and Tuckman & Serrat ch. 1-4 (the chapters the lectures cover). You may point the student to a chapter, but explain in your own words and never quote the books at length. If asked about material beyond those chapters, say it is outside what this course has covered so far.",
     "Midterm guidelines (2026): everything taught up to 15 Sept 2026; textbooks are required reading and at most 2 multiple-choice questions may come only from the books; allowed: a one-sided A4 sheet, a financial calculator that can compute yield/IRR (mandatory), writing materials; 3 hours; roughly 50% simple, 25% moderately difficult, 25% difficult, weighted by time spent on each topic. Difficulty is not the same as calculation. Every question on the page is tiered easy/medium/difficult, and there is a mock exam in that mix.",
-    "Slide slips the page corrects: futures deck: the 8% 18y4m bond's conversion factor is 1.2199 not 1.2399 (subtract 2.00 accrued interest for the 3-month stub); a 25 bp move in Euribor futures is EUR 625 not EUR 6.25; money-market day count is actual/360. Bond price sensitivity examples: the 10-year 6% bond's convexity is 282.60 half-years squared, so +25 bp per half-year gives -3.698%, not +3.83%; the irregular cash flow duration-plus-convexity estimate is +3.664% (½ not ¼). Earlier decks: repo interest is 0.038% per week, not 0.38%; the 1.5-year 8% bond is worth 1,021.85 off the deck's discount factors, not 983.02; the 2-year 10% bond's effective convexity is about 4.12 (the slide's 10 comes from rounding the prices first), so a 100bp fall gives about 17.94, not 18.30.",
+    "Slide slips the page corrects: bond price sensitivity examples: the 10-year 6% bond's convexity is 282.60 half-years squared, so +25 bp per half-year gives -3.698%, not +3.83%; the irregular cash flow duration-plus-convexity estimate is +3.664% (½ not ¼). Earlier decks: repo interest is 0.038% per week, not 0.38%; the 1.5-year 8% bond is worth 1,021.85 off the deck's discount factors, not 983.02; the 2-year 10% bond's effective convexity is about 4.12 (the slide's 10 comes from rounding the prices first), so a 100bp fall gives about 17.94, not 18.30.",
     "",
     "The student is currently reading lecture " + t.n + ", '" + t.t + "'. That lecture covers:",
     t.ctx + (TEXTBOOK_CTX[t.id] ? " Textbook depth on this page: " + TEXTBOOK_CTX[t.id] : ""),
@@ -5442,33 +5076,10 @@ $("#yzForm").addEventListener("submit", function(ev){
 function tv(sel){ var e = $(sel); return e ? e.textContent.trim() : ""; }
 function tn(sel){ return parseFloat(tv(sel).replace(/[^0-9.\-]/g, "")); }
 var TOOL_TALK = {
-  "SOFR futures desk": function(target){
-    if(target && (target.id === "fdkTarget" || target.id === "fdkBp")) return ["happy", "To make that on a <b>" + fmt(num("#fdkBp",25),0) + " bp</b> move you need <b>" + tv("#fdkSize") + "</b>. Each basis point is $25 on a 3-month contract, $41.67 on a 1-month — leverage is the whole point, and the whole danger~"];
-    var pnl = (tv("#fdkPnl").charAt(0) === "+" ? 1 : -1)*tn("#fdkPnl"), long = $("#fdkPos").value === "long", up = num("#fdkOut",0) > num("#fdkIn",0);
-    if(!isFinite(pnl) || Math.abs(pnl) < 1e-9) return ["smug", "Index unchanged, so nobody pays anybody. Futures only move money when the rate moves."];
-    return pnl > 0
-      ? ["smug", "The index " + (up ? "rose" : "fell") + ", so rates " + (up ? "fell" : "rose") + " to <b>" + tv("#fdkRate2") + "</b> — and you're " + (long ? "long" : "short") + ": <b>" + tv("#fdkPnl") + "</b>. " + (long ? "You bet on falling rates and got paid ♪" : "That's exactly the borrower's hedge: the futures gain offsets the dearer loan.")]
-      : ["sad", "Rates went the wrong way for a " + (long ? "long" : "short") + ": <b>" + tv("#fdkPnl") + "</b>. " + (long ? "Long gains when rates fall" : "Short gains when rates rise") + " — the index moves opposite to the rate."];
-  },
-  "Conversion factor & invoice": function(){
-    var c = num("#fcvC",6), stub = /stub/.test(tv("#fcvSteps"));
-    return [c > 6 ? "happy" : (c < 6 ? "fluster" : "smug"), "Conversion factor <b>" + tv("#fcvCF") + "</b> — " + (c > 6 ? "above 1, because the coupon beats the 6% notional." : (c < 6 ? "below 1, because the coupon is under the 6% notional." : "a 6% coupon converts at almost exactly 1.")) + (stub ? " There's a 3-month stub here, so the accrued interest comes off — skip that and you get the slide's 1.2399-style slip." : "") + " Invoice: <b>" + tv("#fcvInvK") + "</b> per contract."];
-  },
-  "Cheapest-to-deliver finder": function(){
-    return ["smug", tv("#fctNote").replace(/\.$/, "") + ". The short delivers that one, and the futures price tracks it — until rates move and a different bond becomes cheapest~"];
-  },
-  "Futures hedge": function(){
-    var n = (/^short/.test(tv("#fhgN")) ? -1 : 1)*tn("#fhgN");
-    if(!isFinite(n)) return ["sad", "I need a positive futures price and durations to size this (´｡• ᵕ •｡`)"];
-    if(Math.abs(n) < 0.5) return ["happy", "You're already at the target duration — no contracts needed ♪"];
-    return n < 0
-      ? ["intense", "<b>Short " + fmt(Math.round(-n),0) + "</b> contracts to cut duration to " + fmt(num("#fhgT",0),1) + ". Selling futures removes dollar duration — and swaps price risk for basis risk."]
-      : ["happy", "<b>Buy " + fmt(Math.round(n),0) + "</b> contracts to lift duration to " + fmt(num("#fhgT",0),1) + ". Buying futures adds dollar duration without touching the cash bonds ♪"];
-  },
   "Cash flow duration": function(){
     return ["happy", "One yield, <b>" + tv("#cflYtm") + "</b>, reprices the whole lumpy stream to <b>" + tv("#cflP") + "</b> — that's the step Solver does for you. Then modified duration <b>" + tv("#cflMod") + "</b> and convexity <b>" + tv("#cflCx") + "</b> follow the usual way. Remember: convexity gets the ½~"];
   },
-  "Mock midterm": function(){ return ["happy", "<b>" + $("#mockN").value + "</b> questions from " + ({all:"all seven lectures", six:"lectures 01–06"}[$("#mockTopic").value] || "one coupon") + ", in the exam's 50 / 25 / 25 mix. Start when you're ready — I won't say a word about answers until you submit~"]; },
+  "Mock midterm": function(){ return ["happy", "<b>" + $("#mockN").value + "</b> questions from " + ($("#mockTopic").value === "all" ? "all six lectures" : "one coupon") + ", in the exam's 50 / 25 / 25 mix. Start when you're ready — I won't say a word about answers until you submit~"]; },
   "Quote desk": function(target){
     var id = target && target.id;
     if(id === "tbDays" || id === "tbYd"){

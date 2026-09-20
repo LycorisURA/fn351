@@ -13,7 +13,7 @@ Open `index.html` in a browser, or turn on GitHub Pages for this repo to host it
 - **Assignments 1 and 2**, with hidden worked solutions.
 - **Exam guide** — a section for the lecturer's own example questions: each one first as multiple choice to attempt cold, then worked in full, in the guideline's own Simple / Moderately difficult / Difficult tiers, plus the class examples on bond price sensitivity and the rules themselves. The multiple-choice versions render the *same* question objects as their home coupon and write to the same answer keys, so answering in either place counts once and shows up in both.
 - **Midterm prep:** a mock exam in the paper's own 50 / 25 / 25 mix.
-- **The sheet** — a reference panel collecting every formula the course uses (42 of them, in nine groups), laid out the way you would fill the one A4 side the exam allows. Each line says what the symbols mean, where the marks get lost, and — under **Use it when** — what kind of question calls for it, with the exact questions on this page where it is needed.
+- **The sheet** — a reference panel collecting every formula the course uses (50 of them, in nine groups), laid out the way you would fill the one A4 side the exam allows. Each line says what the symbols mean, where the marks get lost, and — under **Use it when** — what kind of question calls for it, with the exact questions on this page where it is needed.
 - **Textbook depth** from Fabozzi (ch. 1–6) and Tuckman & Serrat (ch. 1–4), restated, with slide and manual errata flagged on the page.
 
 ## Design
